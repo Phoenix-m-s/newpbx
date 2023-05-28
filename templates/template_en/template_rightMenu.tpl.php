@@ -161,18 +161,18 @@ $listMenu = checkDisplayUi();
 
                 <?php } //if($listMenu['record']!=0){?>
                 <!--                {************** confrence menu add by Sakhamanesh&jahanbakhsh ******************}-->
-
-                <?php  if($listMenu['record']!=0){?>
+<!--
+                <?php /* if($listMenu['record']!=0){*/?>
                     <li>
-                        <a href="<?php echo RELA_DIR . 'record.php' ?>">
+                        <a href="<?php /*echo RELA_DIR . 'record.php' */?>">
                             <i class="sidebar-icon fa fa-video-camera"></i>
                             <span class="sidebar-text">
-                            <?php echo RIGHTMENU_39; ?>
+                            <?php /*echo RIGHTMENU_39; */?>
                     </span>
                         </a>
                     </li>
 
-                <?php } ?>
+                --><?php /*} */?>
             <?php } elseif ($member_info != -1) { ?>
 
                 <li>

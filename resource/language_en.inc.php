@@ -633,6 +633,7 @@ define("RIGHTMENU_36", "Time Condition");
 define("RIGHTMENU_37", "voipconfig");
 //add by zj
 define("RIGHTMENU_38", "Conference");
+define("RIGHTMENU_38", "Conference");
 
 // main text
 define("ADD","Add");
