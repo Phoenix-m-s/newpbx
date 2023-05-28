@@ -47,7 +47,7 @@ $admin_permission = $admin_info['permission_pbx'];
                         {
                             if (confirm("Are you sure?"))
                             {
-                                window.location="<?php$_SERVER['PHP_SELF']?>?action=status&id="+id+"&status="+s+"&os="+os;
+                                window.location="<?php $_SERVER['PHP_SELF']?>?action=status&id="+id+"&status="+s+"&os="+os;
                             }
                         }
 
@@ -236,6 +236,3 @@ $admin_permission = $admin_info['permission_pbx'];
     </div>
 </div>
 </div>
-<?php /*
-
-*/?>
