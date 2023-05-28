@@ -1,0 +1,17 @@
+
+image_version:" P0S3-8-12-00 "
+line1_name:"test1-sean"
+line1_authname:"test1-sean"
+line1_password: "123456"
+line1_shortname: "javad"
+line1_displayname:"javad"
+proxy1_port:"5060"
+proxy1_address:172.18:0.54
+nat_enable:"1"
+proxy_register:"1"
+# Phone Label (Text desired to be displayed in upper right corner)
+phone_label: " " ; add a space at the end, looks neater
+phone_password: "cisco" ; Limited to 31 characters (Default - cisco)
+user_info:none
+telnet_level :"2"
+logo_url:" http://172.31.0.96/cisco.bmp"

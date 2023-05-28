@@ -1,0 +1,289 @@
+<?php
+include_once ROOT_DIR . "common/init.inc.php";
+include_once ROOT_DIR . "common/func.inc.php";
+include_once ROOT_DIR . "common/looeic.php";
+include_once ROOT_DIR . "component/report/Report.php";
+include_once ROOT_DIR . "component/extension/AdminExstionNewModel.php";
+
+
+
+/**
+ * Class AdminAnnounceController
+ */
+class ReportController
+{
+    /**
+     * @var
+     */
+    private $error;
+    /**
+     * @var
+     */
+    private $fileName;
+    /**
+     * @var
+     */
+    private $exportType;
+
+    /**
+     * @var array
+     */
+    private $msg = [];
+    /**
+     * @var array
+     */
+    private $DSTList = [
+        2 => 'Queue',
+        3 => 'Extension',
+        4 => 'Announce',
+        5 => 'IVR',
+        6 => 'Voice Mail',
+        7 => 'Hang Up',
+        8 => 'Time Condition'
+    ];
+    /**
+     * @var array
+     */
+    private $forwardList = [
+        'defaultMessage' => 'Default Message',
+        'customMessage' => 'Custom Message',
+        'customMessageByList' => 'Custom Message By List',
+        'customMessageByRecord' => 'Custom Message By Record'
+    ];
+
+    /**
+     * @param $list
+     * @param string $message
+     */
+    private function template($list, $message = '')
+    {
+        switch ($this->exportType) {
+            case 'html':
+
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/template_start.tpl";
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/template_header.tpl";
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/template_rightMenu.tpl.php";
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/$this->fileName";
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/template_footer.tpl";
+                include ROOT_DIR . "templates/" . CURRENT_SKIN . "/template_end.tpl";
+                break;
+            case 'json':
+                return;
+                break;
+            case 'array' :
+                echo $list;
+                break;
+            case 'serialize' :
+                echo serialize($list);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    public function showReport($msg='')
+    {
+        $this->exportType = 'html';
+        $result =$this->fileName = 'report.show.php';
+        $this->template($result, '');
+        die();
+    }
+
+    private function _getReport($fields='')
+    {
+
+        global $member_info,$admin_info, $company_info;
+
+        $company_name=$company_info['comp_name'];
+        $this->_checkPermission();
+        $conn = parent::getConnection();
+        $fields['useTrash']='false';
+        $filter=$this->filterBuilder($fields);
+        $length=$filter['length'];
+        $filter=$filter['list'];
+        if($filter['order'] =='')
+        {
+            $filter['order']= 'ORDER BY `calldate` DESC';
+        }
+        if($member_info==-1){
+            $sql = "SELECT  `t1`.* FROM (SELECT `cdr`.* FROM `cdr` WHERE `cdr`.`dcontext` like '%-$company_name') as t1
+                   ".$filter['WHERE'] .$filter['filter'].$filter['order'].$filter['limit'];
+
+        }
+        else{
+            $sql = "SELECT  `t1`.* FROM (SELECT `cdr`.* FROM `cdr` WHERE `cdr`.`dcontext` like '%-$company_name' and `src`='".$member_info['extension_id']."' or `dst` = '".$member_info['extension_id']."' ) as t1
+                   ".$filter['WHERE'] .$filter['filter'].$filter['order'].$filter['limit'];
+            die($sql);
+        }
+
+
+
+
+        //or WHERE    news_id='$id' ");
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        if (!$stmt)
+        {
+            $result['result'] = -1;
+            $result['no'] = 1;
+            $result['msg'] = $conn->errorInfo();
+            return $result;
+        }
+
+        $sql="
+
+                SELECT
+                  Count(`t1`.`cdr_id`) AS `recCount`
+                FROM
+                  (SELECT *
+                  FROM `cdr`
+                  WHERE `cdr`.`dcontext` LIKE '%-$company_name') AS `t1`
+
+             ".$filter['WHERE'] .$filter['filter'];
+        //echo $stmt->rowCount();
+
+        $stmTp = $conn->prepare($sql);
+        $stmTp->setFetchMode(PDO::FETCH_ASSOC);
+        $stmTp->execute();
+
+        $rowP = $stmTp->fetch();
+        $rowFound=$rowP['recCount'];
+        $this->_paging['recordsFiltered']=$rowP['recCount'];
+        $this->_paging['recordsTotal']= $rowFound['found'];
+
+        while($row = $stmt->fetch())
+        {
+            $callDate=$row['calldate'];
+            list($date, $time) = explode(" ",$callDate);
+            list($year, $month, $day) = explode("-", $date);
+            list($extension, $compName) = explode("-", $row['dcontext']);
+            $row['filename']=RELA_CHANEL.$company_name.'/'.$year.'/'.$month.'/'.$day.'/'.$row['src'].'-'.$row['dst'].'-'.$row['uniqueid'].'.'.'wav';
+            $this->_set_reportListDb($row['cdr_id'], $row);
+        }
+
+
+        $result['result'] = 1;
+        $result['no'] = 2;
+        return $result;
+    }
+
+    public function search($get)
+    {
+        include_once(ROOT_DIR . "component/datatable.converter.php");
+        $i = 0;
+
+        $columns = array(
+            array('db' => 'cdr_id', 'dt' => $i ++),
+            array('db' => 'calldate', 'dt' => $i ++),
+            array('db' => 'clid', 'dt' => $i ++),
+            array('db' => 'src', 'dt' => $i ++),
+            array('db' => 'dst', 'dt' => $i ++),
+            array('db' => 'channel', 'dt' => $i ++),
+            array('db' => 'dstchannel', 'dt' => $i ++),
+            array('db' => 'lastapp', 'dt' => $i ++),
+            array('db' => 'lastdata', 'dt' => $i ++),
+            array('db' => 'duration', 'dt' => $i ++),
+            array('db' => 'billsec', 'dt' => $i ++),
+            array('db' => 'disposition', 'dt' => $i ++),
+            array('db' => 'userfield', 'dt' => $i ++),
+            array('db' => 'filename', 'dt' => $i ++)
+        );
+
+        //$primaryKey = 'id';
+        $convert = new convertDatatableIO();
+        $convert->input = $get;
+        $convert->columns = $columns;
+        $searchFields = $convert->convertInput();
+        $operationSearchFields = $searchFields;
+        unset($operationSearchFields['showFields']);
+        $reportResult=$this->getReport($operationSearchFields);
+
+        $list['list'] = $reportResult['report']['export']['list'];
+        $list['paging'] = $reportResult['totalRecord'];
+
+        $other[$i - 1] = array(
+            'formatter' => function($list) {
+                $st = '<a href="' . $list['filename'] . '"><i class="fa fa-volume-down text-orange"></i></a>';
+
+                return $st;
+            }
+        );
+
+        $export = $convert->convertOutput($list, $columns, $other);
+
+        echo json_encode($export);
+        die();
+    }
+
+    public function getReport($searchFields)
+    {
+
+        global $company_info,$member_info;
+        if($member_info !=-1)
+        {
+            $extension=AdminExstionNewModel::getAll()
+                ->where('extension_id','=',$member_info['extension_id'])->getList()['export']['list'];
+
+
+            $company_name=$company_info['comp_name'];
+            $report=Report::getAll();
+            //$campaigns = Stocks::getAll();
+            $report->where('dcontext', 'like', '%-'.$company_name)
+                ->where('src', '=', $extension[0]['extension_no'])
+                ->orWhere('dst', '=', $extension[0]['extension_no']);
+        }
+        else{
+            $company_name=$company_info['comp_name'];
+            $report=Report::getAll();
+            //$campaigns = Stocks::getAll();
+            $report->where('dcontext', 'like', '%-'.$company_name);
+        }
+
+
+        if (isset($searchFields['filter'])) {
+            foreach ($searchFields['filter'] as $filter => $value) {
+                if ($filter == 'status') {
+                    $report->where($filter, '=', $value);
+                } else {
+                    $report->where($filter, 'like', '%' . $value . '%');
+                }
+
+            }
+        }
+
+        $obj = clone $report;
+        //echo '<pre/>';
+        $sql = $obj->build('');
+
+
+
+        $sql = str_replace('SELECT *', 'SELECT count(*)', $sql);
+        $rs = $obj->query($sql)->getList();
+
+        if (isset($searchFields['order'])) {
+            foreach ($searchFields['order'] as $filter => $value) {
+                $report->orderBy($filter, $value);
+            }
+        } else {
+            //$report->orderBy('status', 'desc');
+            // $report->orderBy('name', 'ASC');
+
+        }
+
+        //$obj = clone $campaigns;
+
+        //$totalRecords = $obj->getList()['export']['recordsCount'];
+        $report->limit($searchFields['limit']['start'], $searchFields['limit']['length']);
+        //$c = $campaigns->getList();
+
+        $result['report'] = $report->getList();
+
+        $result['totalRecord'] = $rs['export']['list'][0]['count(*)'];
+        return $result;
+    }
+
+
+}

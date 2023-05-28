@@ -1,0 +1,27 @@
+@mixin rounded($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin no-margin($top: $zero, $right: $zero, $bottom: $zero, $left: $zero) {
+  margin: $top $right $bottom $left;
+}
+
+@mixin no-padding($top: $zero, $right: $zero, $bottom: $zero, $left: $zero) {
+  padding: $top $right $bottom $left;
+}
+
+@mixin calculate($property, $a, $b) {
+  #{$property}: -webkit-calc(#{$a} - #{$b});
+  #{$property}:    -moz-calc(#{$a} - #{$b});
+  #{$property}:         calc(#{$a} - #{$b});
+}

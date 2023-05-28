@@ -1,0 +1,122 @@
+// font variables
+@font-face {
+  font-family: 'HelveticaNeueThin';
+  src: url('../fonts/helvetica/HelveticaNeueThin.woff2') format('woff2'),
+  url('../fonts/helvetica/HelveticaNeueThin.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HelveticaNeueMedium';
+  src: url('../fonts/helvetica/HelveticaNeueMedium.woff2') format('woff2'),
+  url('../fonts/helvetica/HelveticaNeueMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+$font-default-fa: samim, tahoma, sans-serif !important;
+$font-default-en: 'HelveticaNeueThin', sans-serif !important;
+$body-default-font-size: 14px;
+$footer-height: 30px;
+$header-height: 56px;
+
+// default property
+$center: center;
+$justify: justify;
+$right: right;
+$left: left;
+$dir-left: ltr;
+$dir-right: rtl;
+
+
+// size variables
+$zero: 0;
+$half-em: .5em;
+$one-em: 1em;
+$one-one-em:1.1em;
+$one-two-em:1.2em;
+$one-three-em: 1.3em;
+$one-half-em: 1.5em;
+$one-six-em:1.6em;
+$two-em: 2em;
+$two-one-em: 2.1em;
+$two-four-em: 2.4em;
+$two-half-em: 2.5em;
+$three-em: 3em;
+$three-three-em: 3.3em;
+$three-half-em: 3.5em;
+$four-em: 4em;
+$four-half-em: 4.5em;
+$five-em: 5em;
+$six-em: 6em;
+$seven-em: 7em;
+$ten-em: 10em;
+$ten-half-em: 10.5em;
+$fourteen-em: 14em;
+$one-px: 1px;
+$three-px: 3px;
+$four-px: 4px;
+$five-px: 5px;
+$eight-px: 8px;
+$ten-px: 10px;
+$twenty-px: 20px;
+$thirty-px: 30px;
+$forty-px: 40px;
+$forty-one-px: 41px;
+$fifty-px: 50px;
+$thumb-px: 60px;
+$seventy-px: 70px;
+$full-px: 100px;
+$one-ten-px: 110px;
+
+$fifteen-size: 15%;
+$twenty-five-size: 25%;
+$half-size: 50%;
+$full-size: 100%;
+
+// positions & displays
+$auto: auto;
+$dis-block: block;
+$dis-inline-block: inline-block;
+$absolute: absolute;
+$pointer: pointer;
+$center: center;
+$none: none;
+$fixed: fixed;
+$relative: relative;
+$static: static;
+$dis-table: table;
+$hidden: hidden;
+$visible: visible;
+
+// color variables
+$transparent-color: transparent;
+$color-base-body: #f2f3f7;
+$section-bg: #f9f9f9;
+$pure-white-color: #fff;
+$light-white-color: #f2f3f7;
+$light-gray-color: #585858;
+$light2-gray-color: #848484;
+$light3-gray-color: #e0e4e8;
+$light4-gray-color: #ddd;
+$light5-gray-color: #bdc3c7;
+$dark-gray-color: #595959;
+$dark2-gray-color: #333;
+$light-red-color: #e47b77;
+$light2-red-color: #f00;
+$dark-red-color: #ed1c24;
+$dark2-red-color: #9e0b0f;
+$light-green-color: #acd373;
+$medium-green-color: #29aa18;
+$dark-green-color: #3c7036;
+$light-orange-color: #f26c4f;
+$dark-orange-color: #ff9818;
+$light-blue-color: #7accc8;
+$dark-blue-color: #5674b9;
+$light-pink-color: #ee1696;
+$dark-pink-color: rgba(238, 22, 150, 0.22);
+$light-violet-color: #9c64a0;
+$dark-violet-color: rgba(156, 100, 160, 0.25);
+$brown-light-color: #998675;
+$light-purple-color: #9740d8;

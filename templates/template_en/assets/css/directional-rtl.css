@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'HelveticaNeueThin';
+  src: url("../fonts/helvetica/HelveticaNeueThin.woff2") format("woff2"), url("../fonts/helvetica/HelveticaNeueThin.woff") format("woff");
+  font-weight: 700;
+  font-style: normal; }
+@font-face {
+  font-family: 'HelveticaNeueMedium';
+  src: url("../fonts/helvetica/HelveticaNeueMedium.woff2") format("woff2"), url("../fonts/helvetica/HelveticaNeueMedium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal; }
+
+/*# sourceMappingURL=directional-rtl.css.map */

@@ -1,0 +1,72 @@
+@import 'style-variables';
+
+.logoHolder {
+  float: $left;
+
+  .profile-nav {
+    float: $right;
+  }
+
+  a {
+    img {
+      float: $left;
+    }
+
+    span {
+      float: $left;
+    }
+  }
+}
+
+.header-profile {
+  float: $right;
+
+  .profile-username {
+    float: $right;
+  }
+}
+
+.side-left {
+  .sidebar > li {
+    float: $left;
+  }
+
+  .sidebar {
+    li {
+      .sidebar-icon {
+        float: $left;
+        margin-left: $ten-px;
+      }
+
+      .sidebar-text {
+        float: $left;
+        text-align: $left;
+        padding-left: $ten-px;
+      }
+
+      b {
+        right: $one-em;
+        webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
+
+      .sidebar-child {
+        li {
+          direction: $dir-left;
+
+          .sidebar-text {
+            text-align: $left;
+            padding-left: $ten-px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.content.active {
+  margin-left: 250px;
+}

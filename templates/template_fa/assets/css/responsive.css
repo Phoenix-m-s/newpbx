@@ -1,0 +1,211 @@
+@media (max-width: 1500px) {
+    body {
+        font-size: 14px;
+    }
+
+    .sidebar-text {
+        font-size: 1.3em !important;
+    }
+
+    .box-items.full-width .panel-body h2 {
+        font-size: 1.5em !important;
+        margin-top: 1em !important;
+    }
+
+    .side-left .sidebar li a .sidebar-icon {
+        font-size: 1.5em !important;
+    }
+
+    .content > .content-body,
+    .content > .content-body form {
+        width: 100% !important;
+    }
+}
+
+@media  (max-width: 1280px) {
+    .form-horizontal .control-label{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1023px) {
+	.translate-left{
+		margin-right: 0;
+	    -webkit-transform: translateX(-300px);
+	    -moz-transform: translateX(-300px);
+	    -ms-transform: translateX(-300px);
+	    -o-transform: translateX(-300px);
+	    transform: translateX(-300px);
+	}
+}
+
+@media (max-width: 992px) {
+/** header **/
+    .header-brand {
+        right: 50%;
+        margin-right: -25px;
+    }
+
+    #toggleSideBar {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .logoHolder{
+        margin-left: 60px;
+    }
+    /** sidebar **/
+	.side-left.active{
+        left: 0 !important;
+        width: 200px;
+	}
+    .side-left {
+        left: -100% !important;
+    }
+		.sidebar{
+			width: 100%;
+			margin: 0 auto;
+			text-align: center;
+            border-bottom: none;
+		}
+		.sidebar:after{
+			content: '';
+			display: table;
+			clear: both;
+		}
+		.sidebar > li{
+			display: table;
+			width: 100%;
+		}
+		.sidebar > li.active:after,
+    	.sidebar > li.active:before{
+    		display: none;
+    	}
+        .sidebar li > a {display: table;padding: 0}
+        .sidebar li > a:hover ul{display: none !important;}
+        .sidebar li a > .sidebar-icon {
+            font-size: 1.5em !important;
+            line-height: 2;
+            width: 40px;
+            height: 40px;
+            float: left;
+        }
+        .sidebar li a > span {
+            font-size: 1.2em;
+            line-height: 2.5;
+            width: 160px;
+            height: 40px;
+            float: left;
+            text-align: left;
+        }
+
+        .sidebar li a > b {
+            top: 13px;
+            right: 10px;
+        }
+        .sidebar li a > b:before {
+            content: "\f107";
+        }
+
+/** end sidebar-left **/
+
+/** sidebar-right **/
+
+/** end sidebar-right **/
+/** end sidebar **/
+    .content.active {
+        margin: 0 !important;
+    }
+
+    .content-body {
+        width: inherit !important;
+        margin: inherit !important;
+    }
+    .content-body form {
+        width: inherit !important;
+        margin: inherit !important;
+    }
+	.content.content-sm{
+		margin-right: 0;
+	}
+	.content > .content-body{
+		min-height: 200px;
+	}
+/* end content */
+}
+
+@media (max-width: 700px) {
+    .logoHolder a {
+        margin-left: 1em;
+    }
+
+    .signin-brand img {
+        max-width: 70px;
+    }
+
+    .signin {
+        margin: 0 auto 50px;
+    }
+
+	.header form.form-inline{
+		display: none;
+	}
+	.header-brand h1, .header-brand h2, .header-brand h3, .header-brand h4, .header-brand h5, .header-brand h6 {
+		font-size: 2em;
+	}
+	/*.header-profile .profile-username{
+		display: none;
+	}*/
+    .tooltip {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    .dropdown-menu.dropdown-extend.pull-right:before {
+        left: 8.5em;
+        right: auto;
+    }
+
+    .profile-nav .dropdown-menu:before {
+        left: 15px;
+    }
+
+    .header-menu > li > a {
+        width: 30px;
+    }
+
+    .logoHolder {
+        margin-left: 0;
+        transform: scale(.6);
+        float: left;
+        position: relative;
+        top: 0;
+    }
+
+    .content-body .container {
+        padding: 0 !important;
+    }
+
+    .ms-container .ms-selectable {
+        margin-right: 30px !important;
+    }
+}
+
+@media screen and (max-width: 582px){
+    .colMax {
+        width: 100%;
+        margin-top: 50px !important;
+    }
+    .colMin{
+        width: 100%;
+        margin-left: 15px !important;
+        margin-top: 12px !important;
+    }
+
+    .box-items.full-width .panel-body h2 {
+        font-size: 1.2em !important;
+    }
+
+    .header-profile {
+        transform: translateY(-5px);
+    }
+}
