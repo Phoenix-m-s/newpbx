@@ -4,16 +4,14 @@ html {
     width: 100vw;
 }
 @font-face {
-    font-family: 'Roya-Bold';
-    font-style: normal;
-    font-weight: 400;
-    src: url('fonts/Roya-Bold.eot');
-    src: url('fonts/Roya-Bold.eot?#iefix') format('embedded-opentype'),
-    url('fonts/Roya-Regular.woff') format('woff'),
-    url('fonts/Roya-Regular.ttf') format('truetype');
+    font-family: 'IranianSans';
+    src: url('../fonts/IranianSans.eot?#') format('eot'),  /* IE6–8 */
+    url('../fonts/IranianSans.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/irsans.ttf') format('truetype');  /* Saf3—5, Chrome4+, FF3.5, Opera 10+ */
 }
+
 body {
-    font-family: 'Roya-Bold', Arial, sans-serif !important;
+    font-family: IranianSans, Arial, sans-serif;
     overflow-x: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -242,7 +240,7 @@ a, label {
     padding: 0;
     line-height: 60px;
     font-size: 2.3em;
-    font-family: 'Roya-Bold', serif !important;
+    font-family: 'Aclonica', serif;
     color: #ffffff;
 }
 
