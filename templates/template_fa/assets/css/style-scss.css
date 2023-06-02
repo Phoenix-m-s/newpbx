@@ -1,13 +1,17 @@
 @font-face {
   font-family: 'HelveticaNeueThin';
-  src: url("../fonts/helvetica/HelveticaNeueThin.woff2") format("woff2"), url("../fonts/helvetica/HelveticaNeueThin.woff") format("woff");
+  src: url("../fonts/HelveticaNeueThin.woff2") format("woff2"), url("../fonts/HelveticaNeueThin.woff") format("woff");
   font-weight: 700;
   font-style: normal; }
 @font-face {
-  font-family: 'HelveticaNeueMedium';
-  src: url("../fonts/helvetica/HelveticaNeueMedium.woff2") format("woff2"), url("../fonts/helvetica/HelveticaNeueMedium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal; }
+  font-family: 'Roya-Bold';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/Roya-Bold.eot');
+  src: url('fonts/Roya-Bold.eot?#iefix') format('embedded-opentype'),
+  url('fonts/Roya-Regular.woff') format('woff'),
+  url('fonts/Roya-Regular.ttf') format('truetype');
+}
 *:not(input, select, option) {
   text-transform: capitalize; }
 
@@ -145,7 +149,9 @@ footer {
           font-size: 1.7em;
           line-height: 2.6em;
           width: 150px;
-          height: 100%; }
+          height: 100%;
+          text-align: right;
+        }
         .side-left .sidebar li a b {
           position: absolute;
           top: 0.5em;

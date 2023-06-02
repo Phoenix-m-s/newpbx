@@ -3,9 +3,17 @@ html {
     height: 100vh;
     width: 100vw;
 }
-
+@font-face {
+    font-family: 'Roya-Bold';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/Roya-Bold.eot');
+    src: url('fonts/Roya-Bold.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roya-Regular.woff') format('woff'),
+    url('fonts/Roya-Regular.ttf') format('truetype');
+}
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Roya-Bold', Arial, sans-serif !important;
     overflow-x: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -234,7 +242,7 @@ a, label {
     padding: 0;
     line-height: 60px;
     font-size: 2.3em;
-    font-family: 'Aclonica', serif;
+    font-family: 'Roya-Bold', serif !important;
     color: #ffffff;
 }
 

@@ -5,7 +5,15 @@
 
 }
 
-
+@font-face {
+    font-family: 'Roya-Bold';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/Roya-Bold.eot');
+    src: url('fonts/Roya-Bold.eot?#iefix') format('embedded-opentype'),
+    url('fonts/Roya-Regular.woff') format('woff'),
+    url('fonts/Roya-Regular.ttf') format('truetype');
+}
 
 /** BACKGROUN COLOR HELPER **/
 .bg-darknight { background-color: #232332 !important; color: #ecf0f1 !important}
@@ -394,7 +402,7 @@ textarea.single-editor{
 .rating > span {
     display: inline-block;
     position: relative;
-    font-family: FontAwesome;
+    font-family: 'Roya-Bold'!important;
     width: 1.1em;
     font-style:normal;
     font-weight:normal;
@@ -475,7 +483,7 @@ td.is-hidden {
     width: 100px;
     height: 100px;
     line-height: 100px;
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: 'Roya-Bold', Monaco, Consolas, "Courier New", monospace;
     font-size: 11px;
     text-align: center;
     overflow: hidden;
@@ -628,6 +636,7 @@ audio {
     .box-items.full-width .panel-body h2 {
         line-height: 4;
         font-size: 1.8em;
+        font-family: 'Roya-Bold';
     }
 
    /* .box-items.theme-midnight:after {
