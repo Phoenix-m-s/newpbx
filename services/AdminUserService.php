@@ -41,7 +41,7 @@ class AdminUserService
 
         $adminUser = AdminUser::getAll()
             ->select('admin.*', 'tbl_company.comp_name')
-            ->where("status","=",0)
+            ->where("status","=",1)
             ->leftJoin('tbl_company', 'tbl_company.comp_id', '=', 'admin.comp_id');
 
         if (isset($searchFields['filter'])) {
@@ -98,7 +98,7 @@ class AdminUserService
         $user->compid=$company_info['comp_id'];
         $user->comp_id=$company_info['comp_id'];
         $user->permission_pbx='100000000011100000001111000000111100000011110000001111000000111100000011110000001111000000111100000011110000001111000000110000000011100000001000000000111100000010000000001000000000';
-        $user->status = 0;
+        $user->status = 1;
 
 
 

@@ -634,9 +634,9 @@ audio {
         width: 100%;
     }
     .box-items.full-width .panel-body h2 {
-        line-height: 4;
-        font-size: 1.8em;
-        font-family: 'Roya-Bold';
+        line-height: 7;
+        font-size: 1.2em;
+        font-family: IranianSans;
     }
 
    /* .box-items.theme-midnight:after {
