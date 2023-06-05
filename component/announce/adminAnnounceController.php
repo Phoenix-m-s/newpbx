@@ -92,6 +92,49 @@ class AdminAnnounceController
                 break;
         }
     }
+    public function excelAnnounce()
+    {
+        global $company_info;
+        $queueDirty = AdminAnnounceModel::getAll()->where('comp_id', '=', $company_info['comp_id'])->getList();
+
+        header("Content-type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=Announce_Reoprt.xls");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        echo '<table border="1">';
+//make the column headers what you want in whatever order you want
+        echo '<tr>
+                    <th>announce_id</th>
+                    <th>comp_id</th>
+                    <th>dst_option_id</th>
+                    <th>dst_option_sub_id</th>
+                    <th>upload_id</th>
+                    <th>announce_name</th>
+                    <th>repeat_input</th>
+                    <th>announce_date</th>
+                    <th>announce_status</th>
+                    <th>forward</th>
+                    <th>DSTOption</th>
+              </tr>';
+//loop the query data to the table in same order as the headers
+        foreach ($queueDirty['export']['list'] as $key=>$value){
+            echo "<tr>
+                      <td>".$value['announce_id']."</td>
+                      <td>".$value['comp_id']."</td>
+                      <td>".$value['dst_option_id']."</td>
+                      <td>".$value['dst_option_sub_id']."</td>
+                      <td>".$value['upload_id']."</td>
+                      <td>".$value['announce_name']."</td>
+                      <td>".$value['repeat_input']."</td>
+                      <td>".$value['announce_date']."</td>
+                      <td>".$value['announce_status']."</td>
+                      <td>".$value['forward']."</td>
+                      <td>".$value['DSTOption']."</td>
+                  </tr>";
+        }
+        echo '</table>';
+
+    }
 
     /**
      * @param string $message

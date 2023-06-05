@@ -22,6 +22,9 @@ if ($admin_info == -1) {
 $announce = new AdminAnnounceController();
 
 switch ($_GET['action']) {
+    case 'downloadExcel':
+        $announce->excelAnnounce();
+        break;
     case 'showAnnounce':
         //checkPermissions('showAllAnnounce','announce');
         $announce->showAllAnnounce('', '', '');
