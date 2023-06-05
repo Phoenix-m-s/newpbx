@@ -98,10 +98,10 @@ class AdminAnnounceController
      */
     public function showAllAnnounce($message = '')
     {
-        global $companyInfo;
+        global $company_info;
         $announceDirty = AdminAnnounceModel::getAll()
-        ->where('comp_id', '=', $companyInfo['comp_id'])
-        ->where('repat_input', '=', 1)->getList();
+        ->where('comp_id', '=', $company_info['comp_id'])
+        ->where('repeat_input', '=', 1)->getList();
         //print_r_debug($announceDirty);
         $announceClean = $announceDirty['export']['list'];
         $this->exportType = 'html';
