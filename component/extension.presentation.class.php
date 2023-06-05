@@ -108,8 +108,8 @@ class extension_presentation
 
     public function excelExtension()
     {
-
-        $extensionList = AdminExstionNewModel::getAll()->getList();
+        global $company_info;
+        $extensionList = AdminExstionNewModel::getAll()->where('comp_id', '=', $company_info['comp_id'])->getList();
 
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=Extension_Reoprt.xls");
