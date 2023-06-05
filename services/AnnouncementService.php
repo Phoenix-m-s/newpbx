@@ -203,21 +203,5 @@ class AnnouncementService
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function TestInput()
-    {
-        $fields['announce_name'] = 'omid';
-        $fields['upload_id'] = 6;
-        $fields['repeat_input'] = 6;
-        $fields['dst_option_id'] = 5;
-        $fields['dst_option_sub_id'] = 5;
-        $fields['forward'] = '';
-        $fields['DSTOption'] = '';
-        $fields['action'] = 'editAnnounce';
-        return $fields;
-
-    }
 
 }
