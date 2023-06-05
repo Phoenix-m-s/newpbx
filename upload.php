@@ -66,7 +66,7 @@ if ($admin_info != -1) {
             $Upload->showAllUploads('', '', '');
             break;
         case 'addFile':
-            checkPermissions('addFile', 'upload');
+            //checkPermissions('addFile', 'upload');
             if (isset($_POST['submit'])) {
                 $Upload->addFile($_FILES, $_POST);
             } elseif (($_POST['audiosrc'])) {
