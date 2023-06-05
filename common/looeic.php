@@ -731,10 +731,10 @@ class looeic extends DB
             return $result;
         }*/
         //$this->appendFields();
-        if($this->config['export_type']=='api')
+       /* if($this->config['export_type']=='api')
         {
             return $this->get_object_or_list_api(0, $key);
-        }
+        }*/
         return $this->get_object_or_list(0, $key);
 
     }
