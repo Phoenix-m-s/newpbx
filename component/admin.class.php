@@ -373,7 +373,7 @@ class admin
             $messageStack->add_session ('login', ModelADMIN_43, 'error');
             return;
         } elseif ( $count ) {
-            $sql = "DELETE FROM sessions WHERE admin_id='" . $obj->admin_id . "'";
+            $sql = "DELETE FROM sessions_admin WHERE admin_id='" . $obj->admin_id . "'";
             $rs = $db->query ($sql);
 
             $sql = "DELETE FROM login_as WHERE admin_id='" . $obj->admin_id . "'
@@ -382,22 +382,24 @@ class admin
 
             $getDateTime = date ("Y-m-d H:i:s");
             $sql = "
-					  insert into sessions(`admin_id`,`comp_id`,`remote_addr`,`last_access_time`)
+					  insert into sessions_admin(`admin_id`,`compid`,`comp_id`,`remote_addr`,`last_access_time`)
 			  values
 					(
 					'" . $obj->admin_id . "',
+					'" . $obj->ascomp_id . "',
 					'" . $obj->ascomp_id . "',
 					'" . $_SERVER[ "REMOTE_ADDR" ] . "',
 					'" . $getDateTime . "'
 					)";
             $rs = $db->query ($sql);
+
             //print_r($rs);
             //die($sql);
             if ( !$rs ) {
                 print_r ($db->errorInfo ());
             }
 
-            $_SESSION[ "sessionID" ] = $this->encrypt ($db->lastInsertId (), $this->GetHash ());
+            $_SESSION[ "sessionAdminID" ] = $this->encrypt ($db->lastInsertId (), $this->GetHash ());
             //$_SESSION["adminUsername"] = $obj->name . " " . $obj->family;
 
             setcookie ("sessionAdminID", $_SESSION[ "sessionAdminID" ], time () + 36000, "/", $_SERVER[ 'HTTP_HOST' ]);
@@ -405,6 +407,7 @@ class admin
 
             $admin_info = $this->checkLogin ();
 
+            //print_r($admin_info);
 
             //print_r($admin_info);
             //die();
