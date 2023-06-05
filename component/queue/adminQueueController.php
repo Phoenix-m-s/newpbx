@@ -65,7 +65,7 @@ class AdminQueueController
     public function excelQueue()
     {
         global $company_info;
-        $queueDirty = AdminQueueModel::getAll()->getList();
+        $queueDirty = AdminQueueModel::getAll()->where('comp_id', '=', $company_info['comp_id'])->getList();
 
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=Queue_Reoprt.xls");
