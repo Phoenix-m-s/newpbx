@@ -139,7 +139,7 @@ class loginAs_presentation
             $arrayList[0] = 'http://' . $subName;
             $newAddress = implode('.', $arrayList);
             $msg = "successfully added.";
-            print_r_debug($newAddress . "loginAs.php?action=loginas&s=" . $session['encrypt']);
+            //print_r_debug($newAddress . "loginAs.php?action=loginas&s=" . $session['encrypt']);
             redirectPage($newAddress . "loginAs.php?action=loginas&s=" . $session['encrypt'], $msg);
         }
 
