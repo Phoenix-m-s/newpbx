@@ -8,6 +8,7 @@
             </li>
         </ul><!--/control-nav-->
     </div>
+    <?php /*
     <div class="content-body">
         <div id="panel-tablesorter" class="panel panel-default">
             <div class="panel-heading">
@@ -20,6 +21,7 @@
                 </div><!-- /panel-actions -->
             </div><!-- /panel-heading -->
             <!--panel-body-->
+
             <div class="panel-body">
 
                 <form method="get" id="form" action="" name="action">
@@ -164,9 +166,11 @@
                     </div>
                 </form>
 
-            </div>
-        </div>
 
+            </div>
+
+        </div>
+ */?>
         <div id="panel-tablesorter1" class="panel panel-default">
             <div class="panel-body">
                 <div class="row no-margin">

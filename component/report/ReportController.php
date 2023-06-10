@@ -314,6 +314,7 @@ class ReportController
 
     public function search($get)
     {
+
         global $company_info;
         include_once(ROOT_DIR . "component/datatable.converter.php");
         $i = 0;
@@ -390,7 +391,7 @@ class ReportController
         //$campaigns = Stocks::getAll();
         $report->where('dcontext', 'like', '%-'.$company_name);
         //print_r_debug($report);
-        if(($reportFilter['startDate']!='') and ($reportFilter['endDate']!=''))
+        /*if(($reportFilter['startDate']!='') and ($reportFilter['endDate']!=''))
         {
             $report->where('date', '>=', $reportFilter['startDate']) and $report->where('date', '<=', $reportFilter['endDate']);
             //$sql = $report->build();
@@ -441,8 +442,8 @@ class ReportController
             $report->where('billsec', '=', $reportFilter['billsec']);
         }
 
-        /*$sql = $report->build();
-        print_r_debug($sql);*/
+        $sql = $report->build();
+        /*print_r_debug($sql);
         if (isset($searchFields['filter'])) {
             foreach ($searchFields['filter'] as $filter => $value) {
                 if ($filter == 'status') {
@@ -452,7 +453,7 @@ class ReportController
                 }
 
             }
-        }
+        }*/
 
         $obj = clone $report;
         //echo '<pre/>';

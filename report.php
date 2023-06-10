@@ -26,7 +26,7 @@ switch ($_GET['action']) {
         $report->search($_GET);
         break;
     case 'showReport':
-        checkPermissions('showReport','report');
+        // checkPermissions('showReport','report');
         $report->showReport('');
         break;
     default:
