@@ -314,7 +314,7 @@ class ReportController
 
     public function search($get)
     {
-
+        print_r($get);
         include_once(ROOT_DIR . "component/datatable.converter.php");
         $i = 0;
         $columns = array(

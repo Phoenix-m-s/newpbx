@@ -101,6 +101,19 @@ class IvrService
 
         $fields['ivr_id'] = $ivr->fields['ivr_id'];
         $IvrDst = new IvrDstService();
+        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
+        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['msg'] = ' Ivr number exists';
+            $result['result'] = -1;
+            return $result;
+        }
+
+        if ($result['result'] != 1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            return $result;
+        }
         $result = $IvrDst->setFieldsAndSaveIvrDst($fields);
         if ($result['result'] != 1) {
             looeic::rollback();
@@ -161,6 +174,14 @@ class IvrService
         }
 
         $IvrDst = new IvrDstService();
+
+        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
+        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['msg'] = ' Ivr number exists';
+            $result['result'] = -1;
+            return $result;
+        }
         $result = $IvrDst->deleteIvrDstByIvrId($fields['ivr_id']);
         if ($result['result'] != 1) {
             looeic::rollback();
