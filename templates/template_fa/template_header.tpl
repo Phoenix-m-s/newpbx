@@ -71,7 +71,7 @@
 
     </div><!-- header-profile -->
 
-    <div class="logoHolder" style="width: 120px;!important;">
+    <div class="logoHolder" style="width: 140px;!important;">
 
         <a href="<?php echo RELA_DIR; ?>"><img src="<?php echo RELA_DIR;?>templates/<?php echo CURRENT_SKIN; ?>/images/logo.png">
 
@@ -79,12 +79,11 @@
 
     </div>
     <div>
-        <a href="changeLanguage.php?action=fa"><img width="40px" height="40px"  src="<?php echo RELA_DIR;?>templates/<?php echo CURRENT_SKIN; ?>/images/fa.png">
-
-        </a>
-        <a href="changeLanguage.php?action=en"><img width="40px" height="40px" src="<?php echo RELA_DIR;?>templates/<?php echo CURRENT_SKIN; ?>/images/en.png">
-
-        </a>
+        <label for="select" style="position: absolute;right: 120px;top: 20px;">زبان:</label>
+        <select class="select2" name="select"  onchange="location = this.value;"  style="width: 70px !important;height: 15px !important;margin-top: 5px;" >
+            <option value="changeLanguage.php?action=fa">fa</option>
+            <option value="changeLanguage.php?action=en">en</option>
+        </select>
     </div>
     <a id="toggleSideBar" class="hidden"> <span class="first"></span> <span class="second"></span> <span class="third"></span> </a>
 </header><!--/header-->
