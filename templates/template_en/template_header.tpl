@@ -80,8 +80,7 @@
 
     </div>
     <div>
-        <label for="select">language:</label>
-        <select class="select2" name="select"  onchange="location = this.value;" tabindex="-1" style="width: 70px !important;height: 35px !important;margin-top: 5px;" >
+        <select class="select2" name="select"  onchange="location = this.value;" tabindex="-1" style="width: 70px !important;height: 10px !important;margin-top: 5px;" >
            <option value="changeLanguage.php?action=en">en</option>
            <option value="changeLanguage.php?action=fa">fa</option>
         </select>

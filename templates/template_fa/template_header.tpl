@@ -79,8 +79,7 @@
 
     </div>
     <div>
-        <label for="select" style="position: absolute;right: 120px;top: 20px;">زبان:</label>
-        <select class="select2" name="select"  onchange="location = this.value;"  style="width: 70px !important;height: 15px !important;margin-top: 5px;" >
+        <select class="select2" name="select"  onchange="location = this.value;"  style="width: 70px !important;height: 10px !important;margin-top: 5px;" >
             <option value="changeLanguage.php?action=fa">fa</option>
             <option value="changeLanguage.php?action=en">en</option>
         </select>
