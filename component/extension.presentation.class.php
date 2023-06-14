@@ -228,45 +228,6 @@ class extension_presentation
     }
 
 
-##FRZ    public function getAllExtensions($member_type)
-##FRZ    {
-##FRZ        global $member_info,$admin_info;
-##FRZ
-##FRZ
-##FRZ        $list = AdminExstionNewModel::getAll();
-##FRZ
-##FRZ
-##FRZ
-##FRZ        if ($member_type == 'extension') {
-##FRZ            $list->where('extension_id', '=', $member_info['extension_id']);
-##FRZ        }
-##FRZ        else{
-##FRZ            $list->where('comp_id', '=', $admin_info['comp_id']);
-##FRZ        }
-##FRZ
-##FRZ
-##FRZ
-##FRZ
-##FRZ
-##FRZ       return $list->orderBy('extension_no')->getList();
-##FRZ
-##FRZ
-##FRZ        die();
-##FRZ    }
-##FRZ
-
-    /**
-     * Shows all the extensions
-     *
-     * @param   $list
-     * @param   $msg
-     *
-     * @return  mixed
-     * @author  Malekloo, Sakhamanesh, Izadi
-     * @version 01.01.01
-     * @date    08/08/2015
-     */
-
     public function getMembertaype()
     {
         global $member_info;
