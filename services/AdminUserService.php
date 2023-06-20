@@ -162,16 +162,18 @@ class AdminUserService
         }
 
         //$user->setFields($fields);
+
         if($fields['password_new']!=''){
             $user->password=md5($fields['password_new']);
         }
         $user->username=$fields['username'];
-        $user->status = 0;
+        $user->name=$fields['name'];
+        $user->family=$fields['family'];
+        $user->status = 1;
         $user->cell_phone = 1;
         $user->member_id = 0;
         $user->compid=$company_info['comp_id'];
         $user->comp_id=$company_info['comp_id'];
-        //$user->permission_pbx='100000000011100000001111000000111100000011110000001111000000111100000011110000001111000000111100000011110000001111000000110000000011100000001000000000111100000010000000001000000000';
         $user->permission_pbx='100000000011100000001111000000111100000011110000001111000000111100000011110000001111000000111100000011110000001111000000110000000011100000001000000000111100000010000000001000000000';
 
         //***********************

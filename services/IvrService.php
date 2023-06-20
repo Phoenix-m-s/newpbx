@@ -163,7 +163,7 @@ class IvrService
 
     public function editIvr($fields)
     {
-
+        print_r_debug($fields['dst_menu_id']);
         global $company_info;
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
@@ -175,7 +175,7 @@ class IvrService
 
         $IvrDst = new IvrDstService();
 
-        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
+        $checkNumberIvr=$IvrDst->checkNumbereEitIvr($fields);
         if ($checkNumberIvr['export']['recordsCount'] >= 1) {
             looeic::rollback();
             $result['msg'] = ' Ivr number exists';
