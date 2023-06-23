@@ -25,7 +25,7 @@ $adminList = new AdminUserController();
 switch ($_GET['action']) {
 
     case 'showAdmin':
-        //checkPermissions('showAdmin','announce');
+        checkPermissions('showAllAdminList','admin.list');
         $adminList->showAllAdmin('', '', '');
         break;
     case 'filterUser':
@@ -68,6 +68,7 @@ switch ($_GET['action']) {
         //}
         break;
     default:
+        checkPermissions('showAllAdminList','admin.list');
         $adminList->showAllAdmin('', '', '');
         break;
 }

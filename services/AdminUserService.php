@@ -1,5 +1,5 @@
 <?php
-include_once ROOT_DIR . 'component/admin/admin/model/AdminUser.php';
+include_once ROOT_DIR . 'component/admin/AdminUser.php';
 include_once ROOT_DIR . 'component/extension/AdminExstionNewModel.php';
 include_once ROOT_DIR . 'component/admin.permission.class.php';
 
