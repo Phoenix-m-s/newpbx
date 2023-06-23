@@ -634,7 +634,7 @@ audio {
         width: 100%;
     }
     .box-items.full-width .panel-body h2 {
-        line-height: 7;
+        line-height: 4;
         font-size: 1.2em;
         font-family: IranianSans;
     }
