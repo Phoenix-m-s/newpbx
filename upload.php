@@ -78,7 +78,7 @@ if ($admin_info != -1) {
             }
             break;
         case 'deleteFiles':
-            checkPermissions('deleteFiles','upload');
+            checkPermissions('deleteUpload','upload');
             if (isset($_GET['id'])) {
                 $Upload->deleteFiles($_GET['id']);
             }
@@ -96,7 +96,7 @@ if ($admin_info != -1) {
             }
             break;
         default:
-            checkPermissions('showAllUploads', 'upload');
+            checkPermissions('showAllUpload', 'upload');
             $Upload->showAllUploads('', '', '');
             break;
     }
