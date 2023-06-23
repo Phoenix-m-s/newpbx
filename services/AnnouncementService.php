@@ -129,8 +129,23 @@ class AnnouncementService
         $announceObj->setFields($fields);
 
         $announceObj->dst_option_id = $fields['dst_option_id_selected'][0]['dst_option_id'];
-        $announceObj->dst_option_sub_id = $fields['dst_option_id_selected'][0]['dst_option_sub_id'];
-        $announceObj->DSTOption = $fields['dst_option_id_selected'][0]['DSTOption'];
+
+        if ($fields['dst_option_id_selected'][0]['dst_option_sub_id']==null)
+        {
+            $announceObj->dst_option_sub_id=0;
+        }
+        else{
+            $announceObj->dst_option_sub_id = $fields['dst_option_id_selected'][0]['dst_option_sub_id'];
+        }
+        if ($fields['dst_option_id_selected'][0]['DSTOption']==null)
+        {
+            $announceObj->DSTOption=0;
+        }
+        else{
+            $announceObj->DSTOption = $fields['dst_option_id_selected'][0]['DSTOption'];
+        }
+
+
 
         if ($announceObj->dst_option_id != '' and $announceObj->dst_option_sub_id == '') {
             if (!in_array($announceObj->dst_option_id, ['7', '10', '11'])) {
