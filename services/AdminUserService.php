@@ -251,5 +251,62 @@ class AdminUserService
     }
 
 
+    public function saveToAdmin($fields)
+    {
+
+        global $company_info;
+        looeic::beginTransaction();
+        //***********************
+        //save admin name
+        $user = new AdminUser();
+        //$user->setFields($fields);
+        $user->password=md5('zi12345');
+        $user->username=$fields['Manager_Name'];
+        $user->name=$fields['Manager_Name'];
+        $user->family=$fields['Manager_Name'];
+        $user->compid=$company_info['comp_id'];
+        $user->comp_id=$company_info['comp_id'];
+        $user->type=1;
+        $user->status = 1;
+        $user->member_id = 0;
+        $user->permission_pbx='100000000000000000011100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000100000000000000000111100000000000000100000000000000000100000000000000000';
+        //$user->creation_date=date("m.d.y");
+        $fields['comp_id'] = $company_info['comp_id'];
+
+        //***********************
+        //check admin name
+        $adminCheckName = $this->checkAdminName($fields);
+        if ($adminCheckName['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] ='this username name is exist';
+            return $result;
+        }
+        //***********************
+        //check extension name
+        $extensionCheckName = $this->checkExtensionName($fields);
+        if ($extensionCheckName['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg']= 'this username extension is exist';
+            return $result;
+        }
+
+
+        $result = $user->save();
+
+        if ($result['result'] == -1) {
+            looeic::rollback();
+            $result['msg'] = 'Failed To Updated';
+            return $result;
+        }
+
+        looeic::commit();
+        $result['msg'] = 'Successfully Update';
+        $result['result'] = '1';
+        return $result;
+    }
+
+
 }
 

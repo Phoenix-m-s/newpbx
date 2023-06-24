@@ -351,7 +351,7 @@ class CompanyService
      * @param $fields
      * @param $message
      */
-    public function editCompany($fields, $fields, $message)
+    public function editCompany($fields, $message)
     {
         //print_r_debug($fields);
 

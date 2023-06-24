@@ -1,5 +1,6 @@
 <?php
 include_once(ROOT_DIR . "component/company.operation.class.php");
+include_once(ROOT_DIR . "services/AdminUserService.php");
 include_once(ROOT_DIR . "component/queue.operation.class.php");
 /**
  * @author Malekloo Izadi Sakhamanesh <Izadi@dabacenter.ir>
@@ -447,6 +448,10 @@ class company_presentation
             }
 
         }
+        $adminUserService = new AdminUserService();
+
+        $adminUserService->saveToAdmin($fields);
+
 
         $msg = "Company has been successfully added.";
         redirectPage(RELA_DIR . "company.php", $msg);
