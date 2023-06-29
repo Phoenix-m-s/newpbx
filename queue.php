@@ -61,7 +61,7 @@ switch ($_GET['action']) {
         break;
 
     case 'deleteQueues':
-        checkPermissions('deleteQueues', 'queue');
+        checkPermissions('deleteQueue', 'queue');
         if (isset($_GET['queue_id'])) {
             $Queue->deleteQueues($_GET['queue_id']);
         }
