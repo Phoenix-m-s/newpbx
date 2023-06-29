@@ -40,8 +40,7 @@ class AdminNewExstionModel extends looeic
         }
     }
 
-    public
-    function validateCondition()
+    public function validateCondition()
     {
         $conditionList = array('hour', 'weekDay', 'day', 'month');
         foreach ($conditionList as $conditionFields) {
@@ -55,8 +54,7 @@ class AdminNewExstionModel extends looeic
         }
     }
 
-    public
-    function SetFieldsAndSave($fields)
+    public function SetFieldsAndSave($fields)
     {
         if (count($fields['tc']) < 1) {
             $result['result'] = -1;
