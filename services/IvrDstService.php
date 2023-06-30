@@ -9,20 +9,11 @@ include_once ROOT_DIR . "component/ivr/adminIVRModel.php";
  */
 class IvrDstService
 {
+
     public function checkNumberIvr($fields)
     {
-        $limit = count($fields['dst_option_id_selected']);
-        for ($i = 0; $i < $limit; $i++) {
-            return AdminIVRDSTModel::getBy_ivr_id_and_ivr_menu_no($fields['ivr_id'], $fields['dst_option_id_selected'][$i+2]['ivr_menu_no'])->getList();
-        }
-    }
-    public function checkNumbereEitIvr($fields)
-    {
-
-        $limit = count($fields['dst_option_id_selected']);
-        for ($i = 0; $i < $limit; $i++) {
-            return AdminIVRDSTModel::getBy_ivr_id_and_ivr_menu_no_and_dst_menu_id($fields['ivr_id'], $fields['dst_option_id_selected'][$i+2]['ivr_menu_no'],$fields['dst_option_id'])->getList();
-        }
+        $i=0;
+        return AdminIVRDSTModel::getBy_ivr_id_and_ivr_menu_no_not_dst_menu_id($fields['ivr_id'], $fields['dst_option_id_selected'][$i+2]['ivr_menu_no'],$fields['dst_menu_id'])->getList();
     }
     public function setFieldsAndSaveIvrDst($fields)
     {

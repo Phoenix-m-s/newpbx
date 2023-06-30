@@ -74,7 +74,7 @@ class IvrService
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
 
-        $ivr = new AdminIVRModel($fields);
+        $ivr = new AdminIVRModel();
         $ivr->comp_id = $admin_info['comp_id'];
         $validate = $ivr->validator();
         if ($validate['result'] == -1) {
@@ -163,11 +163,12 @@ class IvrService
 
     public function editIvr($fields)
     {
-        print_r_debug($fields['dst_menu_id']);
+
         global $company_info;
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
         $ivr = AdminIVRModel::find($fields['ivr_id']);
+        //print_r_debug($ivr->getList());
         if (!is_object($ivr)) {
             $ivr['msg'] = 'this ivr not exsist';
             return $ivr;
@@ -175,13 +176,7 @@ class IvrService
 
         $IvrDst = new IvrDstService();
 
-        $checkNumberIvr=$IvrDst->checkNumbereEitIvr($fields);
-        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
-            looeic::rollback();
-            $result['msg'] = ' Ivr number exists';
-            $result['result'] = -1;
-            return $result;
-        }
+
         $result = $IvrDst->deleteIvrDstByIvrId($fields['ivr_id']);
         if ($result['result'] != 1) {
             looeic::rollback();
@@ -209,6 +204,14 @@ class IvrService
             looeic::rollback();
             $result['result'] = -1;
             $result['msg'] = 'this ivr name is exist';
+            return $result;
+        }
+
+        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
+        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['msg'] = ' Ivr number exists';
+            $result['result'] = -1;
             return $result;
         }
 
