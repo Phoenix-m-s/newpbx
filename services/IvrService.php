@@ -210,8 +210,8 @@ class IvrService
             return $result;
         }
 
-        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
-        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
+        $checkNumberIvr=$IvrDst->checkEditNumberIvr($fields);
+        if ($checkNumberIvr==-1) {
             looeic::rollback();
             $result['msg'] = ' Ivr number exists';
             $result['result'] = -1;

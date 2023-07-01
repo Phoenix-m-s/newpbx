@@ -21,6 +21,18 @@ class IvrDstService
         }
         return $result['result']=1;
     }
+    public function checkEditNumberIvr($fields)
+    {
+
+        $limit = count($fields['dst_option_id_selected']);
+        for ($i = 0; $i < $limit; $i++) {
+            $result [$i]= AdminIVRDSTModel::query("select * from tbl_ivr_dst_menu where not ivr_id=".$fields['ivr_id']." and ivr_menu_no=".$fields['dst_option_id_selected'][$i+2]['ivr_menu_no'])->getList();
+            if ($result[$i]['export']['recordsCount'] >= 1) {
+                return $result['result']=-1;
+            }
+        }
+        return $result['result']=1;
+    }
     public function setFieldsAndSaveIvrDst($fields)
     {
         $limit = count($fields['dst_option_id_selected']);
