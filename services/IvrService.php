@@ -74,7 +74,7 @@ class IvrService
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
 
-        $ivr = new AdminIVRModel();
+        $ivr = new AdminIVRModel($fields);
         $ivr->comp_id = $admin_info['comp_id'];
         $validate = $ivr->validator();
         if ($validate['result'] == -1) {
@@ -100,9 +100,12 @@ class IvrService
         }
 
         $fields['ivr_id'] = $ivr->fields['ivr_id'];
+
         $IvrDst = new IvrDstService();
+
         $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
-        if ($checkNumberIvr['export']['recordsCount'] >= 1) {
+
+        if ($checkNumberIvr ==-1) {
             looeic::rollback();
             $result['msg'] = ' Ivr number exists';
             $result['result'] = -1;

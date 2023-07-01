@@ -12,8 +12,14 @@ class IvrDstService
 
     public function checkNumberIvr($fields)
     {
-        $i=0;
-        return AdminIVRDSTModel::getBy_ivr_id_and_ivr_menu_no_not_dst_menu_id($fields['ivr_id'], $fields['dst_option_id_selected'][$i+2]['ivr_menu_no'],$fields['dst_menu_id'])->getList();
+        $limit = count($fields['dst_option_id_selected']);
+        for ($i = 0; $i < $limit; $i++) {
+            $result [$i]= AdminIVRDSTModel::getBy_ivr_menu_no($fields['dst_option_id_selected'][$i+2]['ivr_menu_no'])->getList();
+            if ( $result [$i]['export']['recordsCount'] >= 1) {
+                return $result['result']=-1;
+            }
+        }
+        return $result['result']=1;
     }
     public function setFieldsAndSaveIvrDst($fields)
     {
