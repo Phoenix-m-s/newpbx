@@ -20,14 +20,14 @@ $AdminList = new admin();
 
 if ($_REQUEST['action'] == "showeditadminform") {
 
-    checkPermissions('edit');
+    checkPermissions('showAllAdminList','admin.list');
 
     $adminListEdit = $AdminList->showEditAdminForm();
     $page->showAdminListEdit($adminListEdit);
 
 } elseif ($_REQUEST['action'] == "editadmin") {
 
-    checkPermissions('edit');
+    checkPermissions('editAdmin','admin.list');
     $AdminList->editAdmin();
 } elseif ($_REQUEST['action'] == "removeadmin") {
 
@@ -35,17 +35,17 @@ if ($_REQUEST['action'] == "showeditadminform") {
     $AdminList->removeAdmin();
 } elseif ($_REQUEST['action'] == 'addadmin') {
 
-    checkPermissions('add');
+    //checkPermissions('addAdmin','admin.list');
     $AdminList->addAdmin();
 } elseif ($_REQUEST['action'] == "showsettask") {
 
-    checkPermissions('settask');
+    checkPermissions('showAllAdminList','admin.list');
     $permissionResult = $AdminList->showSetTask();
     $page->showAdminPermissionList($permissionResult);
 
 } elseif ($_REQUEST['action'] == "setAdminTask") {
 
-    checkPermissions('settask');
+    checkPermissions('showAllAdminList','admin.list');
     $AdminList->setAdminTask();
 } else {
 

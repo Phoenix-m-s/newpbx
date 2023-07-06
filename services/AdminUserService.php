@@ -38,10 +38,12 @@ class AdminUserService
      */
     public function getUsers($searchFields)
     {
-
+        global $company_info;
+       // print_r_debug($company_info);
         $adminUser = AdminUser::getAll()
             ->select('admin.*', 'tbl_company.comp_name')
             ->where("status","=",1)
+            ->where("comp_id","=",$company_info['comp_id'])
             ->leftJoin('tbl_company', 'tbl_company.comp_id', '=', 'admin.comp_id');
 
         if (isset($searchFields['filter'])) {

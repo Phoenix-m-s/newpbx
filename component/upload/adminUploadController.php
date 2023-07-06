@@ -77,10 +77,11 @@ class AdminUploadController
     /** shows the list of all the uploaded files */
     public function showAllUploads($message)
     {
-        global $admin_info, $member_info;
+
+        global $company_info,$admin_info, $member_info;
         if ($admin_info != -1) {
             $company_id = $admin_info['comp_id'];
-            $uploadDirty = AdminUploadModel::getBy_comp_id($company_id)->getList();
+            $uploadDirty = AdminUploadModel::getBy_comp_id($company_info['comp_id'])->getList();
 
         } elseif ($member_info != -1) {
             $company_id = $member_info['comp_id'];

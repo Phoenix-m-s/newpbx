@@ -234,7 +234,11 @@ function getAllPermisssion()
     $PagePermission['voipconfig']->addAction(array('action' => 'showAllVoipconfig', 'code' => 1, 'label' => 'view'));
 //******************************************adminlist*****************************************//
     $PagePermission['admin.list'] = new clsPermissionsPage(18, $len);
-    $PagePermission['admin.list']->addAction(array('action' => 'showAllAdminList', 'code' => 1, 'label' => 'view'));//******************************************adminlist*****************************************//
+    $PagePermission['admin.list']->addAction(array('action' => 'showAllAdminList', 'code' => 1, 'label' => 'view'));
+    $PagePermission['admin.list']->addAction(array('action' => 'editAdmin', 'code' => 2, 'label' => 'edit'));
+    $PagePermission['admin.list']->addAction(array('action' => 'addAdmin', 'code' => 3, 'label' => 'create'));
+    $PagePermission['admin.list']->addAction(array('action' => 'deleteAdmin', 'code' => 4, 'label' => 'delete'));
+    //******************************************adminlist*****************************************//
 //******************************************adminlist*****************************************//
     $PagePermission['record'] = new clsPermissionsPage(19, $len);
     $PagePermission['record']->addAction(array('action' => 'showAllRecord', 'code' => 1, 'label' => 'view'));
