@@ -147,6 +147,7 @@ class TblDstOptionService
      */
     public function getDialExtensionDetailByName($list, $id)
     {
+        //print_r_debug($list);
 
 
         /*$dstServiceList=array(
@@ -176,10 +177,11 @@ class TblDstOptionService
             $funcName = 'getAll' . $this->dstServiceList[$value['dst_option_id']];
 
 
+
             if ($value['dst_option_id'] == 13 or $value['dst_option_id'] == 9) {
 
                 $list[$key]['child'] = $className->$funcName($value['id']);
-            } else if ($value['dst_option_id'] == 6) {
+            } else if ($value['dst_option_id'] ==6) {
                 $list[$key]['child'] = $className->$funcName($id);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
                
@@ -187,10 +189,74 @@ class TblDstOptionService
 
                 $list[$key]['child'] = $className->$funcName();
             }
+
+            if ($value['dst_option_id'] == 12){
+                $serviceName = new TimeConditionService();
+                $list[$key]['child'] = $serviceName->getAllTimeCondition();
+
+            }
             $i++;
             
         }
+        //print_r_debug($list);
       
+        return $list;
+    }
+    public function getDialExtensionDetailByNameExtension($list, $id)
+    {
+        //print_r_debug($list);
+
+
+        /*$dstServiceList=array(
+            1=>'Sip',
+            2=>'Queue',
+            3=>'Extension',
+            4=>'Announcement',
+            5=>'Ivr',
+            6=>'VoiceMail',
+            7=>'HangUp',
+            8=>'TimeCondition',
+            9=>'Forward',
+            10=>'DirectDial',
+            11=>'Fax'
+        );*/
+
+        $i = 1;
+        foreach ($list as $key => $value) {
+
+            if ($value['dst_option_id'] == '') {
+                $list[$key]['child'] = array();
+                continue;
+            }
+            $serviceName = $this->dstServiceList[$value['dst_option_id']] . 'Service';
+
+            $className = new $serviceName();
+            $funcName = 'getAll' . $this->dstServiceList[$value['dst_option_id']];
+
+
+
+            if ($value['dst_option_id'] == 13 or $value['dst_option_id'] == 9) {
+
+                $list[$key]['child'] = $className->$funcName($value['id']);
+            } else if ($value['dst_option_id'] ==6) {
+                $list[$key]['child'] = $className->$funcName($id);
+                //print_r_debug($list[$key]['child'] = $className->$funcName($id));
+
+            } else {
+
+                $list[$key]['child'] = $className->$funcName();
+            }
+
+            if ($value['dst_option_id'] == 12){
+                $serviceName = new TimeConditionService();
+                $list[$key]['child'] = $serviceName->getAllTimeConditionExtension();
+
+            }
+            $i++;
+
+        }
+        //print_r_debug($list);
+
         return $list;
     }
 

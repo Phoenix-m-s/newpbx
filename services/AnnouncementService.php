@@ -11,9 +11,9 @@ class AnnouncementService
      */
     public function getAllAnnouncement()
     {
-        global $admin_info;
+        global $company_info;
         $announceList = adminAnnounceModel::getAll()->
-         where('comp_id', '=', $admin_info['comp_id'])->get();
+         where('comp_id', '=', $company_info['comp_id'])->get();
         $result['0'] = array('name' => 'choose from list', 'id' => '');
         $i = 1;
         foreach ($announceList['export']['list'] as $key => $value) {

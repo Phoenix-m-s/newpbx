@@ -839,7 +839,9 @@ class extension_presentation
         $fields = $this->reArrangeTimeConditionData($fields, $timeConditionClean);
         $timeConditionOption = new TblDstOptionService();
         $dialExtension_list = $timeConditionOption->getExtensionTimeConditionOption($extension_id);
-        $fields['dst_option_id'] = $timeConditionOption->getDialExtensionDetailByName($dialExtension_list, $extension_id);
+        //print_r_debug($dialExtension_list);
+        $fields['dst_option_id'] = $timeConditionOption->getDialExtensionDetailByNameExtension($dialExtension_list, $extension_id);
+        //print_r_debug($fields);
         $fields['fdst_option_id'] = $fields['dst_option_id'];
         $fields['action'] = 'editNewExtensionTimeCondition';
         $fields['comp_id'] = $company_info['comp_id'];
