@@ -67,6 +67,24 @@ class IvrService
         $list = json_encode($fields, JSON_PRETTY_PRINT);
         return $list;
     }
+    function checkDuplicates($array) {
+        unset($array[0]);
+        unset($array[1]);
+        $data =array();
+        foreach ($array as $key=>$value)
+        {
+            $data[].=$value['ivr_menu_no'];
+        }
+        $count = array_count_values($data);
+
+        foreach ($count as $value) {
+            if ($value > 1) {
+                return -1;
+            }
+        }
+        return 1;
+
+    }
 
     public function addIvr($fields)
     {
@@ -83,6 +101,7 @@ class IvrService
             $result['result'] = -1;
             return $result;
         }
+
 
         $ivrName = $this->checkIvrName($fields);
         if ($ivrName['export']['recordsCount'] >= 1) {
@@ -102,12 +121,12 @@ class IvrService
         $fields['ivr_id'] = $ivr->fields['ivr_id'];
 
         $IvrDst = new IvrDstService();
-
-        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
+        $i=0;
+        $checkNumberIvr=$this->checkDuplicates($fields['dst_option_id_selected']);
 
         if ($checkNumberIvr ==-1) {
             looeic::rollback();
-            $result['msg'] = ' Ivr number exists';
+            $result['msg'] = 'Ivr number Duplicates exists';
             $result['result'] = -1;
             return $result;
         }
@@ -210,10 +229,10 @@ class IvrService
             return $result;
         }
 
-        $checkNumberIvr=$IvrDst->checkEditNumberIvr($fields);
+        $checkNumberIvr=$this->checkDuplicates($fields['dst_option_id_selected']);
         if ($checkNumberIvr==-1) {
             looeic::rollback();
-            $result['msg'] = ' Ivr number exists';
+            $result['msg'] = ' Ivr number Duplicates exists';
             $result['result'] = -1;
             return $result;
         }
