@@ -67,6 +67,16 @@ class IvrService
         $list = json_encode($fields, JSON_PRETTY_PRINT);
         return $list;
     }
+    function checkNumberArray($array) {
+
+        $uniqueArray = array_map("unserialize", array_unique(array_map("serialize", $array)));
+        print_r_debug($uniqueArray);
+        if (count($array) != count($uniqueArray)) {
+            return $result=-1;
+        } else {
+            return $result=1;
+        }
+    }
 
     public function addIvr($fields)
     {
@@ -102,10 +112,13 @@ class IvrService
         $fields['ivr_id'] = $ivr->fields['ivr_id'];
 
         $IvrDst = new IvrDstService();
+        $limit = count($fields['dst_option_id_selected']);
+        for ($i = 0; $i < $limit; $i++) {
+            $result = $this->checkNumberArray($fields['dst_option_id_selected'][$i+1]);
 
-        $checkNumberIvr=$IvrDst->checkNumberIvr($fields);
-
-        if ($checkNumberIvr ==-1) {
+        }
+        print_r_debug($result);
+        if ($result ==-1) {
             looeic::rollback();
             $result['msg'] = ' Ivr number exists';
             $result['result'] = -1;
@@ -166,7 +179,6 @@ class IvrService
 
     public function editIvr($fields)
     {
-
         global $company_info;
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
