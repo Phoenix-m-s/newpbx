@@ -67,15 +67,23 @@ class IvrService
         $list = json_encode($fields, JSON_PRETTY_PRINT);
         return $list;
     }
-    function checkNumberArray($array) {
-
-        $uniqueArray = array_map("unserialize", array_unique(array_map("serialize", $array)));
-        print_r_debug($uniqueArray);
-        if (count($array) != count($uniqueArray)) {
-            return $result=-1;
-        } else {
-            return $result=1;
+    function checkDuplicates($array) {
+        unset($array[0]);
+        unset($array[1]);
+        $data =array();
+        foreach ($array as $key=>$value)
+        {
+            $data[].=$value['ivr_menu_no'];
         }
+        $count = array_count_values($data);
+
+        foreach ($count as $value) {
+            if ($value > 1) {
+                return -1;
+            }
+        }
+        return 1;
+
     }
 
     public function addIvr($fields)
@@ -93,6 +101,7 @@ class IvrService
             $result['result'] = -1;
             return $result;
         }
+
 
         $ivrName = $this->checkIvrName($fields);
         if ($ivrName['export']['recordsCount'] >= 1) {
@@ -112,15 +121,12 @@ class IvrService
         $fields['ivr_id'] = $ivr->fields['ivr_id'];
 
         $IvrDst = new IvrDstService();
-        $limit = count($fields['dst_option_id_selected']);
-        for ($i = 0; $i < $limit; $i++) {
-            $result = $this->checkNumberArray($fields['dst_option_id_selected'][$i+1]);
+        $i=0;
+        $checkNumberIvr=$this->checkDuplicates($fields['dst_option_id_selected']);
 
-        }
-        print_r_debug($result);
-        if ($result ==-1) {
+        if ($checkNumberIvr ==-1) {
             looeic::rollback();
-            $result['msg'] = ' Ivr number exists';
+            $result['msg'] = 'Ivr number Duplicates exists';
             $result['result'] = -1;
             return $result;
         }
@@ -179,6 +185,7 @@ class IvrService
 
     public function editIvr($fields)
     {
+
         global $company_info;
         looeic::beginTransaction();
         $fields['comp_id'] = $company_info['comp_id'];
@@ -222,10 +229,10 @@ class IvrService
             return $result;
         }
 
-        $checkNumberIvr=$IvrDst->checkEditNumberIvr($fields);
+        $checkNumberIvr=$this->checkDuplicates($fields['dst_option_id_selected']);
         if ($checkNumberIvr==-1) {
             looeic::rollback();
-            $result['msg'] = ' Ivr number exists';
+            $result['msg'] = ' Ivr number Duplicates exists';
             $result['result'] = -1;
             return $result;
         }
