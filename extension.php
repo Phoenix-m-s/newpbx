@@ -125,7 +125,7 @@ switch ($_GET['action']) {
         break;
 
     case 'editExtension':
-        checkPermissions('editExtension', 'extension');
+        //checkPermissions('editExtension', 'extension');
         if (isset($_POST['action'])) {
 
             $_POST['id'] = $_GET['id'];
