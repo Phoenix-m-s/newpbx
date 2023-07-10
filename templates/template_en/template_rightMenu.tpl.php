@@ -188,13 +188,13 @@ $listMenu = checkDisplayUi();
 
 
             <?php } ?>
-            <li>
-                <a href="<?php print RELA_DIR; ?>campaign.php">
+           <!-- <li>
+                <a href="<?php /*print RELA_DIR; */?>campaign.php">
                     <i class="sidebar-icon fa fa-chevron-right"></i>
-                    <span class="sidebar-text"><?php echo RIGHTMENU_18; ?></span>
+                    <span class="sidebar-text"><?php /*echo RIGHTMENU_18; */?></span>
                 </a>
 
-            </li>
+            </li>-->
 
         </ul>
 
