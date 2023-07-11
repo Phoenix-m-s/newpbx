@@ -54,7 +54,7 @@ class adminSessionController
     }
 
     public function deleteSessionByMemberId($memberId){
-        $sessionModel = new adminSessionModel();
+        $sessionModel = new adminSessionsModel();
         $sessionDirty = $sessionModel->getBy_member_id($memberId)->getList();
         $sessionClean = $sessionDirty['export']['list'][0];
         $result = $sessionModel->delete($sessionClean['session_id']);
