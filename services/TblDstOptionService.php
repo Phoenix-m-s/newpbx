@@ -192,7 +192,7 @@ class TblDstOptionService
 
             if ($value['dst_option_id'] == 12){
                 $serviceName = new TimeConditionService();
-                $list[$key]['child'] = $serviceName->getAllTimeCondition();
+                $list[$key]['child'] = $serviceName->getAllTimeConditionExtension();
 
             }
             $i++;
