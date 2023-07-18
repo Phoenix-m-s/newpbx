@@ -54,6 +54,7 @@ class TblDstOptionService
             ->orderBy('priority')
             ->get();
 
+
         $i = 0;
         foreach ($dstOptionList['export']['list'] as $key => $value) {
 
@@ -185,7 +186,13 @@ class TblDstOptionService
                 $list[$key]['child'] = $className->$funcName($id);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
                
-            } else {
+            } else if ($value['dst_option_id'] ==12) {
+                $list[$key]['child'] = $className->$funcName($id);
+                //print_r_debug($list[$key]['child'] = $className->$funcName($id));
+
+            }
+
+            else {
 
                 $list[$key]['child'] = $className->$funcName();
             }
@@ -240,6 +247,7 @@ class TblDstOptionService
                 //die('q');
                 //$funcName = $this->getAllTimeCondition($id)
                 $list[$key]['child'] = $className->$funcName($id);
+                //print_r_debug($list);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
 
             }
