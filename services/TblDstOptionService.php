@@ -54,6 +54,7 @@ class TblDstOptionService
             ->orderBy('priority')
             ->get();
 
+
         $i = 0;
         foreach ($dstOptionList['export']['list'] as $key => $value) {
 
@@ -185,15 +186,15 @@ class TblDstOptionService
                 $list[$key]['child'] = $className->$funcName($id);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
                
-            } else {
+            } else if ($value['dst_option_id'] ==12) {
+                $list[$key]['child'] = $className->$funcName($id);
+                //print_r_debug($list[$key]['child'] = $className->$funcName($id));
 
-                $list[$key]['child'] = $className->$funcName();
             }
 
-            if ($value['dst_option_id'] == 12){
-                $serviceName = new TimeConditionService();
-                $list[$key]['child'] = $serviceName->getAllTimeCondition();
+            else {
 
+                $list[$key]['child'] = $className->$funcName();
             }
             $i++;
             
@@ -234,7 +235,6 @@ class TblDstOptionService
             $funcName = 'getAll' . $this->dstServiceList[$value['dst_option_id']];
 
 
-
             if ($value['dst_option_id'] == 13 or $value['dst_option_id'] == 9) {
 
                 $list[$key]['child'] = $className->$funcName($value['id']);
@@ -242,20 +242,24 @@ class TblDstOptionService
                 $list[$key]['child'] = $className->$funcName($id);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
 
-            } else {
+            }
+            else if ($value['dst_option_id']==12) {
+                //die('q');
+                //$funcName = $this->getAllTimeCondition($id)
+                $list[$key]['child'] = $className->$funcName($id);
+                //print_r_debug($list);
+                //print_r_debug($list[$key]['child'] = $className->$funcName($id));
+
+            }
+
+            else {
 
                 $list[$key]['child'] = $className->$funcName();
             }
 
-            if ($value['dst_option_id'] == 12){
-                $serviceName = new TimeConditionService();
-                $list[$key]['child'] = $serviceName->getAllTimeConditionExtension();
-
-            }
             $i++;
 
         }
-        //print_r_debug($list);
 
         return $list;
     }
