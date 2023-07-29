@@ -185,6 +185,11 @@ $listMenu = checkDisplayUi();
                         <i class="sidebar-icon fa fa-phone"></i>
                         <span class="sidebar-text"><?php echo RIGHTMENU_05; ?></span> </a>
                 </li>
+                <li>
+                    <a href="<?php echo RELA_DIR . 'report.php?action=showReportExtension' ?>">
+                        <i class="sidebar-icon fa fa-bar-chart"></i>
+                        <span class="sidebar-text"><?php echo RIGHTMENU_14; ?></span> </a>
+                </li>
 
 
             <?php } ?>

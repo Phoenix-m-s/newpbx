@@ -7,14 +7,15 @@ include_once ROOT_DIR . "common/func.inc.php";
 include_once ROOT_DIR . "component/db.inc.class.php";
 include_once ROOT_DIR . "component/report/ReportController.php";
 
-global $admin_info;
-if ($admin_info == -1) {
+global $admin_info,$member_info;
+/*if ($admin_info == -1) {
     if ($member_info != -1) {
         redirectPage(RELA_DIR, "You don't have the permission to this page");
     }
+
     header("location:" . RELA_DIR . "login.php");
     die();
-}
+}*/
 //checkPermissions();
 
 //$announce = new announce_presentation();
@@ -25,7 +26,14 @@ switch ($_GET['action']) {
     case 'search':
         $report->search($_GET);
         break;
+    case 'searchExtension':
+        $report->searchExtension($_GET);
+        break;
+    case 'showReportExtension':
+        $report->showReportExtension('');
+        break;
     case 'showReport':
+
         // checkPermissions('showReport','report');
         $report->showReport('');
         break;

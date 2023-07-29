@@ -3928,7 +3928,16 @@ class Extention_fileGenerator extends DataBase
 
                     $this->class_fields[$count]['exten_FDST' . $temp_count]['value'] = $fields['extension_no'] . ',n,Goto(announce-' . $announceDetail['announce_name'] . '-' . $fields['comp_name'] . ',s,1)';
 
-                } else {
+                }
+
+                else if ($fields['fdst_option_id'] == "12") {
+
+                    $TimeConditionByExtensionDetail = $this->getExtensionTimeConditionByExtensionID($fields['fdst_option_sub_id'])['rs']->fetch();
+
+                    $this->class_fields[$count]['exten_FDST' . $temp_count]['value'] = $fields['extension_no'] . ',n,Goto(ExtensionTimeCondition-' . $TimeConditionByExtensionDetail['announce_name'] . '-' . $fields['comp_name'] . ',s,1)';
+
+                }
+                else {
 
                     die(" Check the id of DST in Failed DTS of Extension");
 

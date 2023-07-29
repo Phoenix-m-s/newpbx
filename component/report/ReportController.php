@@ -233,6 +233,15 @@ class ReportController
         }
     }
 
+    public function showReportExtension($msg='')
+    {
+
+        $this->exportType = 'html';
+        $this->fileName = 'report.show.extension.php';
+        $this->template($msg, '');
+        die();
+    }
+
     public function showReport($msg='')
     {
 
@@ -381,6 +390,75 @@ class ReportController
         echo json_encode($export);
         die();
     }
+    public function searchExtension($get)
+    {
+
+        global $company_info;
+        include_once(ROOT_DIR . "component/datatable.converter.php");
+        $i = 0;
+        $columns = array(
+            array('db' => 'cdr_id', 'dt' => $i ++),
+            array('db' => 'calldate', 'dt' => $i ++),
+            array('db' => 'clid', 'dt' => $i ++),
+            array('db' => 'src', 'dt' => $i ++),
+            array('db' => 'dst', 'dt' => $i ++),
+            array('db' => 'channel', 'dt' => $i ++),
+            array('db' => 'dstchannel', 'dt' => $i ++),
+            array('db' => 'lastapp', 'dt' => $i ++),
+            array('db' => 'lastdata', 'dt' => $i ++),
+            array('db' => 'duration', 'dt' => $i ++),
+            array('db' => 'billsec', 'dt' => $i ++),
+            array('db' => 'disposition', 'dt' => $i ++),
+            array('db' => 'userfield', 'dt' => $i ++),
+            array('db' => 'filename', 'dt' => $i ++)
+        );
+
+        //$primaryKey = 'id';
+        $convert = new convertDatatableIO();
+        $convert->input = $get;
+        $convert->columns = $columns;
+        $searchFields = $convert->convertInput();
+        $operationSearchFields = $searchFields;
+        //unset($operationSearchFields['showFields']);
+
+        $reportFilter = $get['filter'];
+        $reportResult=$this->getReportExtension($operationSearchFields,$reportFilter);
+
+
+        $list['list'] = $reportResult['report']['export']['list'];
+
+        $list['paging'] = $reportResult['totalRecord'];
+        $j=0;
+        foreach ($list['list'] as $key=>$value)
+        {
+            $j++;
+            $company_name=$company_info['comp_name'];
+            $list['list'][$key]['counter']=$j;
+            $callDate=$list['list'][$key]['calldate'];
+            list($date, $time) = explode(" ",$callDate);
+            list($year, $month, $day) = explode("-", $date);
+            $list['list'][$key]['path']=ROOT_DIR.$company_name.'/'.$year.'/'.$month.'/'.$day.'/'.$list['list'][$key]['uniqueid'].'.'.'wav';
+            //$list['list'][$key]['path']= ROOT_DIR.'zitel/monitor/zitel/'.$company_info['comp_id'].'/'.$list['list'][$key]['uniqueid'].'wav';;
+        }
+        $other['0'] = array(
+            'formatter' => function ($list) {
+                $st = $list['counter'];
+                return $st;
+            }
+        );
+        $other[$i - 1] = array(
+            'formatter' => function($list) {
+                $st = '<a href="'. $list['path'].'"><i class="fa fa-volume-down text-orange"></i></a>';
+
+                return $st;
+            }
+        );
+
+        $export = $convert->convertOutput($list, $columns, $other);
+
+        echo json_encode($export);
+        die();
+    }
 
     public function getReport($searchFields,$reportFilter)
     {
@@ -391,6 +469,111 @@ class ReportController
         //$campaigns = Stocks::getAll();
         $report->where('dcontext', 'like', '%-'.$company_name);
         //print_r_debug($report);
+        /*if(($reportFilter['startDate']!='') and ($reportFilter['endDate']!=''))
+        {
+            $report->where('date', '>=', $reportFilter['startDate']) and $report->where('date', '<=', $reportFilter['endDate']);
+            //$sql = $report->build();
+        }
+
+        else if(isset($reportFilter['startDate']) and $reportFilter['startDate']!='')
+        {
+            $report->where('date', '>=', $reportFilter['startDate']);
+        }
+
+        else if(isset($reportFilter['endDate']) and $reportFilter['endDate']!='')
+        {
+            $report->where('date', '<=', $reportFilter['endDate']);
+        }
+
+        if(($reportFilter['hourStart']!='') and ($reportFilter['hourEnd']!=''))
+        {
+            $report->where('time', '>=', $reportFilter['hourStart']) and $report->where('time', '<=', $reportFilter['hourEnd']);
+            $sql = $report->build();
+        }
+
+        else if(isset($reportFilter['hourStart']) and $reportFilter['hourStart']!='')
+        {
+            $report->where('time', '>=', $reportFilter['hourStart']);
+        }
+        else if(isset($recordFilter['hourEnd']) and $reportFilter['hourEnd']!='')
+        {
+            $report->where('time', '<=', $reportFilter['hourEnd']);
+        }
+
+        if(isset($reportFilter['src']) and $reportFilter['src']!='')
+        {
+            $report->where('src', '=', $reportFilter['src']);
+        }
+        if(isset($reportFilter['dst']) and $reportFilter['dst']!='')
+        {
+            $report->where('dst', '=', $reportFilter['dst']);
+        }
+
+
+
+        if(isset($reportFilter['billsec_select']) and $reportFilter['billsec']!='')
+        {
+            $report->where('billsec', $reportFilter['billsec_select'],$reportFilter['billsec']);
+        }
+        elseif(isset($reportFilter['billsec']) and $reportFilter['billsec']!='')
+        {
+            $report->where('billsec', '=', $reportFilter['billsec']);
+        }
+
+        $sql = $report->build();
+        /*print_r_debug($sql);
+        if (isset($searchFields['filter'])) {
+            foreach ($searchFields['filter'] as $filter => $value) {
+                if ($filter == 'status') {
+                    $report->where($filter, '=', $value);
+                } else {
+                    $report->where($filter, 'like', '%' . $value . '%');
+                }
+
+            }
+        }*/
+
+        $obj = clone $report;
+        //echo '<pre/>';
+        $sql = $obj->build('');
+        //print_r_debug($sql);
+
+        $sql = str_replace('SELECT *', 'SELECT count(*)', $sql);
+        $rs = $obj->query($sql)->getList();
+
+        if (isset($searchFields['order'])) {
+            foreach ($searchFields['order'] as $filter => $value) {
+                $report->orderBy($filter, $value);
+            }
+        } else {
+            //$report->orderBy('status', 'desc');
+            // $report->orderBy('name', 'ASC');
+
+        }
+
+        //$obj = clone $campaigns;
+
+        //$totalRecords = $obj->getList()['export']['recordsCount'];
+        $report->limit($searchFields['limit']['start'], $searchFields['limit']['length']);
+        //$c = $campaigns->getList();
+
+        $result['report'] = $report->getList();
+
+        $result['totalRecord'] = $rs['export']['list'][0]['count(*)'];
+        return $result;
+    }
+
+    public function getReportExtension($searchFields,$reportFilter)
+    {
+        global $company_info,$member_info;
+        $company_name=$company_info['comp_name'];
+        //print_r_debug($member_info);
+        $report=Report::getAll();
+        //$campaigns = Stocks::getAll();
+        $report->where('dcontext', 'like', '%-'.$company_name);
+        $report->where('src', '=',$member_info['extension_no']);
+        $report->where('dst', '=',$member_info['extension_no']);
+
         /*if(($reportFilter['startDate']!='') and ($reportFilter['endDate']!=''))
         {
             $report->where('date', '>=', $reportFilter['startDate']) and $report->where('date', '<=', $reportFilter['endDate']);
