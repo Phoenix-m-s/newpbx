@@ -6,6 +6,35 @@ class fileGeneratorTrunk extends DataBase
     public $debugMode;
     public $fileName;
     public $defaultConfig;
+    function logAMITrunk($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Trunk/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Trunk/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Trunk.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
+
 
     function createTrunkFile($comp_id = '')
     {
@@ -65,6 +94,7 @@ class fileGeneratorTrunk extends DataBase
             echo $buffer;
         }
         fwrite($handle, $buffer);
+        $this->logAMITrunk($buffer,false);
         fclose($handle);
     }
 
@@ -176,6 +206,7 @@ class fileGeneratorTrunk extends DataBase
             $result['result'] = -1;
             $result['no'] = 1;
             $result['msg'] = $conn->errorInfo();
+            $this->logAMITrunk($result['msg'],false);
             return $result;
         }
 
