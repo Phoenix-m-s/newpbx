@@ -419,6 +419,7 @@ class adminLoginController
     }
     public function login($_input)
     {
+
         global $memberModel, $member_info;
 
         /*
@@ -541,8 +542,8 @@ class adminLoginController
         //            ///set notification
         //        }
 
-
         redirectPage(RELA_DIR, "");
+
         die();
     }
     public function checkLogin()

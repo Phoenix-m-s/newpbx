@@ -947,7 +947,7 @@ global $member_info, $admin_info;
 
          minorTickInterval: 'auto',
          minorTickWidth: 1,
-         minorTickLength: 10,
+         minorTickLength: 10,a
          minorTickPosition: 'inside',
          minorTickColor: '#666',
 
