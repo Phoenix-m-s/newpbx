@@ -12,11 +12,41 @@ class AstMan {
         $this -> socket = false;
         $this -> error = "";
     }
+    function logAMI($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/ami/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/ami/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami/ami.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
+
 
     function Login() {
         $this -> socket = @fsockopen($this -> amiHost,$this -> amiPort, $errno, $errstr, 1);
         if (!$this -> socket) {
             $this -> error =  "Could not connect: $errstr ($errno)";
+            $this->logAMI(  $this -> error ,false);
             return false;
         } else {
 
@@ -25,9 +55,11 @@ class AstMan {
             $amiPassword = $this->amiPassword;
             $wrets = $this->Query("Action: Login\r\nUserName: $amiUsername\r\nSecret: $amiPassword\r\nEvents: off\r\n\r\n");
             if (strpos($wrets, "Message: Authentication accepted") !== false) {
+                $this->logAMI('Message: Authentication accepted',true);
                 return true;
             } else {
                 $this->error = ModelPHP_AMI_01;
+                $this->logAMI(ModelPHP_AMI_01, false);
                 fclose($this -> socket);
                 $this->socket = false;
                 return false;
@@ -41,6 +73,7 @@ class AstMan {
             while (!feof($this->socket)) {
                 $wrets .= fread($this->socket, 8192);
             }
+            $this->logAMI($this->socket,true);
             fclose($this->socket);
             $this->socket = false;
         }
@@ -51,6 +84,7 @@ class AstMan {
         $wrets = "";
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI($this->error,false);
             return false;
         }
 
@@ -77,6 +111,7 @@ class AstMan {
             //die();
 
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI(ModelPHP_AMI_02,false);
             return false;
         }
 
@@ -153,6 +188,7 @@ class AstMan {
 
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI($this->error,false);
             return false;
         }
 
@@ -180,6 +216,7 @@ class AstMan {
             {
                 if ($this->socket === false) {
                     $this->error = ModelPHP_AMI_02;
+                    $this->logAMI($this->error,false);
                     return false;
                 }
                 $query = "Action: Command\r\nCommand: database put Ext ".$fields['extension_no'].'-'.$fields['comp_name'];
@@ -224,6 +261,7 @@ class AstMan {
             {
                 if ($this->socket === false) {
                     $this->error = ModelPHP_AMI_02;
+                    $this->logAMI($this->error,false);
                     return false;
                 }
                 $query = "Action: Command\r\nCommand: database put Ext ".$fields['extension_no'].'-'.$fields['comp_name']."/Rec/Internal yes\r\n\r\n";
@@ -252,6 +290,7 @@ class AstMan {
             {
                 if ($this->socket === false) {
                     $this->error = ModelPHP_AMI_02;
+                    $this->logAMI($this->error,false);
                     return false;
                 }
                 $query = "Action: Command\r\nCommand: database put Ext ".$fields['extension_no'].'-'.$fields['comp_name']."/Rec/External yes\r\n\r\n";
@@ -276,8 +315,8 @@ class AstMan {
 
 
         }
+        $this->logAMI($wrets,true);
         return $wrets;
-
 
 
     }
@@ -292,6 +331,7 @@ class AstMan {
             //die();
 
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI(ModelPHP_AMI_02,false);
             return false;
         }
         // die('ok');
@@ -305,6 +345,7 @@ class AstMan {
             $info = stream_get_meta_data($this->socket);
 
         } while ($line != "\r\n" && $info["timed_out"] === false );
+        $this->logAMI($wrets,true);
         return $wrets;
     }
 
@@ -314,6 +355,7 @@ class AstMan {
 
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI($this->error,false);
             return false;
         }
 
@@ -324,6 +366,7 @@ class AstMan {
             $wrets .= $line;
             $info = stream_get_meta_data($this->socket);
         } while ($line != "Event: PeerlistComplete\r\n" && $info["timed_out"] === false);
+        $this->logAMI($wrets,true);
         return $wrets;
     }
     function getOnlineSip() {
@@ -332,6 +375,7 @@ class AstMan {
 
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI($this->error,false);
             return false;
         }
 
@@ -343,6 +387,7 @@ class AstMan {
             //$wrets .= $line;
             $info = stream_get_meta_data($this->socket);
         } while ($line != "Event: PeerlistComplete\r\n" && $info["timed_out"] === false);
+        $this->logAMI($wrets,true);
         return $wrets;
     }
     function getOnlineUserConference($number) {
@@ -354,6 +399,7 @@ class AstMan {
 
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
+            $this->logAMI($this->error,false);
             return false;
         }
 
@@ -390,11 +436,13 @@ class AstMan {
                     break;
             }
 
+            $this->logAMI($str,true);
             fwrite($file, $str);
             fclose($file);
             return true;
         } else {
             $this->error = ModelPHP_AMI_03;
+            $this->logAMI($this->error,false);
             return false;
         }
     }
@@ -403,16 +451,19 @@ class AstMan {
         if ($user && $dir) {
             $file = fopen($dir, "a+");
             $str = "exten => " . $user . ",1,Dial(SIP/" . $user . ")\n";
+            $this->logAMI($str,false);
             fwrite($file, $str);
             fclose($file);
             return true;
         } else {
             $this->error = ModelPHP_AMI_03;
+            $this->logAMI($this->error,false);
             return false;
         }
     }
 
     function GetError() {
+        $this->logAMI($this->error,false);
         return $this->error;
     }
 }
