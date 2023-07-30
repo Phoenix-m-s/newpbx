@@ -38,6 +38,35 @@ class Extention_fileGenerator extends DataBase
     {
         $this->comp_id = $comp_id;
     }
+    function logAMIExtension($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Extension/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Extension/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Extension/extension.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
+
 
     /**
      * @param $did_name
@@ -385,6 +414,8 @@ class Extention_fileGenerator extends DataBase
         }
 
         fwrite($handle, $buffer);
+        $this->logAMIExtension($buffer, true);
+        $this->logAMIExtension('فایل اکستنش با موفقیت ثبت شد', true);
         fclose($handle);
     }
 

@@ -29,6 +29,35 @@ class Extention_fileGenerator_webrtc
     {
         $this->class_fields[] = $data;
     }
+    function logAMIExtensionWebrtc($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/ExtensionWebrtc/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/ExtensionWebrtc/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ExtensionWebrtc/ExtensionWebrtc.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
+
 
     public function createExtensionWebrtcFile()
     {
@@ -88,10 +117,14 @@ class Extention_fileGenerator_webrtc
 
         }
 
+        $this->logAMIExtensionWebrtc($content,true);
+        $this->createExtensionWebrtcFile('فایل اکستنشن وب ارت سی',true);
+
         if (file_put_contents($this->fileName, $content)) {
             $result['result'] = 1;
             $svgContent = '';
             $result['content'] = $svgContent;
+
             return $result;
         }
 
