@@ -45,7 +45,7 @@ class Extention_fileGenerator extends DataBase
             mkdir('voip/'.$company_info['comp_name'].'/'.'log/Extension/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Extension/extension.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Extension/Extension.log';;
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
