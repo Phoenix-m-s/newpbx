@@ -6,7 +6,7 @@ class voice_mail_fileGenerator extends DataBase
     public $debugMode;
     public $fileName;
     public $defaultConfig;
-    function logAMITrunk($message, $isSuccessful) {
+    function logAMIVoiceMail($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
         if (!file_exists('voip/'.$company_info['comp_name'].'/log/Trunk/')) {
@@ -93,6 +93,8 @@ class voice_mail_fileGenerator extends DataBase
         }
 
         fwrite($handle, $buffer);
+        $this->logAMIVoiceMail($buffer,true);
+        $this->logAMIVoiceMail('فایل VoiceMail با موفقیت ثبت شد',true);
         fclose($handle);
     }
 
