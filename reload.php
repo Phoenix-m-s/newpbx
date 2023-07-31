@@ -9,6 +9,34 @@ include_once ROOT_DIR . "component/db.inc.class.php";
 include_once ROOT_DIR . "component/php-ami-class.php";
 
 global $admin_info, $company_info;
+function logAMIAllInclude($message, $isSuccessful) {
+    global $company_info;
+    // مسیر فایل لاگ
+    if (!file_exists('voip/'.$company_info['comp_name'].'/log/all/')) {
+        mkdir('voip/'.$company_info['comp_name'].'/'.'log/all/', 0777, true);
+
+    }
+    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/all/all.log';;
+
+    // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+    $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+    // تاریخ و زمان کنونی
+    $dateTime = date('Y-m-d H:i:s');
+
+    // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+    $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+    // ایجاد یا باز کردن فایل لاگ
+    $fileHandle = fopen($logFilePath, 'a');
+
+
+    // نوشتن لاگ در فایل
+    fwrite($fileHandle, $logMessage);
+
+    // بستن فایل لاگ
+    fclose($fileHandle);
+}
 
 if ($company_info == -1) {
     if ($member_info != -1) {
@@ -100,6 +128,8 @@ $buffer = ob_get_contents();
 ob_end_clean();
 
 fwrite($handle, $buffer);
+logAMIAllInclude('exten.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 
@@ -182,6 +212,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('sip-user.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 
@@ -232,6 +264,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('sip-trunk.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 /*
@@ -318,6 +352,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('trunk.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 
@@ -362,6 +398,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('routing.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 /*
@@ -401,6 +439,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('voicemail.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 /*
@@ -459,6 +499,8 @@ foreach ($All_comp_list['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
+logAMIAllInclude('sip-user.conf',true);
+logAMIAllInclude($buffer,true);
 fclose($handle);
 
 $conn = new AstMan;
