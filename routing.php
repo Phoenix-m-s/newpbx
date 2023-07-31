@@ -14,6 +14,7 @@ if ($admin_info == -1) {
     }
     header("location:".RELA_DIR."login.php");
     die();
+
 }
 //checkPermissions();
 
