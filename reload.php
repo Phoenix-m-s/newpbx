@@ -36,38 +36,6 @@ include_once ROOT_DIR . "component/fileGenerator_extension.php";
 include_once ROOT_DIR . "component/fileGenerator_extension_webrtc.php";
 
 
-function logAMI1($message, $isSuccessful) {
-    global $company_info;
-    // مسیر فایل لاگ
-    if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
-      mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
-
-    }
-    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami.log';;
-
-    // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
-    $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
-
-    // تاریخ و زمان کنونی
-    $dateTime = date('Y-m-d H:i:s');
-
-    // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
-    $logMessage = "[$dateTime] [$logLevel] $message\n";
-
-    // ایجاد یا باز کردن فایل لاگ
-    $fileHandle = fopen($logFilePath, 'a');
-
-
-    // نوشتن لاگ در فایل
-    fwrite($fileHandle, $logMessage);
-
-    // بستن فایل لاگ
-    fclose($fileHandle);
-}
-
-
-
-
 
 /*
 | --------------------------------------------------------------------------------------
@@ -134,7 +102,6 @@ ob_end_clean();
 fwrite($handle, $buffer);
 fclose($handle);
 
-//logAMI($buffer, true);
 
 /*
 | --------------------------------------------------------------------------------------
@@ -217,7 +184,6 @@ $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
 fclose($handle);
-//logAMI('اتصال به AMI با موفقیت برقرار شد.', true);
 
 
 /*

@@ -9,6 +9,34 @@ class sip_user_fileGenerator extends DataBase
     function logAMISccp($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Sccp/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Sccp/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Sccp/Sccp.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
+    function logAMISip($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
         if (!file_exists('voip/'.$company_info['comp_name'].'/log/Sip/')) {
             mkdir('voip/'.$company_info['comp_name'].'/'.'log/Sip/', 0777, true);
 
@@ -97,8 +125,8 @@ class sip_user_fileGenerator extends DataBase
             echo $buffer;
         }
 
-        $this->logAMISccp($buffer,true);
-        $this->logAMISccp('فایل سیب با موفقیت ثبت شد',true);
+        $this->logAMISip($buffer,true);
+        $this->logAMISip('فایل sipuser با موفقیت ثبت شد',true);
 
         fwrite($handle, $buffer);
         fclose($handle);
@@ -264,6 +292,8 @@ class sip_user_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
+        $this->logAMISccp($buffer);
+        $this->logAMISccp('فایل Sccp با موفقیت ثبت شد',true);
 
         fwrite($handle, $buffer);
         fclose($handle);
@@ -340,7 +370,7 @@ class sip_user_fileGenerator extends DataBase
         foreach ($array_fields as $key => $fields)
         {
 
-           $this->class_fields[$count]['extension_no']['key'] = '[SEP' . str_replace(':','',$fields['mac_address']) . '](7970)';
+            $this->class_fields[$count]['extension_no']['key'] = '[SEP' . str_replace(':','',$fields['mac_address']) . '](7970)';
             $this->class_fields[$count]['extension_no']['value'] = '';
 
             if ($fields['caller_id_number'] != '') {
@@ -378,7 +408,7 @@ class sip_user_fileGenerator extends DataBase
 
             //mailbox = 10011
             //$this->class_fields[$count]['mailbox']['key'] = 'description';
-           // $this->class_fields[$count]['mailbox']['value'] = 'Line '.$fields['extension_no'];
+            // $this->class_fields[$count]['mailbox']['value'] = 'Line '.$fields['extension_no'];
 
             $this->class_fields[$count]['cid_name']['key'] = 'cid_name';
             $this->class_fields[$count]['cid_name']['value'] = $fields['extension_name'];
@@ -391,7 +421,7 @@ class sip_user_fileGenerator extends DataBase
 
 
 
-           // [407-eis](line-eis)//extension number-compname (line-compname)
+            // [407-eis](line-eis)//extension number-compname (line-compname)
 
 
             /*$this->class_fields[$count]['type']['key'] = 'dial';
@@ -429,10 +459,10 @@ class sip_user_fileGenerator extends DataBase
         }
 
         foreach ($array_fields as $key => $fields) {
-	    //Config For all Company 
+            //Config For all Company
             //$this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] . '-' . $fields['comp_name'] . ']';
 
-	    //Config For Just Zi-tel 
+            //Config For Just Zi-tel
             $this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] .']';
             $this->class_fields[$count]['extension_no']['value'] = '';
 
@@ -460,7 +490,7 @@ class sip_user_fileGenerator extends DataBase
             $this->class_fields[$count]['busylevel']['key'] = 'busylevel';
             $this->class_fields[$count]['busylevel']['value'] = '2';
 
-	    
+
             $this->class_fields[$count]['canreinvite']['key'] = 'canreinvite';
             $this->class_fields[$count]['canreinvite']['value'] = 'no';
 

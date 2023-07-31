@@ -15,11 +15,11 @@ class AstMan {
     function logAMI($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/ami/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/ami/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Ami/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Ami/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami/ami.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Ami/Ami.log';;
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';

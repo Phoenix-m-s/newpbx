@@ -13,7 +13,7 @@ class fileGeneratorTrunk extends DataBase
             mkdir('voip/'.$company_info['comp_name'].'/'.'log/Trunk/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Trunk.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Trunk/Trunk.log';;
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';

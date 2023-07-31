@@ -6,6 +6,34 @@ class fileGeneratorRouting extends DataBase
     public $debugMode;
     public $fileName;
     public $defaultConfig;
+    function logAMIRouting($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Routing/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Routing/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Routing/Routing.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
 
     function createRoutingFile($comp_id = '')
     {
@@ -65,7 +93,11 @@ class fileGeneratorRouting extends DataBase
             echo $buffer;
         }
         //print_r_debug($buffer);
+
         fwrite($handle, $buffer);
+        $this->createRoutingFile($buffer,true);
+        $this->logAMISccp('فایل Routing با موفقیت ثبت شد',true);
+
         fclose($handle);
     }
 
