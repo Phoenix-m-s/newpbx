@@ -95,8 +95,8 @@ class fileGeneratorRouting extends DataBase
         //print_r_debug($buffer);
 
         fwrite($handle, $buffer);
-        $this->createRoutingFile($buffer,true);
-        $this->logAMISccp('فایل Routing با موفقیت ثبت شد',true);
+        $this->logAMIRouting($buffer,true);
+        $this->logAMIRouting('فایل Routing با موفقیت ثبت شد',true);
 
         fclose($handle);
     }
