@@ -12,6 +12,34 @@ class queue_fileGenerator extends DataBase
     {
 
     }
+    function logAMIQueue($message, $isSuccessful) {
+        global $company_info;
+        // مسیر فایل لاگ
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Trunk/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Trunk/', 0777, true);
+
+        }
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Trunk/Trunk.log';;
+
+        // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
+        $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
+
+        // تاریخ و زمان کنونی
+        $dateTime = date('Y-m-d H:i:s');
+
+        // متن کامل لاگ (تاریخ و زمان + سطح + پیام)
+        $logMessage = "[$dateTime] [$logLevel] $message\n";
+
+        // ایجاد یا باز کردن فایل لاگ
+        $fileHandle = fopen($logFilePath, 'a');
+
+
+        // نوشتن لاگ در فایل
+        fwrite($fileHandle, $logMessage);
+
+        // بستن فایل لاگ
+        fclose($fileHandle);
+    }
 
 
 //*******************************************************
@@ -87,6 +115,8 @@ class queue_fileGenerator extends DataBase
 
         }
         fwrite($handle, $buffer);
+        $this->logAMIQueue($buffer,true);
+        $this->createQueueFile('فایل Queue با موفقیت ثبت شد',true);
         fclose($handle);
 
 
