@@ -29,7 +29,7 @@ class Extention_fileGenerator_webrtc
     {
         $this->class_fields[] = $data;
     }
-    function logAMIExtensionWebrtc($message, $isSuccessful) {
+  /*  function logAMIExtensionWebrtc($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
         if (!file_exists('voip/'.$company_info['comp_name'].'/log/ExtensionWebrtc/')) {
@@ -56,7 +56,7 @@ class Extention_fileGenerator_webrtc
 
         // بستن فایل لاگ
         fclose($fileHandle);
-    }
+    }*/
 
 
     public function createExtensionWebrtcFile()
@@ -98,12 +98,8 @@ class Extention_fileGenerator_webrtc
             $this->add('');
             $this->add(';-------------------------------');
             $this->add('');
-
-
         }
         $this->create();
-
-
     }
 
 
@@ -117,8 +113,8 @@ class Extention_fileGenerator_webrtc
 
         }
 
-        $this->logAMIExtensionWebrtc($content,true);
-        $this->createExtensionWebrtcFile('فایل اکستنشن وب ارت سی',true);
+        //$this->logAMIExtensionWebrtc($content,true);
+        //$this->createExtensionWebrtcFile('فایل اکستنشن وب ارت سی',true);
 
         if (file_put_contents($this->fileName, $content)) {
             $result['result'] = 1;

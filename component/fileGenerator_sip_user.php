@@ -9,11 +9,11 @@ class sip_user_fileGenerator extends DataBase
     function logAMISccp($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Sip/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Sip/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Sip/Sip.log';;
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -96,7 +96,9 @@ class sip_user_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
-        $this-$this->logAMISccp($buffer,true);
+
+        $this->logAMISccp($buffer,true);
+        $this->logAMISccp('فایل سیب با موفقیت ثبت شد',true);
 
         fwrite($handle, $buffer);
         fclose($handle);

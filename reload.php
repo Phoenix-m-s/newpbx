@@ -1,5 +1,7 @@
 <?php
+
 include_once "server.inc.php";
+
 include_once ROOT_DIR . "common/db.inc.php";
 include_once ROOT_DIR . "common/init.inc.php";
 include_once ROOT_DIR . "common/func.inc.php";
@@ -217,7 +219,7 @@ fwrite($handle, $buffer);
 fclose($handle);
 //logAMI('اتصال به AMI با موفقیت برقرار شد.', true);
 
-die('z');
+
 /*
 | --------------------------------------------------------------------------------------
 |
