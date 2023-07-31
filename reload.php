@@ -139,7 +139,6 @@ $defaultConfig['ALL']['6']['value'] = 'yes';
 
 
 $sipObj = new sip_user_fileGenerator();
-$sipObj = new sip_user_fileGenerator();
 
 /*
 | --------------------------------------------------------------------------------------
