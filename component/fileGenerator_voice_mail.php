@@ -9,11 +9,11 @@ class voice_mail_fileGenerator extends DataBase
     function logAMIVoiceMail($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/VoiceMail/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/VoiceMail/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/VoiceMail/VoiceMail.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';;
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -93,8 +93,10 @@ class voice_mail_fileGenerator extends DataBase
         }
 
         fwrite($handle, $buffer);
-        $this->logAMIVoiceMail($buffer,true);
-        $this->logAMIVoiceMail('فایل VoiceMail با موفقیت ثبت شد',true);
+        $this->logAMIVoiceMail('---------------VoiceMaillog-----------------', true);
+        $this->logAMIVoiceMail($buffer, true);
+        $this->logAMIVoiceMail('فایل VoiceMail با موفقیت ثبت شد', true);
+        $this->logAMIVoiceMail('**********************', true);
         fclose($handle);
     }
 

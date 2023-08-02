@@ -9,11 +9,11 @@ class fileGeneratorTrunk extends DataBase
     function logAMITrunk($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Trunk/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Trunk/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Trunk/Trunk.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -94,7 +94,11 @@ class fileGeneratorTrunk extends DataBase
             echo $buffer;
         }
         fwrite($handle, $buffer);
-        $this->logAMITrunk($buffer,false);
+        $this->logAMITrunk('---------------Trunklog-----------------', true);
+        $this->logAMITrunk($buffer, true);
+        $this->logAMITrunk('فایل Trunk با موفقیت ثبت شد', true);
+        $this->logAMITrunk('**********************', true);
+
         fclose($handle);
     }
 

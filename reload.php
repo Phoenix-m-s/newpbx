@@ -12,11 +12,11 @@ global $admin_info, $company_info;
 function logAMIAllInclude($message, $isSuccessful) {
     global $company_info;
     // مسیر فایل لاگ
-    if (!file_exists('voip/'.$company_info['comp_name'].'/log/all/')) {
-        mkdir('voip/'.$company_info['comp_name'].'/'.'log/all/', 0777, true);
+    if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+        mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
     }
-    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/all/all.log';;
+    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';;
 
     // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
     $logLevel = $isSuccessful ? 'INFO' : 'ERROR';

@@ -9,11 +9,11 @@ class sip_trunk_fileGenerator extends DataBase
     function logAMISip($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Sip_Trunk/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Sip_Trunk/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Sip_Trunk/Sip_Trunk.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -94,8 +94,11 @@ class sip_trunk_fileGenerator extends DataBase
             echo $buffer;
         }
         fwrite($handle, $buffer);
-        $this->logAMISip($buffer,true);
+        $this->logAMISip('---------------Sip_Trunklog-----------------', true);
+        $this->logAMISip($buffer, true);
         $this->logAMISip('فایل Sip_Trunk با موفقیت ثبت شد',true);
+        $this->logAMISip('**********************', true);
+
         fclose($handle);
     }
 

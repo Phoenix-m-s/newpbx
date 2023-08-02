@@ -9,11 +9,11 @@ class fileGeneratorRouting extends DataBase
     function logAMIRouting($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Routing/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Routing/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Routing/Routing.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -95,8 +95,10 @@ class fileGeneratorRouting extends DataBase
         //print_r_debug($buffer);
 
         fwrite($handle, $buffer);
-        $this->logAMIRouting($buffer,true);
-        $this->logAMIRouting('فایل Routing با موفقیت ثبت شد',true);
+        $this->logAMIRouting('---------------Routinglog-----------------', true);
+        $this->logAMIRouting($buffer, true);
+        $this->logAMIRouting('فایل Routing با موفقیت ثبت شد', true);
+        $this->logAMIRouting('**********************', true);
 
         fclose($handle);
     }

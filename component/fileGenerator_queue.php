@@ -15,11 +15,11 @@ class queue_fileGenerator extends DataBase
     function logAMIQueue($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/Queue/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/Queue/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/Queue/Queue.log';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -116,8 +116,12 @@ class queue_fileGenerator extends DataBase
         }
         fwrite($handle, $buffer);
 
-        $this->logAMIQueue($buffer,true);
+        $this->logAMIQueue('---------------Queuelog-----------------', true);
+        $this->logAMIQueue($buffer, true);
         $this->logAMIQueue('فایل Queue با موفقیت ثبت شد',true);
+        $this->logAMIQueue('**********************', true);
+
+
         fclose($handle);
 
 
