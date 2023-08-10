@@ -1,4 +1,5 @@
 <?php
+
 class AstMan {
 
     public $socket;
@@ -11,6 +12,7 @@ class AstMan {
     function __constructor() {
         $this -> socket = false;
         $this -> error = "";
+
     }
     function logAMI($message, $isSuccessful) {
         global $company_info;
@@ -43,6 +45,7 @@ class AstMan {
 
 
     function Login() {
+
         $this -> socket = @fsockopen($this -> amiHost,$this -> amiPort, $errno, $errstr, 1);
         if (!$this -> socket) {
             $this -> error =  "Could not connect: $errstr ($errno)";
@@ -81,6 +84,7 @@ class AstMan {
     }
 
     function Query($query) {
+
         $wrets = "";
         if ($this->socket === false) {
             $this->error = ModelPHP_AMI_02;
@@ -178,6 +182,7 @@ class AstMan {
 
     function addForward($data)
     {
+
         //Command("Action: Command\r\nCommand: database put Ext $exten/Dst/ $value_opt\r\n\r\n");
         //Command("Action: Command\r\nCommand: database put Ext extension_no/Dst/Finternal|Fexternal $value_opt\r\n\r\n");
         //Ext/201/Dst/Fexternal/09123063658
@@ -203,6 +208,7 @@ class AstMan {
 
 
         echo 'responce delete:';
+        $this->logAMI($wrets,true);
         print_r($wrets);
         echo '<br/> <br/>';
         $wrets = "";
@@ -245,10 +251,12 @@ class AstMan {
                 } while ($line != "\r\n" && $info["timed_out"] === false );
 
                 echo '$query-'.$k.': ';
+                $this->logAMI($query,true);
                 print_r($query);
                 echo '';
                 echo 'responce $query:';
                 print_r($wrets);
+                $this->logAMI($wrets,true);
                 echo '<br/> <br/>';
             }
             $wrets = "";
@@ -275,10 +283,13 @@ class AstMan {
                 } while ($line != "\r\n" && $info["timed_out"] === false );
 
                 echo '$query-'.$k.': ';
+                $this->logAMI($query,true);
                 print_r($query);
                 echo '';
                 echo 'responce $query:';
+                $this->logAMI($wrets,true);
                 print_r($wrets);
+
                 echo '<br/> <br/>';
 
                 //print_r($info);
@@ -304,9 +315,11 @@ class AstMan {
                 } while ($line != "\r\n" && $info["timed_out"] === false );
 
                 echo '$query-'.$k.': ';
+                $this->logAMI($query,true);
                 print_r($query);
                 echo '';
                 echo 'responce $query:';
+                $this->logAMI($wrets,true);
                 print_r($wrets);
                 echo '<br/> <br/>';
                 //print_r($info);
@@ -422,6 +435,7 @@ class AstMan {
         if ($user && $type && $dir) {
             echo $dir;
             if (!file_exists($dir)) {
+                $this->logAMI('no exisit',false);
                 die('nist');
             }
 
