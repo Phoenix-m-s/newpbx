@@ -21,7 +21,7 @@ class AstMan {
             mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami.txt';;
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/ami.log';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -58,7 +58,7 @@ class AstMan {
             $amiPassword = $this->amiPassword;
             $wrets = $this->Query("Action: Login\r\nUserName: $amiUsername\r\nSecret: $amiPassword\r\nEvents: off\r\n\r\n");
             if (strpos($wrets, "Message: Authentication accepted") !== false) {
-                $this->logAMI('Message: Authentication accepted',true);
+                $this->logAMI($wrets.'Message: Authentication accepted',true);
                 return true;
             } else {
                 $this->error = ModelPHP_AMI_01;
@@ -251,7 +251,7 @@ class AstMan {
                 } while ($line != "\r\n" && $info["timed_out"] === false );
 
                 echo '$query-'.$k.': ';
-                $this->logAMI($query,true);
+                $this->logAMI('$query-'.$k,true);
                 print_r($query);
                 echo '';
                 echo 'responce $query:';
