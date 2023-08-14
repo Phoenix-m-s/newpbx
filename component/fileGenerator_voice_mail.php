@@ -93,10 +93,8 @@ class voice_mail_fileGenerator extends DataBase
         }
 
         fwrite($handle, $buffer);
-        $this->logAMIVoiceMail('---------------VoiceMaillog-----------------', true);
-        $this->logAMIVoiceMail($buffer, true);
-        $this->logAMIVoiceMail('فایل VoiceMail با موفقیت ثبت شد', true);
-        $this->logAMIVoiceMail('**********************', true);
+
+        $this->logAMIVoiceMail('create voiceMail', true);
         fclose($handle);
     }
 

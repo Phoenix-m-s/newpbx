@@ -94,10 +94,8 @@ class fileGeneratorTrunk extends DataBase
             echo $buffer;
         }
         fwrite($handle, $buffer);
-        $this->logAMITrunk('---------------Trunklog-----------------', true);
-        $this->logAMITrunk($buffer, true);
-        $this->logAMITrunk('فایل Trunk با موفقیت ثبت شد', true);
-        $this->logAMITrunk('**********************', true);
+
+        $this->logAMITrunk('create Trunk', true);
 
         fclose($handle);
     }

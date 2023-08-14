@@ -200,7 +200,7 @@ $sipObj->defaultConfig = '';//$defaultConfig;
 $sipObj->createSccpFile($company_info);
 
 
-$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'sip-user.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/'.$company_info['comp_name'].'sip-user.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -252,7 +252,7 @@ $sipTrunkObj->defaultConfig = $defaultConfig;
 $sipTrunkObj->createSipFile($company_info['comp_id']);
 
 
-$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/sip-trunk.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'] .'/'.$company_info['comp_name'].'/sip-trunk.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -340,7 +340,7 @@ $trunkObj->defaultConfig = $defaultConfig;
 
 $trunkObj->createTrunkFile($company_info['comp_id']);
 
-$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'trunk.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'] .'/'.$company_info['comp_name'].'trunk.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }

@@ -97,6 +97,8 @@ class Extention_fileGenerator extends DataBase
      */
     public static function getCompany($comp_id = '')
     {
+        global $company_info;
+        $comp_id=$company_info['comp_id'];
         $conn = parent::getConnection();
         $append_sql = '';
         if ($comp_id != '') {
@@ -413,10 +415,7 @@ class Extention_fileGenerator extends DataBase
 
         fwrite($handle, $buffer);
         fwrite($handle, $buffer);
-        $this->logAMIExtension('---------------Extensionlog-----------------', true);
-        $this->logAMIExtension($buffer, true);
-        $this->logAMIExtension('فایل اکستنش با موفقیت ثبت شد', true);
-        $this->logAMIExtension('**********************', true);
+        $this->logAMIExtension('create extension', true);
         fclose($handle);
     }
 

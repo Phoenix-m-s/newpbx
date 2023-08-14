@@ -94,10 +94,8 @@ class sip_trunk_fileGenerator extends DataBase
             echo $buffer;
         }
         fwrite($handle, $buffer);
-        $this->logAMISip('---------------Sip_Trunklog-----------------', true);
-        $this->logAMISip($buffer, true);
-        $this->logAMISip('فایل Sip_Trunk با موفقیت ثبت شد',true);
-        $this->logAMISip('**********************', true);
+        $this->logAMISip('create sip_trunk',true);
+
 
         fclose($handle);
     }

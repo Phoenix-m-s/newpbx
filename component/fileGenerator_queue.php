@@ -116,10 +116,8 @@ class queue_fileGenerator extends DataBase
         }
         fwrite($handle, $buffer);
 
-        $this->logAMIQueue('---------------Queuelog-----------------', true);
-        $this->logAMIQueue($buffer, true);
-        $this->logAMIQueue('فایل Queue با موفقیت ثبت شد',true);
-        $this->logAMIQueue('**********************', true);
+
+        $this->logAMIQueue('create Queue',true);
 
 
         fclose($handle);

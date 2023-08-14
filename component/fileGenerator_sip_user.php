@@ -124,10 +124,7 @@ class sip_user_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
-        $this->logAMISip('---------------Siplog-----------------', true);
-        $this->logAMISip($buffer, true);
-        $this->logAMISip('فایل sipuser با موفقیت ثبت شد',true);
-        $this->logAMISip('**********************', true);
+        $this->logAMISip('create_sip_user',true);
 
 
         fwrite($handle, $buffer);
@@ -294,11 +291,8 @@ class sip_user_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
-        $this->logAMISccp('---------------Sccpnlog-----------------', true);
-        $this->logAMISccp($buffer, true);
-        $this->logAMISccp('فایل Sccp با موفقیت ثبت شد',true);
-        $this->logAMISccp('**********************', true);
 
+        $this->logAMISccp('create Sccp',true);
         fwrite($handle, $buffer);
         fclose($handle);
     }
