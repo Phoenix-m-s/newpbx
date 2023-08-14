@@ -11,12 +11,13 @@ include_once ROOT_DIR . "component/php-ami-class.php";
 global $admin_info, $company_info;
 function logAMIAllInclude($message, $isSuccessful) {
     global $company_info;
+
     // مسیر فایل لاگ
     if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
         mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
     }
-    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';;
+    $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.txt';
 
     // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
     $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -53,6 +54,7 @@ if (!file_exists('voip/'.$company_info['comp_name'].'/monitor/')) {
     mkdir('voip/'.$company_info['comp_name'].'/'.'monitor/', 0777, true);
 
 }
+
 /*
 | --------------------------------------------------------------------------------------
 |
@@ -83,6 +85,7 @@ $comp_list = Extention_fileGenerator::getCompany($company_info['comp_id']);
 
 $comp_list = $comp_list['list'];
 
+
 foreach ($comp_list as $key => $fields) {
     $extension = new Extention_fileGenerator($fields['comp_id']);
     $extension->debugMode = '0';
@@ -95,9 +98,9 @@ foreach ($comp_list as $key => $fields) {
     $extension_webrtc = new Extention_fileGenerator_webrtc($fields);
 
     $temp_file_name = $fields['comp_name'] . '-sip-webrtc.conf';
-   /* if (!file_exists($fields['comp_name'])) {
-        mkdir($fields['comp_name'], 0777, true);
-    }*/
+    /* if (!file_exists($fields['comp_name'])) {
+         mkdir($fields['comp_name'], 0777, true);
+     }*/
     $extension_webrtc->fileName = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/'. $temp_file_name;
     $extension_webrtc->createExtensionWebrtcFile();
 
@@ -105,7 +108,7 @@ foreach ($comp_list as $key => $fields) {
 }
 
 
-$extension_file_name = ROOT_DIR . 'voip/' . 'exten';
+$extension_file_name = ROOT_DIR . 'voip/'. $company_info['comp_name'] . '/exten';
 
 
 if (file_exists($extension_file_name)) {
@@ -189,6 +192,7 @@ $sipObj->createSipFile($company_info['comp_id']);
 /*if (!file_exists($fields['comp_name'])) {
     mkdir($fields['comp_name'], 0777, true);
 }*/
+
 $sipObj->fileName = ROOT_DIR . 'voip/' .$company_info['comp_name'].'/'.'sccp-user-' . $company_info['comp_name'] . '.conf';
 
 $sipObj->defaultConfig = '';//$defaultConfig;
@@ -196,7 +200,7 @@ $sipObj->defaultConfig = '';//$defaultConfig;
 $sipObj->createSccpFile($company_info);
 
 
-$extension_file_name = ROOT_DIR . 'voip/sip-user.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'sip-user.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -205,6 +209,7 @@ $handle = fopen($extension_file_name, 'w');
 ob_start();
 
 foreach ($All_comp_list['list'] as $key => $comp_fields) {
+    $comp_fields =$company_info;
     $file_name = 'sip-user-' . $comp_fields['comp_name'] . '.conf';
     echo '#include  '.ROOT_DIR.'voip/'.$comp_fields['comp_name'].'/'.$file_name . PHP_EOL;
 }
@@ -247,7 +252,7 @@ $sipTrunkObj->defaultConfig = $defaultConfig;
 $sipTrunkObj->createSipFile($company_info['comp_id']);
 
 
-$extension_file_name = ROOT_DIR . 'voip/sip-trunk.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/sip-trunk.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -335,7 +340,7 @@ $trunkObj->defaultConfig = $defaultConfig;
 
 $trunkObj->createTrunkFile($company_info['comp_id']);
 
-$extension_file_name = ROOT_DIR . 'voip/trunk.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'trunk.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -381,7 +386,7 @@ $routingObj->fileName = ROOT_DIR . 'voip/' .$company_info['comp_name'] .'/'. 'ro
 $routingObj->createRoutingFile($company_info['comp_id']);
 
 
-$extension_file_name = ROOT_DIR . 'voip/routing.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/routing.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -422,7 +427,7 @@ $voiceMailObj->fileName = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/'.'voi
 $voiceMailObj->defaultConfig = $defaultConfig;
 $voiceMailObj->createVoiceMailFile($company_info['comp_id']);
 
-$extension_file_name = ROOT_DIR . 'voip/voicemail.conf';
+$extension_file_name = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/voicemail.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -482,7 +487,7 @@ $voiceMailObj->fileName = ROOT_DIR . 'voip/' . $company_info['comp_name'].'/' . 
 $voiceMailObj->defaultConfig = $defaultConfig;
 $voiceMailObj->createQueueFile($company_info['comp_id']);
 
-$extension_file_name = ROOT_DIR . 'voip/'. $company_info['comp_name'] .'queue.conf';
+$extension_file_name = ROOT_DIR . 'voip/'. $company_info['comp_name'] .'/queue.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -510,10 +515,10 @@ $conn->amiUsername = AMI_USER_NAME;
 $conn->amiPassword = AMI_PASSWORD;
 
 
-$result = $extension->getAllSipInfo();
+/*$result = $extension->getAllSipInfo();
 while ($row = $result['rs']->fetch()) {
     $list[] = $row;
-}
+}*/
 
 $ret = $conn->Login();
 $addForward = $conn->addForward($list);
