@@ -256,7 +256,7 @@ class AstMan {
                 echo '';
                 echo 'responce $query:';
                 print_r($wrets);
-                $this->logAMI($wrets,true);
+                $this->logAMI('responce $query:'.$wrets,true);
                 echo '<br/> <br/>';
             }
             $wrets = "";
@@ -319,7 +319,7 @@ class AstMan {
                 print_r($query);
                 echo '';
                 echo 'responce $query:';
-                $this->logAMI($wrets,true);
+                $this->logAMI('responce $query:'.$wrets,true);
                 print_r($wrets);
                 echo '<br/> <br/>';
                 //print_r($info);
