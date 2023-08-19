@@ -117,11 +117,13 @@ class voice_mail_fileGenerator extends DataBase
             }
 
             if ($fields['voicemail_email'] == '') {
-                continue;
+              /*  $this->class_fields[$count]['extension_no']['key'] = $fields['extension_no'];
+                $this->class_fields[$count]['extension_no']['value'] = $fields['secret'] . ',' . $fields['extension_no'];
+                $this->class_fields[$count]['extension_no']['operator'] = ' => ';*/
             }
 
             $this->class_fields[$count]['extension_no']['key'] = $fields['extension_no'];
-            $this->class_fields[$count]['extension_no']['value'] = $fields['voicemail_pass'] . ',' . $fields['extension_name'] . ',' . $fields['voicemail_email'] . ',,attach=yes ';
+            $this->class_fields[$count]['extension_no']['value'] = $fields['secret'] . ',' . $fields['extension_no'];
             $this->class_fields[$count]['extension_no']['operator'] = ' => ';
 
             if (isset($defaultConfig['ALL'])) {
