@@ -16,7 +16,7 @@ class VoiceMailService
     public function getAllVoiceMail($id=0)
     {
 
-        global $admin_info,$member_info;
+       /* global $admin_info,$member_info;
         
         if($admin_info !=-1){
             $voiceMailList = AdminExstionNewModel::getAll()
@@ -42,7 +42,9 @@ class VoiceMailService
             $result[$i]['name'] = $value->fields['extension_no'];
             $result[$i]['id'] = $value->fields['extension_id'];
             $i++;
-        }
+        }*/
+        $result = array();
+
         return $result;
     }
 
