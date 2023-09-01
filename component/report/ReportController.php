@@ -572,7 +572,7 @@ class ReportController
         //$campaigns = Stocks::getAll();
         $report->where('dcontext', 'like', '%-'.$company_name);
         $report->where('src', '=',$member_info['extension_no']);
-        $report->where('dst', '=',$member_info['extension_no']);
+        $report->orWhere('dst', '=',$member_info['extension_no']);
 
         /*if(($reportFilter['startDate']!='') and ($reportFilter['endDate']!=''))
         {
