@@ -209,6 +209,13 @@ class sip_presentation
     public function addSip($fields)
     {
         global $admin_info, $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $sip = new SipService();
         $result = $sip->service_AddSip($fields);
         if ($result['result'] != 1) {
@@ -260,6 +267,13 @@ class sip_presentation
     public function editSip($fields, $msg)
     {
         global $admin_info, $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $sip = new SipService();
         $result = $sip->service_editSip($fields);
         if ($result['result'] != 1) {
