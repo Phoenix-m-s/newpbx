@@ -264,7 +264,15 @@ class extension_presentation
     public function addExtension($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $fields['comp_id'] = $company_info['comp_id'];
+
         $extension = new ExtensionService();
         $result = $extension->addExtension($fields);
         if ($result['result'] != 1) {
@@ -305,7 +313,13 @@ class extension_presentation
     {
 
         global $company_info,$member_info;
-
+        $checkcharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checkcharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $fields['comp_id'] = $company_info['comp_id'];
         $extensionNumberCheck = AdminExtensionModel::getBy_comp_id_and_extension_no_and_not_extension_id($fields['comp_id'], $fields['tc'][0]['extension_no'], $fields['tc'][0]['extension_id'])->getList();
         if ($extensionNumberCheck['export']['recordsCount'] >= 1) {

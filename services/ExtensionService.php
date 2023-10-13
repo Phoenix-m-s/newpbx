@@ -159,7 +159,7 @@ class ExtensionService
             die();
         }
 
-        $extensionNumberCheck = AdminExtensionModel::getBy_comp_id_and_extension_name($fields['comp_id'], $fields['extension_name'])->getList();
+        $extensionNumberCheck = AdminExtensionModel::getBy_comp_id_and_extension_name($fields['comp_id'], $fields['tc'][0]['extension_name'])->getList();
 
         if ($extensionNumberCheck['export']['recordsCount'] >= 1) {
             $result['result'] = -1;
@@ -175,7 +175,7 @@ class ExtensionService
 
             if (isset($mysql['connections']['mysql2'])) {
                 $checkMac = AdminExtensionModel2::getAll()
-                    ->where('mac_address', '=', $fields['mac_address'])
+                    ->where('mac_address', '=', $fields['tc'][0]['mac_address'])
                     ->getList();
                 if ($checkMac['export']['recordsCount'] >= 1) {
                     $result['result'] = -1;
@@ -189,7 +189,7 @@ class ExtensionService
 
 
             $checkMac = AdminExtensionModel::getAll()
-                ->where('mac_address', '=', $fields['mac_address'])
+                ->where('mac_address', '=', $fields['tc'][0]['mac_address'])
                 ->getList();
             if ($checkMac['export']['recordsCount'] >= 1) {
                 $result['result'] = -1;
@@ -202,7 +202,7 @@ class ExtensionService
         }
 
 
-        $extensionNumberCheck = AdminExtensionModel::getBy_comp_id_and_extension_no($fields['comp_id'], $fields['extension_no'])->getList();
+        $extensionNumberCheck = AdminExtensionModel::getBy_comp_id_and_extension_no($fields['comp_id'], $fields['tc'][0]['extension_no'])->getList();
         if ($extensionNumberCheck['export']['recordsCount'] >= 1) {
             $result['result'] = -1;
             $result['msg'] = 'this extension number is exist';
@@ -212,7 +212,7 @@ class ExtensionService
 
         //**********************
         //checkusername extention
-        $usernameCheck = AdminExtensionModel::getBy_comp_id_and_username($fields['comp_id'], $fields['username'])->getList();
+        $usernameCheck = AdminExtensionModel::getBy_comp_id_and_username($fields['comp_id'], $fields['tc'][0]['username'])->getList();
         if ($usernameCheck['export']['recordsCount'] >= 1) {
             $result['result'] = -1;
             $result['msg'] = 'this user name is exist';
@@ -221,7 +221,8 @@ class ExtensionService
             die();
         }
 
-        $queueNumberCheck = adminQueueModel::getBy_queue_ext_no($fields['extension_no'])->getList();
+        $queueNumberCheck = adminQueueModel::getBy_queue_ext_no($fields['tc'][0]['extension_no'])->getList();
+
         if ($queueNumberCheck['export']['recordsCount'] >= 1) {
             $result['result'] = -1;
             $result['msg'] = 'this extension number is exist';
@@ -232,6 +233,7 @@ class ExtensionService
         //******************
         //check AdminUsername
         $checkAdminUsername = $this->checkAdminName($fields);
+
         if ($checkAdminUsername['export']['recordsCount'] >= 1) {
             $result['result'] = -1;
             $result['msg'] = 'this adminUsername is exist';
@@ -256,7 +258,7 @@ class ExtensionService
 
         $operation = new AdminExstionNewModel();
         $result = $operation->SetFieldsAndSave($fields);
-        //print_r_debug($result);
+
         return $result;
 
     }
