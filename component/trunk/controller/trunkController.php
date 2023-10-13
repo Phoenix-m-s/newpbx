@@ -94,6 +94,13 @@ class TrunkController
     public function addTrunk($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $trunk = new TrunkService();
         $result = $trunk->service_AddTrunk($fields);
 
@@ -139,6 +146,13 @@ class TrunkController
     public function editTrunk($fields, $msg)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $trunk = new TrunkService();
         $result = $trunk->service_editTrunk($fields);
         if ($result['result'] != 1) {

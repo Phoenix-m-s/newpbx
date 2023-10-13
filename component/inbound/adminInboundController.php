@@ -147,6 +147,13 @@ class AdminInboundController
     {
 
         $inbound = new InboundService();
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $result = $inbound->addInbound($fields);
 
         if ($result['result'] != 1) {
@@ -306,6 +313,13 @@ class AdminInboundController
     public function editInbound($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $inbound = new InboundService();
         $result = $inbound->editInbound($fields);
         if ($result['result'] != 1) {

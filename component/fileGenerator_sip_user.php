@@ -126,7 +126,7 @@ class sip_user_fileGenerator extends DataBase
         }
         $this->logAMISip('create_sip_user',true);
 
-
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
         fclose($handle);
     }

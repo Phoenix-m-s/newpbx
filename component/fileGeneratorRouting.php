@@ -93,7 +93,7 @@ class fileGeneratorRouting extends DataBase
             echo $buffer;
         }
         //print_r_debug($buffer);
-
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
 
         $this->logAMIRouting('create Routing', true);

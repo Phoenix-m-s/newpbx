@@ -147,6 +147,13 @@ class AdminQueueController
     public function addQueue($fields)
     {
         global $admin_info, $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $queue = new QueueService();
         $result = $queue->addQueue($fields);
         if ($result['result'] != 1) {
@@ -179,6 +186,13 @@ class AdminQueueController
     public function editQueue($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $queue = new QueueService();
         $result = $queue->editQueue($fields);
         if ($result['result'] != 1) {

@@ -215,6 +215,13 @@ class adminMainTimeConditionController
 
         global $company_info;
         looeic::beginTransaction();
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $fields['comp_id'] = $company_info['comp_id'];
         $timeConditionModel = new AdminMainTimeConditionModel($fields);
         $timeConditionModel->name = $fields['name'];
@@ -262,6 +269,13 @@ class adminMainTimeConditionController
     public function editTimeCondition($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $fields['comp_id'] = $company_info['comp_id'];
         looeic::beginTransaction();
         $timeConditionModel = AdminMainTimeConditionModel::find($fields['timeConditionID']);

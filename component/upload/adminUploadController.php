@@ -123,7 +123,13 @@ class AdminUploadController
     {
 
         global $admin_info, $member_info,$company_info;
-
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $uploadName = AdminUploadModel::getBy_comp_id_and_title($admin_info['comp_id'], $fields['Title'])->getList();
 
         $uploadObj = new AdminUploadModel();

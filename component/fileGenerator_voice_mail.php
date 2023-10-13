@@ -91,7 +91,7 @@ class voice_mail_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
-
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
 
         $this->logAMIVoiceMail('create voiceMail', true);

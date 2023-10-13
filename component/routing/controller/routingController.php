@@ -67,6 +67,13 @@ class RoutingController
     public function addRouting($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $routing = new RoutingService();
         $result = $routing->addRouting($fields);
 

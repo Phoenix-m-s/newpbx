@@ -114,6 +114,7 @@ class queue_fileGenerator extends DataBase
             echo $buffer;
 
         }
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
 
 

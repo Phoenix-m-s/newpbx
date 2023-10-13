@@ -412,8 +412,7 @@ class Extention_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
-
-        fwrite($handle, $buffer);
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
         $this->logAMIExtension('create extension', true);
         fclose($handle);

@@ -93,6 +93,7 @@ class fileGeneratorTrunk extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
 
         $this->logAMITrunk('create Trunk', true);

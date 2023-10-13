@@ -190,6 +190,13 @@ class AdminAnnounceController
      */
     public function addAnnounce($fields)
     {
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $announce = new AnnouncementService();
         $result = $announce->addAnnouncement($fields);
 

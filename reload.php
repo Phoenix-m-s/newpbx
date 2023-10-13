@@ -8,6 +8,7 @@ include_once ROOT_DIR . "common/func.inc.php";
 include_once ROOT_DIR . "component/db.inc.class.php";
 include_once ROOT_DIR . "component/php-ami-class.php";
 
+
 global $admin_info, $company_info;
 function logAMIAllInclude($message, $isSuccessful) {
     global $company_info;

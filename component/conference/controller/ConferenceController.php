@@ -133,6 +133,13 @@ class ConferenceController
     public function addConference($fields)
     {
         global $admin_info, $member_info,$company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $conference = new ConferenceService();
         $result = $conference->addConference($fields);
 
@@ -244,6 +251,13 @@ class ConferenceController
     public function editConference($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $conference = new ConferenceService();
         $result = $conference->editConference($fields);
         if ($result['result'] != 1) {

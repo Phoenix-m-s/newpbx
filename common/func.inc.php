@@ -1185,3 +1185,41 @@ function get_group_info_date($p_id)
     $return['rs'] = $internet_detail_rs->fields;
     return $return;
 }
+function convertPersianToEnglish($inputArray) {
+    $persianChars = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+    $englishChars = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+
+    foreach ($inputArray as &$input) {
+        $input = str_replace($persianChars, $englishChars, $input);
+    }
+
+    return $inputArray;
+}
+function convertPersianNumbersToEnglish($input) {
+    $persianNumbers = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+    $englishNumbers = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+
+    $output = str_replace($persianNumbers, $englishNumbers, $input);
+    return $output;
+}
+function checkForPersianWordsInMultiDimensionalKeyValueArray($inputArray) {
+    foreach ($inputArray as $key => $value) {
+        if (is_array($value)) {
+            $result = checkForPersianWordsInMultiDimensionalKeyValueArray($value);
+            if ($result == -1) {
+                return -1; // حداقل یکی از مقادیر در ارایه چند بعدی حاوی کلمه‌های فارسی است
+            }
+        } else {
+            // تقسیم مقدار به کلمات
+            $words = preg_split('/\s+/', $value);
+
+            foreach ($words as $word) {
+                if (preg_match('/[\x{0600}-\x{06FF}\x{FB50}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $word)) {
+                    return -1; // حداقل یکی از کلمات در مقادیر حاوی کلمه‌های فارسی است
+                }
+            }
+        }
+    }
+    return 0; // هیچ کلمه‌ای فارسی در مقادیر ارایه نیست
+}
+

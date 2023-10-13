@@ -142,6 +142,13 @@ class AdminOutboundController
     {
         global $admin_info, $company_info;
         $Outbound = new OutBoundService();
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $result = $Outbound->addOutBound($fields);
         if ($result['result'] != 1) {
             $result['result'] = -1;
@@ -184,6 +191,13 @@ class AdminOutboundController
     {
         global $admin_info, $company_info;
         $Outbound = new OutBoundService();
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $result = $Outbound->editOutBound($fields);
         if ($result['result'] != 1) {
             $result['result'] = -1;

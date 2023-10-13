@@ -80,6 +80,13 @@ class AdminIVRController extends looeic
     public function addIvr($fields)
     {
         global $admin_info, $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $ivr = new IvrService();
         $result = $ivr->addIvr($fields);
         if ($result['result'] != 1) {
@@ -105,6 +112,13 @@ class AdminIVRController extends looeic
     public function editIvr($fields)
     {
         global $company_info;
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
         $ivr = new IvrService();
         $result = $ivr->editIvr($fields);
         if ($result['result'] != 1) {

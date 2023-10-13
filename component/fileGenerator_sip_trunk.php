@@ -93,6 +93,9 @@ class sip_trunk_fileGenerator extends DataBase
             echo '<pre/>';
             echo $buffer;
         }
+
+
+        $buffer = convertPersianNumbersToEnglish($buffer);
         fwrite($handle, $buffer);
         $this->logAMISip('create sip_trunk',true);
 
