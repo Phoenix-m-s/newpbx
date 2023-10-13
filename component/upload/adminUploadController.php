@@ -126,8 +126,8 @@ class AdminUploadController
         $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
         if ($checharacter==-1) {
             $result['result'] = -1;
-            $result['msg'] = 'You used an illegal character';
-            echo json_encode($result);
+            $message[] = 'You used an illegal character';
+            redirectPage(RELA_DIR . 'upload.php',   $message);
             die();
         }
         $uploadName = AdminUploadModel::getBy_comp_id_and_title($admin_info['comp_id'], $fields['Title'])->getList();
