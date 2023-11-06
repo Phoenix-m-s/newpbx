@@ -458,10 +458,10 @@ class sip_user_fileGenerator extends DataBase
 
         foreach ($array_fields as $key => $fields) {
             //Config For all Company
-            //$this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] . '-' . $fields['comp_name'] . ']';
+            $this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] . '-' . $fields['comp_name'] . ']';
 
             //Config For Just Zi-tel
-            $this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] .']';
+            //$this->class_fields[$count]['extension_no']['key'] = '[' . $fields['extension_no'] .']';
             $this->class_fields[$count]['extension_no']['value'] = '';
 
             if ($fields['caller_id_number'] != '') {
