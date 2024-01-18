@@ -260,6 +260,37 @@ fclose($handle);
 /*
 | --------------------------------------------------------------------------------------
 |
+| Creating All SipUserConf
+|
+| --------------------------------------------------------------------------------------
+*/
+$All_comp_list_new = Extention_fileGenerator::getCompanyList();
+$extension_file_name = ROOT_DIR . 'voip/sip-user.conf';
+if (file_exists($extension_file_name)) {
+    unlink($extension_file_name);
+}
+
+$handle = fopen($extension_file_name, 'w');
+ob_start();
+
+foreach ($All_comp_list_new['list'] as $key => $comp_fields) {
+    $file_name = 'sip-user-' . $comp_fields['comp_name'] . '.conf';
+
+    //echo '#include  '.ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
+    echo '#include  '.ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
+}
+
+$buffer = ob_get_contents();
+ob_end_clean();
+fwrite($handle, $buffer);
+logAMIAllInclude('sip-user.conf',true);
+logAMIAllInclude($buffer,true);
+fclose($handle);
+
+
+/*
+| --------------------------------------------------------------------------------------
+|
 | Creating SIP TRUNK File
 |
 | --------------------------------------------------------------------------------------
