@@ -132,6 +132,38 @@ class Extention_fileGenerator extends DataBase
         return $result;
 
     }
+    public static function getCompanyList()
+    {
+        $conn = parent::getConnection();
+
+
+        $sql = "SELECT * FROM tbl_company";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        if (!$stmt) {
+            $result['result'] = -1;
+            $result['no'] = 1;
+            $result['msg'] = $conn->errorInfo();
+            return $result;
+        }
+
+        $stmTp = $conn->prepare($sql);
+        $stmTp->setFetchMode(PDO::FETCH_ASSOC);
+        $stmTp->execute();
+
+        while ($row = $stmt->fetch()) {
+            $companyList[$row['comp_id']] = $row;
+        }
+
+        $result['list'] = $companyList;
+        $result['result'] = 1;
+        $result['no'] = 2;
+        return $result;
+
+    }
 
     /**
      *

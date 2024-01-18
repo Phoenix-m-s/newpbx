@@ -8,8 +8,8 @@ include_once ROOT_DIR . "common/func.inc.php";
 include_once ROOT_DIR . "component/db.inc.class.php";
 include_once ROOT_DIR . "component/php-ami-class.php";
 
-
 global $admin_info, $company_info;
+
 function logAMIAllInclude($message, $isSuccessful) {
     global $company_info;
 
@@ -73,43 +73,46 @@ include_once ROOT_DIR . "component/fileGenerator_extension_webrtc.php";
 | Fetches all the company from company database
 | --------------------------------------------------------------------------------------
 */
-$All_comp_list = Extention_fileGenerator::getCompany();
+
+
+$All_comp_list_new = Extention_fileGenerator::getCompanyList();
+//$extension_file_name = ROOT_DIR . 'voip/'. $company_info['comp_name'] . '/exten';
+$extension_file_name = ROOT_DIR . 'voip/exten';
+
+
+if (file_exists($extension_file_name)) {
+    unlink($extension_file_name);
+}
+
+$handle = fopen($extension_file_name.'.conf', 'w');
+
+
+ob_start();
+
+foreach ($All_comp_list_new['list'] as $key => $comp_fields) {
+    $file_name = $comp_fields['comp_name'] . '-exten.conf';
+
+    echo '#include' .' '.ROOT_DIR . 'voip/' .$comp_fields['comp_name'].'/'.$file_name . PHP_EOL;
+}
+
+$buffer = ob_get_contents();
+
+ob_end_clean();
+
+fwrite($handle, $buffer);
+logAMIAllInclude('exten.conf',true);
+logAMIAllInclude($buffer,true);
+fclose($handle);
+
 
 /*
 | --------------------------------------------------------------------------------------
-| Fetches the company that are logged in now which is active right now ...
+| exten for company
 | --------------------------------------------------------------------------------------
 */
-$comp_list = Extention_fileGenerator::getCompany($company_info['comp_id']);
-
-
-
-$comp_list = $comp_list['list'];
-
-
-foreach ($comp_list as $key => $fields) {
-    $extension = new Extention_fileGenerator($fields['comp_id']);
-    $extension->debugMode = '0';
-
-    $temp_file_name = $fields['comp_name'] . '-exten.conf';
-    $extension->fileName = ROOT_DIR . 'voip/' .$fields['comp_name'].'/'. $temp_file_name;
-    $extension->createExtensionFile();
-
-
-    $extension_webrtc = new Extention_fileGenerator_webrtc($fields);
-
-    $temp_file_name = $fields['comp_name'] . '-sip-webrtc.conf';
-    /* if (!file_exists($fields['comp_name'])) {
-         mkdir($fields['comp_name'], 0777, true);
-     }*/
-    $extension_webrtc->fileName = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/'. $temp_file_name;
-    $extension_webrtc->createExtensionWebrtcFile();
-
-
-}
-
-
+$All_comp_list = Extention_fileGenerator::getCompany();
 $extension_file_name = ROOT_DIR . 'voip/'. $company_info['comp_name'] . '/exten';
+
 
 
 if (file_exists($extension_file_name)) {
@@ -136,6 +139,37 @@ logAMIAllInclude('exten.conf',true);
 logAMIAllInclude($buffer,true);
 fclose($handle);
 
+/*
+| --------------------------------------------------------------------------------------
+| create Sipuser
+| --------------------------------------------------------------------------------------
+*/
+$comp_list = Extention_fileGenerator::getCompany($company_info['comp_id']);
+
+
+
+$comp_list = $comp_list['list'];
+
+foreach ($comp_list as $key => $fields) {
+    $extension = new Extention_fileGenerator($fields['comp_id']);
+    $extension->debugMode = '0';
+
+    $temp_file_name = $fields['comp_name'] . '-exten.conf';
+    $extension->fileName = ROOT_DIR . 'voip/' .$fields['comp_name'].'/'. $temp_file_name;
+    $extension->createExtensionFile();
+
+
+    $extension_webrtc = new Extention_fileGenerator_webrtc($fields);
+
+    $temp_file_name = $fields['comp_name'] . '-sip-webrtc.conf';
+    /* if (!file_exists($fields['comp_name'])) {
+         mkdir($fields['comp_name'], 0777, true);
+     }*/
+    $extension_webrtc->fileName = ROOT_DIR . 'voip/'.$company_info['comp_name'].'/'. $temp_file_name;
+    $extension_webrtc->createExtensionWebrtcFile();
+
+
+}
 
 /*
 | --------------------------------------------------------------------------------------
@@ -437,7 +471,7 @@ $handle = fopen($extension_file_name, 'w');
 ob_start();
 
 foreach ($All_comp_list['list'] as $key => $comp_fields) {
-    $All_comp_list['comp_name'];
+    //$file_name = 'voicemail-' . $comp_fields['comp_name'] . '.conf';
     $file_name = 'voicemail-' . $comp_fields['comp_name'] . '.conf';
     echo '#include  ' .ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
 }
@@ -497,8 +531,37 @@ $handle = fopen($extension_file_name, 'w');
 ob_start();
 
 foreach ($All_comp_list['list'] as $key => $comp_fields) {
-    $All_comp_list['comp_name'];
-    $file_name = 'voicemail-' . $comp_fields['comp_name'] . '.conf';
+
+    //$file_name = 'voicemail-' . $comp_fields['comp_name'] . '.conf';
+    $file_name ='queue-' .$comp_fields['comp_name'] . '.conf';
+    echo '#include  '.ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
+}
+$buffer = ob_get_contents();
+ob_end_clean();
+fwrite($handle, $buffer);
+logAMIAllInclude('sip-user.conf',true);
+logAMIAllInclude($buffer,true);
+fclose($handle);
+/*
+| --------------------------------------------------------------------------------------
+|
+| Creating All QUEUE conf
+|
+| --------------------------------------------------------------------------------------
+*/
+$All_comp_list_new = Extention_fileGenerator::getCompanyList();
+$extension_file_name = ROOT_DIR . 'voip/queue.conf';
+if (file_exists($extension_file_name)) {
+    unlink($extension_file_name);
+}
+
+$handle = fopen($extension_file_name, 'w');
+ob_start();
+
+foreach ($All_comp_list_new['list'] as $key => $comp_fields) {
+    $file_name = 'queue-' . $comp_fields['comp_name'] . '.conf';
+
+    //echo '#include  '.ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
     echo '#include  '.ROOT_DIR.'voip/'. $comp_fields['comp_name'] .'/'.$file_name . PHP_EOL;
 }
 

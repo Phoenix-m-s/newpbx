@@ -113,8 +113,8 @@ class fileGeneratorTrunk extends DataBase
 
         //print_r_debug($array_fields);
         foreach ($array_fields as $key => $fields) {
-            //$this->class_fields[$count]['sip_name']['key'] = '[' . $fields['sip_name'] . '-' . $fields['comp_name'] . ']';
-            $this->class_fields[$count]['sip_name']['key'] = '[' . $fields['sip_name'] . ']';
+            $this->class_fields[$count]['sip_name']['key'] = '[' . $fields['sip_name'] . '-' . $fields['comp_name'] . ']';
+           // $this->class_fields[$count]['sip_name']['key'] = '[' . $fields['sip_name'] . ']';
             $this->class_fields[$count]['sip_name']['value'] = '';
 
             $this->class_fields[$count]['sip_context']['key'] = 'context';

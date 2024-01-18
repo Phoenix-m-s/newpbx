@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="37786ca0-cfdd-4e25-bbc2-1a88165c0afc" name="172.20.8.227">
+        <fileTransfer rootFolder="/var/www/newpbx" accessType="SFTP" host="172.20.8.227" port="22" sshConfigId="e1d3e6b4-7d0e-425a-8510-a419396573e1" sshConfig="root@172.20.8.227:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="3231b232-01ed-4ee0-853a-5e903072ce33" name="172.20.8.98">
+        <fileTransfer rootFolder="/opt/voip-multi-company" accessType="SFTP" host="172.20.8.98" port="22" sshConfigId="60645f98-6be8-4584-a839-c9080571b2f6" sshConfig="172.20.8.98">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

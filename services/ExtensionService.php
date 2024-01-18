@@ -44,8 +44,8 @@ class ExtensionService
 
     public function getAllExtensionName()
     {
-
-        $upLoadDirty = AdminExtensionModel::getAll()->get();
+        global $company_info;
+        $upLoadDirty = AdminExtensionModel::getAll() ->where('comp_id', '=', $company_info['comp_id'])->get();;
 
         foreach ($upLoadDirty['export']['list'] as $key => $value) {
             $result[$key]['name'] = $value->fields['extension_name'];
