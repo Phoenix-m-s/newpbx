@@ -137,7 +137,7 @@ class Extention_fileGenerator extends DataBase
         $conn = parent::getConnection();
 
 
-        $sql = "SELECT * FROM tbl_company";
+        $sql = "SELECT * FROM tbl_company where trash=0";
 
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
