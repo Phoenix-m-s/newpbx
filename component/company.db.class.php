@@ -499,7 +499,7 @@ class company_db extends DataBase
                  `email` as Email,
                  `comp_id` as comp_id,
                  `comp_status` as Comp_Status
-    		     FROM 	tbl_company where trash='0' " . $filter['WHERE'] . $filter['filter'] . $filter['order'] . $filter['limit'];
+    		     FROM 	tbl_company" . $filter['WHERE'] . $filter['filter'] . $filter['order'] . $filter['limit'];
 
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

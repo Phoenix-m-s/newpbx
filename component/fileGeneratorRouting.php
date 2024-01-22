@@ -9,11 +9,11 @@ class fileGeneratorRouting extends DataBase
     function logAMIRouting($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
+        if (!file_exists('newpbx/'.$company_info['comp_name'].'/log/')) {
+            mkdir('newpbx/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
+        $logFilePath =  'newpbx/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';

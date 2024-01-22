@@ -17,12 +17,12 @@ foreach ($comp_list as $key => $fields) {
     $extension->debugMode = '1';
 
     $temp_file_name = $fields['comp_id'] . '-exten.conf';
-    $extension->fileName = ROOT_DIR . 'voip/' . $temp_file_name;
+    $extension->fileName = ROOT_DIR . 'newpbx/' . $temp_file_name;
     $list_file_name[] = $temp_file_name;
     $extension->createExtensionFile();
 }
 
-$extension_file_name = ROOT_DIR.'voip/' . 'exten.conf';
+$extension_file_name = ROOT_DIR.'newpbx/' . 'exten.conf';
 if (file_exists($extension_file_name)) {
     unlink($extension_file_name);
 }
@@ -61,7 +61,7 @@ $defaultConfig['ALL']['7']['value'] = 'yes';
 $sipObj= new sip_user_fileGenerator();
 
 $sipObj->debugMode = '1';
-$sipObj->fileName = ROOT_DIR.'voip/' . 'sip_user.conf';
+$sipObj->fileName = ROOT_DIR.'newpbx/' . 'sip_user.conf';
 $sipObj->defaultConfig = $defaultConfig;
 
 $sipObj->createSipFile();
@@ -76,7 +76,7 @@ $defaultConfig['ALL'][1]['value'] = 'yes';
 $sipTrunkObj = new sip_trunk_fileGenerator();
 
 $sipTrunkObj->debugMode = '1';
-$sipTrunkObj->fileName = ROOT_DIR.'voip/' . 'sip_trunk.conf';
+$sipTrunkObj->fileName = ROOT_DIR.'newpbx/' . 'sip_trunk.conf';
 $sipTrunkObj->defaultConfig = $defaultConfig;
 
 $sipTrunkObj->createSipFile();
@@ -91,7 +91,7 @@ $defaultConfig['HEAD'][1]['key'] = '[default]';
 $defaultConfig['HEAD'][1]['value'] = '';
 
 $voiceMailObj->debugMode = '1';
-$voiceMailObj->fileName = ROOT_DIR.'voip/' . 'voicemail.conf';
+$voiceMailObj->fileName = ROOT_DIR.'newpbx/' . 'voicemail.conf';
 $voiceMailObj->defaultConfig = $defaultConfig;
 $voiceMailObj->createVoiceMailFile();
 
@@ -114,6 +114,6 @@ $defaultConfig['ALL']['1']['key'] = 'leavewhenempty';
 $defaultConfig['ALL']['1']['value'] = 'yes';
 
 $voiceMailObj->debugMode = '1';
-$voiceMailObj->fileName = ROOT_DIR.'voip/' . 'queue.conf';
+$voiceMailObj->fileName = ROOT_DIR.'newpbx/' . 'queue.conf';
 $voiceMailObj->defaultConfig = $defaultConfig;
 $voiceMailObj->createQueueFile();

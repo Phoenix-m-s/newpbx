@@ -41,11 +41,11 @@ class Extention_fileGenerator extends DataBase
     function logAMIExtension($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
-            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
+        if (!file_exists('newpbx/'.$company_info['comp_name'].'/log/')) {
+            mkdir('newpbx/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
+        $logFilePath =  'newpbx/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';
@@ -105,7 +105,7 @@ class Extention_fileGenerator extends DataBase
             $append_sql = 'and comp_id=' . $comp_id;
         }
 
-        $sql = "SELECT * FROM tbl_company WHERE `trash`='0' $append_sql";
+        $sql = "SELECT * FROM tbl_company ".$append_sql;
 
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -4295,7 +4295,7 @@ class Extention_fileGenerator extends DataBase
 
 
         $this->class_fields[$count]['exten_set_path']['key'] = 'exten';
-        $this->class_fields[$count]['exten_set_path']['value'] = 's,1,Set(path=' . RECORD_PATH .'voip/'. $comp_name . DS . "monitor" . DS . ')';
+        $this->class_fields[$count]['exten_set_path']['value'] = 's,1,Set(path=' . RECORD_PATH .'newpbx/'. $comp_name . DS . "monitor" . DS . ')';
         $this->class_fields[$count]['exten_set_path']['operator'] = ' => ';
 
         $this->class_fields[$count]['exten_set_company']['key'] = 'exten';
