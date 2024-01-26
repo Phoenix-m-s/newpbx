@@ -70,13 +70,13 @@ class admin
         $sql = "DELETE FROM sessions_admin WHERE last_access_time < (NOW()-3000000)";
 
 
-        $db2->query ( $sql );
+        $db2->query($sql);
 
-        $password = md5 ( $password );
+        $password = md5($password);
 
         $sql = "SELECT `admin_id` ,`comp_id` , `name`, `family` FROM `admin` where `comp_id` = '" . $company_info[ 'comp_id' ] . "' AND `username` = '" . $username . "' AND password = '" . $password . "'";
 
-        $admin_rs = $db2->query ( $sql );
+        $admin_rs = $db2->query ($sql);
 
         $obj = $admin_rs->fetch ( PDO::FETCH_OBJ );
 

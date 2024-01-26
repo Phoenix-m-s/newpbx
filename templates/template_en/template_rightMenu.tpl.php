@@ -19,7 +19,7 @@ $listMenu = checkDisplayUi();
             <?php if ($admin_info != -1) { ?>
 
                 <?php
-                if ($company_info != -1 and $admin_info['loginAs'] != ''): ?>
+                if ($company_info != -1 and $admin_info['loginAs'] != '' and $company_info['comp_name']=='zitel'): ?>
 
                 <?php endif ?>
                 <?php if($listMenu['loginAs']!=0){?>
@@ -36,7 +36,7 @@ $listMenu = checkDisplayUi();
                         <span class="sidebar-text"><?php echo INDEX_001; ?></span> </a>
                 </li>
 
-                <?php  if($listMenu['SuperAdmin']!=0){?>
+                <?php  if($listMenu['SuperAdmin']!=0 and $company_info['comp_name']=='zitel'){?>
                     <li>
                         <a class="hasMenu"> <i class="sidebar-icon fa fa-user"></i>
                             <span class="sidebar-text"><?php echo INDEX_012; ?></span>

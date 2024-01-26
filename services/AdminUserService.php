@@ -159,6 +159,7 @@ class AdminUserService
             return $result;
         }
         $user = AdminUser::find($fields['admin_id']);
+        //print_r_debug($user);
 
 
         if (!is_object($user)) {

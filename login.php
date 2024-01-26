@@ -1,4 +1,5 @@
 <?php
+
 require_once "server.inc.php";
 require_once "common/essential.inc.php";
 
