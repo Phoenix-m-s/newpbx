@@ -225,10 +225,13 @@ class AdminUserService
     public function editPermission($fields, $adminId)
     {
         $user = AdminUser::find($adminId);
-        $result = $user->setFields($fields);
+
+        $result = $user->setFields();
 
         $user->save();
+
         $user = AdminUser::find($adminId);
+
         //dd($user);
         return $result;
     }

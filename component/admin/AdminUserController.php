@@ -266,7 +266,7 @@ class AdminUserController
         $PagePermission=$adminDirty->getAllPermissions();
         $permissionCode='';
         $countAllPermission=count($PagePermission)*COUNT_PERMISSION-1;
-        //print_r_debug(COUNT_PERMISSION);
+
 
         for($i=0;$i<=$countAllPermission;$i++)
         {
