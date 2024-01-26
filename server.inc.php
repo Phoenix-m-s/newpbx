@@ -92,7 +92,7 @@ define("SERVER_IP", "127.0.0.1");
 define("UPLOAD_VOIPCONFIG_DIR", ROOT_DIR . "component/voip_config/admin/model/");
 //uploader
 define("SIZE_UPLOAD_FILE", 50000000);
-define("TARGET_DIR", ROOT_DIR . "newpbx/");
+define("TARGET_DIR", ROOT_DIR . "voip/");
 
 
 

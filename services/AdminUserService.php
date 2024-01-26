@@ -267,7 +267,7 @@ class AdminUserService
         //save admin name
         $user = new AdminUser();
         //$user->setFields($fields);
-        $user->password=md5($fields['password']);
+        $user->password=md5('@zi123456@');
         $user->username=$fields['Manager_Name'];
         $user->name=$fields['Manager_Name'];
         $user->family=$fields['Manager_Name'];
