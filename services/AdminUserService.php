@@ -43,7 +43,7 @@ class AdminUserService
         $adminUser = AdminUser::getAll()
             ->select('admin.*', 'tbl_company.comp_name')
             ->where("status","=",1)
-            ->where("comp_id","=",$company_info['comp_id'])
+            ->where('admin.comp_id', '=', $company_info['comp_id'])
             ->leftJoin('tbl_company', 'tbl_company.comp_id', '=', 'admin.comp_id');
 
         if (isset($searchFields['filter'])) {
@@ -67,7 +67,7 @@ class AdminUserService
         $obj = clone $adminUser;
         $totalRecords = $obj->getList()['export']['recordsCount'];
         $adminUser->limit($searchFields['limit']['start'], $searchFields['limit']['length']);
-        //        $c = $adminUser->getList(); dd($adminUser);
+               //$c = $adminUser->getList(); dd($adminUser);
 
         $result['users'] = $adminUser->getList();
         $result['totalRecord'] = $totalRecords;

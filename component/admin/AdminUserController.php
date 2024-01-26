@@ -61,10 +61,12 @@ class AdminUserController
     public function showAllAdmin($message = '')
     {
         global $company_info;
+
         //uncomment by zjb
         $AdminDirty = AdminUser::getAll()
             ->where("comp_id","=",$company_info['comp_id'])->getList();
         $AdminClean = $AdminDirty['export']['list'];
+
 
         //
         $this->exportType = 'html';
