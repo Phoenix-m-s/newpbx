@@ -949,6 +949,11 @@ class company_operation
         if ($resultInsert['result'] == -1) {
             return $resultInsert['msg'];
         }
+        // Assuming $comp_id is a global variable declared elsewhere
+        global $comp_id;
+
+        // Set the global comp_id variable with the inserted company's ID
+        $comp_id = $this->_companyDbObj->getInsertedCompanyId();
 
         $result = $this->set_companyGroupInfo($this->_companyDbObj->groupCompany);
         $result['result'] = 1;

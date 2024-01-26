@@ -13,7 +13,7 @@ if ($admin_info == -1) {
 }
 
 
-//checkPermissions('view');
+checkPermissions('view');
 
 
 $AdminList = new admin();

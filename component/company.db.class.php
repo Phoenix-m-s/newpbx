@@ -484,12 +484,17 @@ class company_db extends DataBase
     private function _getCompany($fields = '')
     {
 
-        global $admin_info;
+        global $admin_info,$company_info;
         $this->_checkPermission();
         $conn = parent::getConnection();
         $filter = $this->filterBuilder($fields);
         $length = $filter['length'];
         $filter = $filter['list'];
+        if($company_info['comp_name']!='zitel')
+        {
+            $filter['filter'] = 'trash = 0 and comp_id='.$company_info['comp_id'];
+        }
+
 
         $sql = "SELECT
                  `comp_name` as Comp_Name,
@@ -501,8 +506,13 @@ class company_db extends DataBase
                  `comp_status` as Comp_Status
     		     FROM 	tbl_company" . $filter['WHERE'] . $filter['filter'] . $filter['order'] . $filter['limit'];
 
+
+
+// استفاده از پارامترهای محافظت شده
+
         $stmt = $conn->prepare($sql);
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->bindParam(':compId', $company_info['comp_id'], PDO::PARAM_INT);
+        //$stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
         if (!$stmt) {
@@ -731,6 +741,7 @@ class company_db extends DataBase
      */
     private function _insertCompanyDB()
     {
+        global $comp_id;
         // global $lang;
         $conn = parent::getConnection();
 
@@ -770,6 +781,8 @@ class company_db extends DataBase
         }
 
         $insertedId = $conn->lastInsertId();
+        // Assign the value to the global variable
+        $comp_id = $insertedId;
         $this->_companyFields['comp_id'] = $insertedId;
         $this->_set_InsertCompanyDB($insertedId, $this->_companyFields);
         $result['result'] = 1;

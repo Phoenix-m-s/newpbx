@@ -221,7 +221,7 @@ class ExtensionService
             die();
         }
 
-        $queueNumberCheck = adminQueueModel::getBy_queue_ext_no($fields['tc'][0]['extension_no'])->getList();
+        $queueNumberCheck = adminQueueModel::getBy_queue_ext_no_and_comp_id($fields['tc'][0]['extension_no'],$fields['comp_id'])->getList();
 
         if ($queueNumberCheck['export']['recordsCount'] >= 1) {
             $result['result'] = -1;

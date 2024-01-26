@@ -15,11 +15,11 @@ class queue_fileGenerator extends DataBase
     function logAMIQueue($message, $isSuccessful) {
         global $company_info;
         // مسیر فایل لاگ
-        if (!file_exists('newpbx/'.$company_info['comp_name'].'/log/')) {
-            mkdir('newpbx/'.$company_info['comp_name'].'/'.'log/', 0777, true);
+        if (!file_exists('voip/'.$company_info['comp_name'].'/log/')) {
+            mkdir('voip/'.$company_info['comp_name'].'/'.'log/', 0777, true);
 
         }
-        $logFilePath =  'newpbx/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
+        $logFilePath =  'voip/'.$company_info['comp_name'].'/'.'log/fileGenerator.log';
 
         // سطح لاگ‌گذاری: INFO برای موفقیت و ERROR برای خطا
         $logLevel = $isSuccessful ? 'INFO' : 'ERROR';

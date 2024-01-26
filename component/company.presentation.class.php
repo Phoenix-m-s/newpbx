@@ -393,6 +393,8 @@ class company_presentation
      */
     public function addCompany($fields)
     {
+        global $comp_id;
+
         global $conn, $lang;
         //******
         $token_list=array_keys($fields['token']);
@@ -448,6 +450,8 @@ class company_presentation
             }
 
         }
+        $fields['comp_id']=$comp_id;
+
         $adminUserService = new AdminUserService();
 
         $adminUserService->saveToAdmin($fields);

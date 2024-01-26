@@ -1089,6 +1089,7 @@ function checkPermissionsUI($pageName,$action)
 
     $PagePermission=getAllPermisssion();
 
+
     $newObj=$PagePermission[$pageName];
 
     unset($PagePermission);

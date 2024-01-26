@@ -42,7 +42,7 @@ class QueueService
     {
         //////////////get extensionList////////////
         $extensionNameList = new ExtensionService();
-        $fields['agents_no'] = $extensionNameList->getAllExtensionName();
+        $fields['agents_no'] = $extensionNameList->getAllExteحnsionName();
 
         //////////////get dialExtensionDetail////////////
         $queueOption = new TblDstOptionService();

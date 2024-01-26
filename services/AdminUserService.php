@@ -256,13 +256,18 @@ class AdminUserService
     public function saveToAdmin($fields)
     {
 
-        global $company_info;
+        if(isset($fields['comp_id'])!=''){
+            $company_info['comp_id']=$fields['comp_id'];
+        }
+        else{
+            global $company_info;
+        }
         looeic::beginTransaction();
         //***********************
         //save admin name
         $user = new AdminUser();
         //$user->setFields($fields);
-        $user->password=md5('zi12345');
+        $user->password=md5($fields['password']);
         $user->username=$fields['Manager_Name'];
         $user->name=$fields['Manager_Name'];
         $user->family=$fields['Manager_Name'];
