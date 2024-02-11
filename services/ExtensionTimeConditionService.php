@@ -11,11 +11,24 @@ class ExtensionTimeConditionService
 {
     public function getAllExtensionTimeCondition($id)
     {
+
         global $company_info;
-        $ExtensionTimeConditionList = AdminNewNameExstionModel::getAll()
+
+        if(isset($id))
+        {
+            $ExtensionTimeConditionList = AdminNewNameExstionModel::getAll()
         ->where('comp_id', '=', $company_info['comp_id'])
         ->where('extension_id','=',$id)
         ->get();
+
+        }
+        else{
+
+            $ExtensionTimeConditionList = AdminMainTimeConditionModel::getAll()
+                ->where('comp_id', '=', $company_info['comp_id'])->get();
+        }
+
+
         $result['0'] = array('name' => 'choose from list', 'id' => '');
         $i = 1;
         foreach ($ExtensionTimeConditionList['export']['list'] as $key => $value) {

@@ -102,8 +102,10 @@ class ExtensionService
         $extensionOption = new TblDstOptionService();
         $dialExtension_list = $extensionOption->getExtensionSuccessOption();
         $list['dst_option_id'] = $extensionOption->getDialExtensionDetailByName($dialExtension_list);
+        unset($list['dst_option_id'][6]);
         $FdialExtension_list = $extensionOption->getExtensionFailedOption();
         $list['fdst_option_id'] = $extensionOption->getDialExtensionDetailByName($FdialExtension_list);
+        unset($list['fdst_option_id'][5]);
         foreach ($list['fdst_option_id'] as $key => $value) {
             if ($value['dst_option_id'] == 6) {
                 foreach ($value['child'] as $k => $v) {
@@ -390,6 +392,7 @@ class ExtensionService
         $dialExtension_list = $extensionOption->getExtensionSuccessOption($extensionId);
         $fields['dst_option_id'] = $extensionOption->getDialExtensionDetailByName($dialExtension_list, $extensionId);
         $FdialExtension_list = $extensionOption->getExtensionFailedOption($extensionId);
+        //print_r_debug($fields);
         $fields['fdst_option_id'] = $extensionOption->getDialExtensionDetailByName($FdialExtension_list, $extensionId);
         $i = 0;
 

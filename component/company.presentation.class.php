@@ -106,7 +106,7 @@ class company_presentation
                 $st ='<a href="'.RELA_DIR.'company.php?action=editCompany&id=' . $list['comp_id'].'"  rel="tooltip" data-original-title="'. EDIT_01 .'">
                                             <i class="fa fa-pencil text-green"></i>
                                         </a>
-                                        <a href="'.RELA_DIR.'company.php?action=trashCompany&id='. $list['comp_id'].'"  rel="tooltip" data-original-title="'. DELETE_01 .'">
+                                        <a href="'.RELA_DIR.'company.php?action=deleteCompany&id='. $list['comp_id'].'"  rel="tooltip" data-original-title="'. DELETE_01 .'">
                                             <i class="fa fa-trash text-red"></i>
                                         </a>';
                 return $st;

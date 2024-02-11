@@ -62,6 +62,7 @@ class TblDstOptionService
             $list[$i]['dst_option_id'] = $value->dst_option_id;
 
             if ($value->dst_option_id == 12 or $value->dst_option_id == 9) {
+
                 $list[$i]['id'] = $id;
             } else if ($value->dst_option_id == 13) {
                 $list[$i]['dst_option_id'] = '';
@@ -148,9 +149,8 @@ class TblDstOptionService
      */
     public function getDialExtensionDetailByName($list, $id)
     {
+
         //print_r_debug($list);
-
-
         /*$dstServiceList=array(
             1=>'Sip',
             2=>'Queue',
@@ -186,8 +186,16 @@ class TblDstOptionService
                 $list[$key]['child'] = $className->$funcName($id);
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
                
-            } else if ($value['dst_option_id'] ==12) {
-                $list[$key]['child'] = $className->$funcName($id);
+            }else if ($value['dst_option_id'] ==8) {
+                $list[$key]['child'] = $className->$funcName($value['id']);
+                //print_r_debug($list[$key]['child'] = $className->$funcName($id));
+
+            }
+
+            else if ($value['dst_option_id'] ==12) {
+
+                $list[$key]['child'] = $className->$funcName($value['id']);
+
                 //print_r_debug($list[$key]['child'] = $className->$funcName($id));
 
             }
@@ -195,6 +203,7 @@ class TblDstOptionService
             else {
 
                 $list[$key]['child'] = $className->$funcName();
+
             }
             $i++;
             
