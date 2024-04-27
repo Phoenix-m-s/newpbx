@@ -29,6 +29,16 @@ class CompanyService
         return $result;
 
     }
+    public function getCompanylistApi()
+    {
+        $company = new AdminCompanyModel();
+        $companyList = $company->getAll()
+            ->paginate(10)
+            ->getList();
+        $data['export']=$companyList;
+        return $data;
+    }
+
     public function getCompanyUsers($searchFields)
     {
         $company = AdminCompanyModel::getAll();
@@ -244,7 +254,7 @@ class CompanyService
 
         $companyObj->support_email = "0";
 
-        $companyObj->container_comp_id = $fields['container_comp_id'];
+        $companyObj->container_comp_id = "1";
 
         $companyObj->comp_status = 1;
 
