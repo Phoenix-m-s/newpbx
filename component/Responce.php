@@ -29,6 +29,7 @@ class Response
     public static function json($data, $status)
     {
         $obj= new Response();
+
         return  $obj->response($data,$status,'json');
 
     }
@@ -43,6 +44,7 @@ class Response
         $this->_code = ($status) ? $status : $this->_code;
         $this->set_headers();
         $funcName = 'encode' . ucfirst($exportType);
+
         echo $this->$funcName($data);
         exit;
         die();
