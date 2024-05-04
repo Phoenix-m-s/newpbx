@@ -20,7 +20,7 @@ include_once ROOT_DIR . 'services/dependency/DependencyService.php';
 include_once ROOT_DIR . "services/TblDstOptionService.php";
 require_once ROOT_DIR . "common/init.inc.php";
 include_once ROOT_DIR . 'component/admin/AdminUser.php';
-
+include_once ROOT_DIR . "component/timeCondition/mainTimeConditionController.php";
 /**
  * @author Malekloo Izadi Sakhamanesh <Izadi@dabacenter.ir>
  * @version 0.0.1 this is the beta version of News
@@ -275,6 +275,81 @@ class extension_presentation
 
         $extension = new ExtensionService();
         $result = $extension->addExtension($fields);
+
+
+        $timeConditionFieldsRest = array(
+            'name' => 'rest-'. $fields['tc'][0]['extension_name'],
+            'comp_id' => $company_info['comp_id'],
+            'extension_id' => $_SESSION['extension_id'],
+            'tc' => array(
+                array(
+                    'dst_option_id_selected' => array(
+                        'dst_option_id' => 7,
+                        'dst_option_sub_id' => '',
+                        'DSTOption' => ''
+                    ),
+                    'hourStart' => '1:50',
+                    'hourEnd' => '17:50',
+                    'weekDayStart' => 6,
+                    'weekDayEnd' => 7,
+                    'dayStart' => '',
+                    'dayEnd' => '',
+                    'monthStart' => '',
+                    'monthEnd' => ''
+                )
+            ),
+            'failTc' => array(
+                array(
+                    'fdst_option_id' => 7,
+                    'fdst_option_sub_id' => '',
+                    'fDSTOption' => ''
+                )
+            ),
+            'action' => 'addTimeCondition'
+        );
+
+
+        $timeConditionFieldswork = array(
+            'name' => 'work-'. $fields['tc'][0]['extension_name'],
+            'comp_id' => $company_info['comp_id'],
+            'extension_id' => $_SESSION['extension_id'],
+            'tc' => array(
+                array(
+                    'dst_option_id_selected' => array(
+                        'dst_option_id' => 7,
+                        'dst_option_sub_id' => '',
+                        'DSTOption' => ''
+                    ),
+                    'hourStart' => '1:50',
+                    'hourEnd' => '3:50',
+                    'weekDayStart' => 1,
+                    'weekDayEnd' => 5,
+                    'dayStart' => '',
+                    'dayEnd' => '',
+                    'monthStart' => '',
+                    'monthEnd' => ''
+                )
+            ),
+            'failTc' => array(
+                array(
+                    'fdst_option_id' => 7,
+                    'fdst_option_sub_id' => '',
+                    'fDSTOption' => ''
+                )
+            ),
+
+        );
+
+        // یکبار نیو کردن شیء adminMainTimeConditionController
+        $timeConditionController = new adminMainTimeConditionController();
+
+// فراخوانی addTimeCondition برای اولین بار
+        $timeConditionRestResult = $timeConditionController->addTimeConditionApi($timeConditionFieldsRest);
+
+// فراخوانی addTimeCondition برای دومین بار
+        $timeConditionWorkResult = $timeConditionController->addTimeConditionApi($timeConditionFieldswork);
+
+
         if ($result['result'] != 1) {
             $result['result'] = -1;
         } else {
@@ -370,7 +445,7 @@ class extension_presentation
 
         }
 
-         //**************
+        //**************
         //checkusername
         $usernameCheck = AdminExtensionModel::getBy_comp_id_and_username_and_not_extension_id($fields['comp_id'], $fields['tc'][0]['username'], $fields['tc'][0]['extension_id'])->getList();
         if ($usernameCheck['export']['recordsCount'] >= 1) {

@@ -256,6 +256,47 @@ class adminMainTimeConditionController
         echo json_encode($result);
         die();
     }
+    public function addTimeConditionApi($fields)
+    {
+
+        global $company_info;
+        looeic::beginTransaction();
+        $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
+        if ($checharacter==-1) {
+            $result['result'] = -1;
+            $result['msg'] = 'You used an illegal character';
+            echo json_encode($result);
+            die();
+        }
+        $fields['comp_id'] = $company_info['comp_id'];
+        $timeConditionModel = new AdminMainTimeConditionModel($fields);
+        $timeConditionModel->name = $fields['name'];
+        $timeConditionModel->comp_id = $fields['comp_id'];
+
+        $validate = $timeConditionModel->validator();
+        if ($validate['result'] == -1) {
+            $result['fields'] = $validate;
+            echo json_encode($result);
+            die();
+        }
+
+        $timeConditionName = AdminMainTimeConditionModel::getBy_comp_id_and_name($fields['comp_id'], $fields['name'])->getList();
+        if ($timeConditionName['export']['recordsCount'] >= 1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] = 'this timeCondition name is exist';
+            echo json_encode($result);
+            die();
+        }
+        $timeConditionModel->save();
+        $fields['timeConditionID'] = $timeConditionModel->id;
+        $timeConditionDetailModel = AdminMainTimeConditionDetailModel::SetFieldsAndSave($fields);
+        looeic::commit();
+        $companyObj = new AdminCompanyModel();
+        $company = $companyObj->find($company_info['comp_id']);
+        $company->reload_alert = 1;
+        $company->save();
+    }
 
     /**
      * edit time condition into database
