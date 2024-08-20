@@ -1,0 +1,10 @@
+# جلوگیری از دسترسی به محتویات پوشه
+Options -Indexes
+
+# فقط اجازه درخواست POST به فایل‌های PHP
+
+# جلوگیری از دسترسی به فایل .htaccess
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>

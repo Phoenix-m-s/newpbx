@@ -241,9 +241,9 @@ class companyController
         if($result['result']!=-1)
         {
 
-            $list['success'] = "true";
-            $list['responseCode'] = 1;
             $list['data'] = $fields;
+            $list['success'] = "true";
+            $list['result'] = 1;
 
             Response::json($list, 201);
         }
