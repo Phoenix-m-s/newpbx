@@ -1084,7 +1084,7 @@ class looeic extends DB
         $conn = dbConn::getConnection($this->CONNECTION_NAME);
         $sql = "
                     INSERT INTO " . $this->TABLE_NAME . "( " . $sql_key . " ) VALUES ( " . $sql_val . " ) ";
-        //die($sql);
+
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

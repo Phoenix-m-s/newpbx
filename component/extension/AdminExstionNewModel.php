@@ -98,6 +98,10 @@ class AdminExstionNewModel extends looeic
         }*/
         //print_r_debug($component);
         $result = $model->save();
+
+        $result['extension_id'] = $model->extension_id;
+        $result['time_condtion_name_id']=$model->extension_id;
+
         return $result;
     }
 }

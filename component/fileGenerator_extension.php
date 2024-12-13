@@ -102,11 +102,11 @@ class Extention_fileGenerator extends DataBase
         $conn = parent::getConnection();
         $append_sql = '';
         if ($comp_id != '') {
-            $append_sql = 'and comp_id=' . $comp_id;
+            $append_sql = 'where comp_id=' . $comp_id;
         }
 
         $sql = "SELECT * FROM tbl_company ".$append_sql;
-        die($sql);
+
 
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

@@ -264,98 +264,171 @@ class extension_presentation
     public function addExtension($fields)
     {
         global $company_info;
+
+        // بررسی مقدار comp_id
+        if (empty($company_info['comp_id'])) {
+            $result['result'] = -1;
+            $result['msg'] = 'Company ID is missing';
+            echo json_encode($result);
+            die();
+        }
+
+        // بررسی کاراکترهای غیرمجاز
         $checharacter = checkForPersianWordsInMultiDimensionalKeyValueArray($fields);
-        if ($checharacter==-1) {
+        if ($checharacter == -1) {
             $result['result'] = -1;
             $result['msg'] = 'You used an illegal character';
             echo json_encode($result);
             die();
         }
+
+        // شروع تراکنش
+        looeic::beginTransaction();
+
+        // افزودن comp_id به فیلدها
         $fields['comp_id'] = $company_info['comp_id'];
 
-        $extension = new ExtensionService();
-        $result = $extension->addExtension($fields);
+        // ذخیره اکستنش
+        $extensionModel = new ExtensionService();
+        $resultAddExtension = $extensionModel->addExtension($fields);
+        if ($resultAddExtension['result'] == -1 || empty($resultAddExtension['extension_id'])) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] = 'Failed to add extension';
+            echo json_encode($result);
+            die();
+        }
 
 
-        $timeConditionFieldsRest = array(
-            'name' => 'rest-'. $fields['tc'][0]['extension_name'],
-            'comp_id' => $company_info['comp_id'],
-            'extension_id' => $_SESSION['extension_id'],
-            'tc' => array(
-                array(
-                    'dst_option_id_selected' => array(
+        // دریافت extension_id
+        $extension_id = $resultAddExtension['extension_id'];
+        $fields['extension_id'] = $extension_id;
+
+
+
+        // تنظیم تایم کاندیشن برای rest
+        $timeConditionFieldsRest = array_merge($fields, [
+            'name' => 'rest-' . $fields['tc'][0]['extension_name'],
+            'tc' => [
+                [
+                    'dst_option_id_selected' => [
                         'dst_option_id' => 7,
                         'dst_option_sub_id' => '',
                         'DSTOption' => ''
-                    ),
+                    ],
                     'hourStart' => '1:50',
                     'hourEnd' => '17:50',
                     'weekDayStart' => 6,
                     'weekDayEnd' => 7,
-                    'dayStart' => '',
-                    'dayEnd' => '',
-                    'monthStart' => '',
-                    'monthEnd' => ''
-                )
-            ),
-            'failTc' => array(
-                array(
+                    'dst_option_id' => 7,
+                    'dst_option_sub_id' => 0,
+                    'DSTOption' => 0,
+                ]
+            ],
+            'failTc' => [
+                [
                     'fdst_option_id' => 7,
                     'fdst_option_sub_id' => '',
                     'fDSTOption' => ''
-                )
-            ),
-            'action' => 'addTimeCondition'
-        );
+                ]
+            ],
+        ]);
 
+        // ذخیره تایم کاندیشن‌های rest
+        $timeConditionModelRest = new AdminNewNameExstionModel();
+        $resultAddTimeConditionRest = $timeConditionModelRest::SetFieldsAndSave($timeConditionFieldsRest);
 
-        $timeConditionFieldswork = array(
-            'name' => 'work-'. $fields['tc'][0]['extension_name'],
-            'comp_id' => $company_info['comp_id'],
-            'extension_id' => $_SESSION['extension_id'],
-            'tc' => array(
-                array(
-                    'dst_option_id_selected' => array(
+        $fields['time_condtion_name_id']=$resultAddTimeConditionRest['id'];
+
+        $timeConditionFieldsRest['time_condtion_name_id']= $fields['time_condtion_name_id'];
+        if ($resultAddTimeConditionRest['result'] == -1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] = 'Failed to add rest time condition';
+            echo json_encode($result);
+            die();
+        }
+
+        // ذخیره جزئیات تایم کاندیشن‌های rest
+        $timeConditionDetailModelRest = new adminTimeConditionModel();
+        $timeConditionDetailRest = $timeConditionDetailModelRest::SetFieldsAndSaveApi($timeConditionFieldsRest);
+        if ($timeConditionDetailRest['result'] == -1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] = 'Failed to add rest time condition details';
+            echo json_encode($result);
+            die();
+        }
+        // تنظیم تایم کاندیشن برای work
+        $timeConditionFieldsWork = array_merge($fields, [
+            'name' => 'work-' . $fields['tc'][0]['extension_name'],
+            'tc' => [
+                [
+                    'dst_option_id_selected' => [
                         'dst_option_id' => 7,
                         'dst_option_sub_id' => '',
                         'DSTOption' => ''
-                    ),
+                    ],
                     'hourStart' => '1:50',
                     'hourEnd' => '3:50',
                     'weekDayStart' => 1,
                     'weekDayEnd' => 5,
-                    'dayStart' => '',
-                    'dayEnd' => '',
-                    'monthStart' => '',
-                    'monthEnd' => ''
-                )
-            ),
-            'failTc' => array(
-                array(
+                    'dst_option_id' => 7,
+                    'dst_option_sub_id' => 0,
+                    'DSTOption' => 0,
+                ]
+            ],
+            'failTc' => [
+                [
                     'fdst_option_id' => 7,
                     'fdst_option_sub_id' => '',
                     'fDSTOption' => ''
-                )
-            ),
+                ]
+            ],
+        ]);
 
-        );
+        // ذخیره تایم کاندیشن‌های work
+        $timeConditionModelWork = new AdminNewNameExstionModel();
+        $resultAddTimeConditionWork = $timeConditionModelWork::SetFieldsAndSave($timeConditionFieldsWork);
+        $fields['time_condtion_name_id']=$resultAddTimeConditionWork['id'];
+        $timeConditionFieldsWork['time_condtion_name_id']=$fields['time_condtion_name_id'];
 
-        // یکبار نیو کردن شیء adminMainTimeConditionController
-        $timeConditionController = new adminMainTimeConditionController();
-
-// فراخوانی addTimeCondition برای اولین بار
-        $timeConditionRestResult = $timeConditionController->addTimeConditionApi($timeConditionFieldsRest);
-
-// فراخوانی addTimeCondition برای دومین بار
-        $timeConditionWorkResult = $timeConditionController->addTimeConditionApi($timeConditionFieldswork);
-
-
-        if ($result['result'] != 1) {
+        if ($resultAddTimeConditionWork['result'] == -1) {
+            looeic::rollback();
             $result['result'] = -1;
-        } else {
-            $company = new CompanyService();
-            $result = $company->activeRelaod($company_info['comp_id']);
+            $result['msg'] = 'Failed to add work time condition';
+            echo json_encode($result);
+            die();
         }
+
+        // ذخیره جزئیات تایم کاندیشن‌های work
+        $timeConditionDetailModelWork = new adminTimeConditionModel();
+        $timeConditionDetailWork = $timeConditionDetailModelWork::SetFieldsAndSaveApi($timeConditionFieldsWork);
+
+        if ($timeConditionDetailWork['result'] == -1) {
+            looeic::rollback();
+            $result['result'] = -1;
+            $result['msg'] = 'Failed to add work time condition details';
+            echo json_encode($result);
+            die();
+        }
+
+        // commit تراکنش
+        looeic::commit();
+
+        // فعال کردن و ریلود شرکت
+        $company = new CompanyService();
+        $companyResult = $company->activeRelaod($company_info['comp_id']);
+        if ($companyResult['result'] == -1) {
+            $result['result'] = -1;
+            $result['msg'] = 'Failed to reload company';
+            echo json_encode($result);
+            die();
+        }
+
+        // موفقیت‌آمیز
+        $result['result'] = 1;
+        $result['msg'] = 'Successfully added';
         echo json_encode($result);
         die();
     }
@@ -942,6 +1015,8 @@ class extension_presentation
         $fields['name'] = $timeConditionName->name;
         $result['fields'] = $fields;
         $result['result'] = 1;
+
+
         $result['msg'] = 'Successfully Update';
         $this->exportType = 'html';
         $this->fileName = 'addTimeConditionNew.php';

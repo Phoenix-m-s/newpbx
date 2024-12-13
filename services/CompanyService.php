@@ -229,132 +229,145 @@ class CompanyService
         $result['msg'] = 'Successfully Update';
         return $result;
     }
-    public function addCompanyApi($fields){
-
+    public function addCompanyApi($fields) {
         looeic::beginTransaction();
 
+        $requiredFields = ['comp_name', 'manager_name', 'address', 'phone_number', 'email', 'name', 'password', 'family', 'type'];
+        $errorMessages = [];
+
+        foreach ($requiredFields as $field) {
+            if (empty($fields[$field])) {
+                $errorMessages[] = $field;
+            }
+        }
+
+        if (!empty($errorMessages)) {
+            looeic::rollback();
+            $result = [
+                'result' => -1,
+                'msg' => 'فیلدهای زیر ضروری هستند و نمی‌توانند خالی باشند',
+                'data' => [
+                    'missingFields' => $errorMessages
+                ]
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
+            return $result;
+        }
+
+        // ادامه‌ی سایر کدها
 
         $companyObj = new AdminCompanyModel();
-
-        //$companyObj->comp_id = $company_info['comp_id'];
-
         $companyObj->comp_name = $fields['comp_name'];
-
         $companyObj->manager_name = $fields['manager_name'];
-
         $companyObj->address = $fields['address'];
-
         $companyObj->phone_number = $fields['phone_number'];
-
         $companyObj->email = $fields['email'];
-
         $companyObj->support_name = "0";
-
         $companyObj->support_phone = "0";
-
         $companyObj->support_email = "0";
-
         $companyObj->container_comp_id = "1";
-
         $companyObj->comp_status = 1;
 
         $validate = $companyObj->validator();
 
         if ($validate['result'] == -1) {
             looeic::rollback();
-            $result['msg'] = $validate['msg'];
-            $result['result'] = -1;
+            $result = [
+                'result' => -1,
+                'msg' => $validate['msg'],
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
 
-        $checkCompanyName= $this->checkCompanyNameApi($fields);
-
+        $checkCompanyName = $this->checkCompanyNameApi($fields);
 
         if ($checkCompanyName['recordsCount'] >= 1) {
             looeic::rollback();
-            $result['result'] = -1;
-            $result['msg'] = 'this comp_name is exist';
+            $result = [
+                'result' => -1,
+                'msg' => 'This company name already exists',
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
 
         $result = $companyObj->save();
 
-
-
         if ($result['result'] == -1) {
             looeic::rollback();
-            $result['msg'] = 'Failed To Updated';
+            $result = [
+                'result' => -1,
+                'msg' => 'Failed to update company',
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
-        /* if($fields['password_new']!=$fields['confirm_password']){
-             looeic::rollback();
-             $result['result'] = -1;
-             $result['msg']= 'this password not match';
-             return $result;
-         }*/
-        //***********************
-        //save admin name
+
+        // ادامه‌ی ذخیره‌ی کاربر (User)
         $user = new AdminUser();
-        $username = substr($fields['username'], 0, strpos($fields['username'], '@'));
-        if($username=='')
-        {
-            $username=$fields['username'];
-        }
-        //$user->setFields($fields);
-        $user->password=md5($fields['password']);
-        $user->username=$username;
-        $user->name=$fields['name'];
-        $user->family=$fields['family'];
-        $user->compid=$companyObj->comp_id;
-        $user->comp_id=$companyObj->comp_id;
-        $user->type=$fields['type'];
+        $username = substr($fields['email'], 0, strpos($fields['email'], '@'));
+
+        $user->password = md5($fields['password']);
+        $user->username = $username;
+        $user->name = $fields['name'];
+        $user->family = $fields['family'];
+        $user->compid = $companyObj->comp_id;
+        $user->comp_id = $companyObj->comp_id;
+        $user->type = $fields['type'];
         $user->status = 1;
-        $user->permission_pbx='100000000000000000011100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000111100000000000000100000000000000000111100000000000000100000000000000000100000000000000000';
-        //$user->creation_date=date("m.d.y");
 
-
-        //***********************
-        //check admin name
         $adminCheckName = $this->checkAdminNameApi($username);
 
         if ($adminCheckName['recordsCount'] >= 1) {
             looeic::rollback();
-            $result['result'] = -1;
-            $result['msg'] ='this username name is exist';
+            $result = [
+                'result' => -1,
+                'msg' => 'This username already exists',
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
-        //***********************
-        //check extension name
+
         $extensionCheckName = $this->checkExtensionNameApi($username);
+
         if ($extensionCheckName['recordsCount'] >= 1) {
             looeic::rollback();
-            $result['result'] = -1;
-            $result['msg']= 'this username extension is exist';
+            $result = [
+                'result' => -1,
+                'msg' => 'This username extension already exists',
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
-        //***********************
-        //check validator
-        /* $validate = $user->validator();
-         if ($validate['result'] == -1) {
-             looeic::rollback();
-             $result['msg'] = $validate['msg'];
-             $result['result'] = -1;
-             return $result;
-         }*/
 
         $result = $user->save();
 
         if ($result['result'] == -1) {
             looeic::rollback();
-            $result['msg'] = 'Failed To Updated';
+            $result = [
+                'result' => -1,
+                'msg' => 'Failed to update user',
+                'data' => null
+            ];
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
             return $result;
         }
 
         looeic::commit();
-        $result['msg'] = 'Successfully Update';
+        $result = [
+            'result' => 1,
+            'msg' => 'Successfully updated',
+            'data' => null
+        ];
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
         return $result;
     }
-
 
     /**
      * @param $AdminID

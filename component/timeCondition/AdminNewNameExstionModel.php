@@ -35,6 +35,8 @@ class AdminNewNameExstionModel extends looeic
         }
         $result['result'] = 1;
         $result['id'] = $model->id;
+        $result['time_condtion_name_id']=$model->extension_id;
+
         return $result;
     }
 }

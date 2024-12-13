@@ -1,21 +1,21 @@
 <?php
-// توابع کمکی برای کدگذاری و کدگشایی Base64 در فرمت URL
 function base64UrlEncode($data) {
+    if (is_array($data)) {
+        $data = json_encode($data); // تبدیل آرایه به رشته JSON
+    }
     return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
-
 function base64UrlDecode($data) {
     return base64_decode(strtr($data, '-_', '+/'));
 }
-
 // تولید توکن JWT
 function generateToken($userId) {
     $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-    $payload = json_encode([
-        'userId' => $userId,
-        'iat' => time(),
-        'exp' => time() + 3600  // توکن بعد از 1 ساعت منقضی می‌شود
-    ]);
+    $payload = [
+        'iat' => time(), // زمان ایجاد توکن
+        'exp' => time() + 3600, // انقضا: 1 ساعت بعد
+        'user_id' => $userId // سایر داده‌ها
+    ];
 
     $base64UrlHeader = base64UrlEncode($header);
     $base64UrlPayload = base64UrlEncode($payload);
@@ -30,11 +30,7 @@ function generateToken($userId) {
 }
 
 // احراز هویت با استفاده از JWT
-// احراز هویت با استفاده از JWT
 function authenticate() {
-
-    header('Content-Type: application/json; charset=utf-8');
-
     $headers = getallheaders();
     if (!isset($headers['Authorization'])) {
         http_response_code(401);
@@ -48,9 +44,7 @@ function authenticate() {
     $data = $headerEncoded . '.' . $payloadEncoded;
     $secretKey = "A$3cRe7Key@123456!%";
 
-    // تولید signature دوباره برای مقایسه
     $signature = base64UrlEncode(hash_hmac('sha256', $data, $secretKey, true));
-
 
     if ($signature !== $signatureEncoded) {
         http_response_code(401);
@@ -65,7 +59,10 @@ function authenticate() {
         echo json_encode(["result" => -1, "data" => ["message" => "توکن منقضی شده است"]], JSON_UNESCAPED_UNICODE);
         exit();
     }
+
     return $payload; // بازگشت payload توکن
 }
+
+
 
 ?>

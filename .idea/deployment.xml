@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" serverName="172.20.8.227" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
+      <paths name="139.99.187.91">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="172.20.8.227">
         <serverdata>
           <mappings>

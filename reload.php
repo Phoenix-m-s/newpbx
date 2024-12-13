@@ -10,7 +10,7 @@ include_once ROOT_DIR . "component/php-ami-class.php";
 
 global $admin_info, $company_info;
 
-function logAMIAllInclude($message, $isSuccessful) {
+function logAMIAllInclude($message,$isSuccessful) {
     global $company_info;
 
     // مسیر فایل لاگ
@@ -570,7 +570,7 @@ foreach ($All_comp_list_new['list'] as $key => $comp_fields) {
 $buffer = ob_get_contents();
 ob_end_clean();
 fwrite($handle, $buffer);
-logAMIAllInclude('create allvoice_mail.conf'.$company_info['comp_name'],,true);
+logAMIAllInclude('create allvoice_mail.conf'.$company_info['comp_name'],true);
 fclose($handle);
 
 

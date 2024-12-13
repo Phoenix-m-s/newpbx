@@ -3,16 +3,23 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="37786ca0-cfdd-4e25-bbc2-1a88165c0afc" name="172.20.8.227">
-        <fileTransfer rootFolder="/var/www/newpbx" accessType="SFTP" host="172.20.8.227" port="22" sshConfigId="e1d3e6b4-7d0e-425a-8510-a419396573e1" sshConfig="root@172.20.8.227:22 password">
+        <fileTransfer rootFolder="/var/www/newpbx" accessType="SFTP" host="139.99.187.91" port="10022" sshConfigId="e1d3e6b4-7d0e-425a-8510-a419396573e1" sshConfig="root@139.99.187.91:10022 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>
       <webServer id="3231b232-01ed-4ee0-853a-5e903072ce33" name="172.20.8.98">
-        <fileTransfer rootFolder="/opt/voip-multi-company" accessType="SFTP" host="172.20.8.98" port="22" sshConfigId="60645f98-6be8-4584-a839-c9080571b2f6" sshConfig="172.20.8.98">
+        <fileTransfer rootFolder="/opt/voip-multi-company" accessType="SFTP" sshConfigId="60645f98-6be8-4584-a839-c9080571b2f6" sshConfig="172.20.8.98">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="29f4b4a5-12c1-4291-a935-7d4e159adb35" name="139.99.187.91">
+        <fileTransfer rootFolder="/opt/voip-multi-company/var/www" accessType="SFTP" host="139.99.187.91" port="10022" sshConfigId="e1d3e6b4-7d0e-425a-8510-a419396573e1" sshConfig="root@139.99.187.91:10022 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>
