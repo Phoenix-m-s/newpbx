@@ -50,6 +50,7 @@ class RoutingController
     {
         global $company_info;
         $routing = new RoutingService();
+        die('4');
         $list = $routing->getAllRouting();
 
         $company = new CompanyService();

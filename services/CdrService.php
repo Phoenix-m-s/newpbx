@@ -1,5 +1,5 @@
 <?php
-include_once ROOT_DIR . "component/cdr/component/model/cdrModel.php";
+include_once ROOT_DIR . "component/cdr/model/cdrModel.php";
 
 
 /**
