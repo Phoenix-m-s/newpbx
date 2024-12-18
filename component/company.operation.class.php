@@ -73,6 +73,7 @@ class company_operation
             'Address' => '',
             'Email' => '',
             'Phone_Number' => '',
+            'timezone' => '',
             'GroupID' => '',
         );
         $this->editForm = array();
@@ -83,6 +84,7 @@ class company_operation
             'Address' => '',
             'Email' => '',
             'Phone_Number' => '',
+            'timezone' => '',
             'GroupID' => ''
         );
 
@@ -293,6 +295,7 @@ class company_operation
     private function _set_companyInfo($value = '')
     {
 
+
         $result['result'] = 1;
 
         /**
@@ -417,6 +420,34 @@ class company_operation
                 $this->_companyInfo['Comp_Name'] = $value['Comp_Name'];
             }
 
+        }
+        /**
+         * Checks if the value of Company name is not empty and is string.
+         */
+        if (isset($value['Timezone'])) {
+            if (empty($value['Timezone'])) {
+                $msg = ModelCOMPANY_05;
+
+                if ($result['result'] == 1) {
+                    $result['msg'] = $msg;
+                }
+                $result['result'] = -1;
+                $result['err'] = -2;
+
+                $result['msgList']['Timezone'] = $msg;
+            } elseif (!is_string($value['Timezone'])) {
+                $msg = ModelCOMPANY_06;
+
+                if ($result['result'] == 1) {
+                    $result['msg'] = $msg;
+                }
+                $result['result'] = -1;
+                $result['err'] = -2;
+
+                $result['msgList']['Timezone'] = $msg;
+            } else {
+                $this->_companyInfo['Timezone'] = $value['Timezone'];
+            }
         }
 
         /**
@@ -590,6 +621,28 @@ class company_operation
 
             }
         }
+        // بررسی Timezone
+        if (isset($value['timezone'])) {
+            if (empty($value['timezone'])) {
+                $msg = 'timezone is required';
+                if ($result['result'] == 1) {
+                    $result['msg'] = $msg;
+                }
+                $result['result'] = -1;
+                $result['err'] = -2;
+                $result['msgList']['timezone'] = $msg;
+            } elseif (!in_array($value['timezone'], timezone_identifiers_list())) {
+                $msg = 'Invalid timezone';
+                if ($result['result'] == 1) {
+                    $result['msg'] = $msg;
+                }
+                $result['result'] = -1;
+                $result['err'] = -2;
+                $result['msgList']['timezone'] = $msg;
+            } else {
+                $this->_companyInfo['timezone'] = $value['timezone'];
+            }
+        }
 
         return $result;
 
@@ -670,6 +723,7 @@ class company_operation
      */
     private function _getCompanyListById($compID)
     {
+
         //global $conn, $lang;
         if (is_int($compID)) {
             $result['result'] = -1;

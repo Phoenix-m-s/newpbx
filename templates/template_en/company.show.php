@@ -149,13 +149,14 @@
                     </div>
                     <table id="example" class="companyTable table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
-                        <tr>
+                        <tr style="color: black">
                             <th><?php echo COMPANY_03?></th>
                             <th><?php echo COMPANY_04?></th>
                             <th><?php echo COMPANY_05?></th>
                             <th><?php echo COMPANY_06?></th>
                             <th><?php echo COMPANY_07?></th>
                             <th><?php echo COMPANY_08?></th>
+                            <th>timezone</th>
                             <th><?php echo COMPANY_09?></th>
                             <th><?php echo COMPANY_10?></th>
                         </tr>
@@ -165,6 +166,7 @@
                         <tr>
                             <th><input type="text" name="search_10" value="" class="search_init form-control" /></th>
                             <th><input type="text" name="search_20" value="" class="search_init form-control" /></th>
+                            <th><input type="text" name="search_30" value="" class="search_init form-control" /></th>
                             <th><input type="text" name="search_30" value="" class="search_init form-control" /></th>
                             <th><input type="text" name="search_30" value="" class="search_init form-control" /></th>
                             <th><input type="text" name="search_30" value="" class="search_init form-control" /></th>

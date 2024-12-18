@@ -335,6 +335,7 @@ class company_db extends DataBase
                     `address` as Address,
                     `phone_number` as Phone_Number,
                     `email` as Email,
+                    `timezone` as timezone,
                     `comp_id` as comp_id
 
                 FROM
@@ -503,6 +504,7 @@ class company_db extends DataBase
                  `phone_number` as Phone_Number,
                  `email` as Email,
                  `comp_id` as comp_id,
+                 `timezone` as timezone,
                  `comp_status` as Comp_Status
     		     FROM 	tbl_company" . $filter['WHERE'] . $filter['filter'] . $filter['order'] . $filter['limit'];
 
@@ -746,30 +748,33 @@ class company_db extends DataBase
         $conn = parent::getConnection();
 
         $sql = "
-                    INSERT INTO tbl_company(
-                    comp_name,
-                    manager_name,
-                    address,
-                    email,
-                    phone_number,
-                    comp_status,
-                    support_name,
-                    trash,
-                    support_phone,
-                    support_email
-                    )
-                    VALUES(
-                    '" . $this->_companyFields['Comp_Name'] . "',
-                    '" . $this->_companyFields['Manager_Name'] . "',
-                    '" . $this->_companyFields['Address'] . "',
-                    '" . $this->_companyFields['Email'] . "',
-                    '" . $this->_companyFields['Phone_Number'] . "',
-                    '" . $this->_companyFields['comp_status'] ="1". "',    
-                    '" . $this->_companyFields['support_name']="Zitel" . "',
-                    '" . $this->_companyFields['trash'] ="0". "',      
-                    '" . $this->_companyFields['support_phone']="1" . "',
-                    '" . $this->_companyFields['support_email'] ="Zitel". "' 
-                    )";
+    INSERT INTO tbl_company(
+        comp_name,
+        manager_name,
+        address,
+        email,
+        phone_number,
+        comp_status,
+        support_name,
+        trash,
+        support_phone,
+        support_email,
+        timezone
+    )
+    VALUES(
+        '" . $this->_companyFields['Comp_Name'] . "',
+        '" . $this->_companyFields['Manager_Name'] . "',
+        '" . $this->_companyFields['Address'] . "',
+        '" . $this->_companyFields['Email'] . "',
+        '" . $this->_companyFields['Phone_Number'] . "',
+        '" . $this->_companyFields['comp_status'] = "1" . "',    
+        '" . $this->_companyFields['support_name'] = "Zitel" . "',
+        '" . $this->_companyFields['trash'] = "0" . "',      
+        '" . $this->_companyFields['support_phone'] = "1" . "',
+        '" . $this->_companyFields['support_email'] = "Zitel" . "',
+        '" . $this->_companyFields['timezone'] . "'
+    )";
+
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -902,7 +907,8 @@ class company_db extends DataBase
                 manager_name ='" . $this->_companyFields['Manager_Name'] . "',
                 address =  '" . $this->_companyFields['Address'] . "',
                 email =  '" . $this->_companyFields['Email'] . "',
-                phone_number =    '" . $this->_companyFields['Phone_Number'] . "'
+                phone_number =    '" . $this->_companyFields['Phone_Number'] . "',
+                timezone = '" . $this->_companyFields['timezone'] . "'
                 WHERE comp_id = $compID;
                 ";
 

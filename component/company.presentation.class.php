@@ -79,7 +79,8 @@ class company_presentation
             array( 'db' => 'Address',  'dt' => 3 ),
             array( 'db' => 'Phone_Number',  'dt' => 4 ),
             array( 'db' => 'Email',  'dt' => 5 ),
-            array( 'db' => 'Comp_Status',  'dt' => 6 )
+            array( 'db' => 'timezone',  'dt' => 6 ),
+            array( 'db' => 'Comp_Status',  'dt' => 7)
         );
 
         //$primaryKey = 'id';
@@ -93,10 +94,11 @@ class company_presentation
         $operationSearchFields['filter']['trash']= 0;
         $operation->getCompanyList($operationSearchFields);
         $list['list']=$operation->companyList;
+        //print_r_debug($list);
 
         $list['paging']=$operation->paging;
 
-        $other['7']=array(
+        $other['8']=array(
 
             'formatter' =>function($list)
             {
@@ -122,7 +124,7 @@ class company_presentation
             }
         );
 
-        $other['6']=array(
+        $other['7']=array(
 
             'formatter' =>function($list)
             {
@@ -393,6 +395,8 @@ class company_presentation
      */
     public function addCompany($fields)
     {
+
+
         global $comp_id;
 
         global $conn, $lang;
@@ -409,14 +413,12 @@ class company_presentation
         //******
 
         $operation=new company_operation();
-
         foreach($operation->addForm as $key=>$val)
         {
 
             $input_fields[$key]=$fields[$key];
 
         }
-
         $result=$operation->set_companyInfo($input_fields);
 
         if ($result['result'] != 1)
@@ -473,6 +475,7 @@ class company_presentation
      */
     public function addCompanyForm($fields,$msg)
     {
+
         global $conn, $lang;
         $fields['CompanyGroup'] = $this->getAllCompanyGroup($msg);
         $this->exportType='html';
@@ -483,7 +486,6 @@ class company_presentation
         $_SESSION['token'][$uniqid]='1';
         $fields['token']='token['.$uniqid.']';
         //*****
-
         $this->template($fields,$msg);
         die();
 
@@ -738,6 +740,7 @@ class company_presentation
         $operation      =new company_operation();
         $result    =$operation->getCompanyListById($compID);
 
+
         if($result['result']=='0')
         {
             return $result['msg'];
@@ -801,7 +804,7 @@ class company_presentation
         else
         {
             $msg = ModelCOMPANY_18;
-            redirectPage(RELA_DIR . "trash.php?action=showCompanyTrash", $msg);
+            redirectPage(RELA_DIR . "company.php?action=showCompany", $msg);
         }
     }
 

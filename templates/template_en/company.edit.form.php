@@ -138,6 +138,54 @@
                                 }
                             }?>
 
+                            <!-- timezone Field in Edit Section -->
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-4 pull-left control-label" for="timezone"><?php echo "time Zone"; ?>:</label>
+                                        <div class="col-xs-12 col-sm-6 pull-left">
+                                            <select class="form-control" name="timezone" id="timezone" required>
+                                                <option value="UTC" <?php echo ($list['timezone'] == 'UTC') ? 'selected' : ''; ?>>UTC</option>
+                                                <option value="Africa/Abidjan" <?php echo ($list['timezone'] == 'Africa/Abidjan') ? 'selected' : ''; ?>>Africa/Abidjan</option>
+                                                <option value="Africa/Accra" <?php echo ($list['timezone'] == 'Africa/Accra') ? 'selected' : ''; ?>>Africa/Accra</option>
+                                                <option value="Africa/Addis_Ababa" <?php echo ($list['timezone'] == 'Africa/Addis_Ababa') ? 'selected' : ''; ?>>Africa/Addis_Ababa</option>
+                                                <option value="Africa/Algiers" <?php echo ($list['timezone'] == 'Africa/Algiers') ? 'selected' : ''; ?>>Africa/Algiers</option>
+                                                <option value="Africa/Cairo" <?php echo ($list['timezone'] == 'Africa/Cairo') ? 'selected' : ''; ?>>Africa/Cairo</option>
+                                                <option value="Africa/Nairobi" <?php echo ($list['timezone'] == 'Africa/Nairobi') ? 'selected' : ''; ?>>Africa/Nairobi</option>
+                                                <option value="America/New_York" <?php echo ($list['timezone'] == 'America/New_York') ? 'selected' : ''; ?>>America/New_York</option>
+                                                <option value="America/Los_Angeles" <?php echo ($list['timezone'] == 'America/Los_Angeles') ? 'selected' : ''; ?>>America/Los_Angeles</option>
+                                                <option value="America/Chicago" <?php echo ($list['timezone'] == 'America/Chicago') ? 'selected' : ''; ?>>America/Chicago</option>
+                                                <option value="America/Denver" <?php echo ($list['timezone'] == 'America/Denver') ? 'selected' : ''; ?>>America/Denver</option>
+                                                <option value="America/Mexico_City" <?php echo ($list['timezone'] == 'America/Mexico_City') ? 'selected' : ''; ?>>America/Mexico_City</option>
+                                                <option value="America/Sao_Paulo" <?php echo ($list['timezone'] == 'America/Sao_Paulo') ? 'selected' : ''; ?>>America/Sao_Paulo</option>
+                                                <option value="Asia/Kolkata" <?php echo ($list['timezone'] == 'Asia/Kolkata') ? 'selected' : ''; ?>>Asia/Kolkata</option>
+                                                <option value="Asia/Tehran" <?php echo ($list['timezone'] == 'Asia/Tehran') ? 'selected' : ''; ?>>Asia/Tehran</option>
+                                                <option value="Asia/Dubai" <?php echo ($list['timezone'] == 'Asia/Dubai') ? 'selected' : ''; ?>>Asia/Dubai</option>
+                                                <option value="Asia/Tokyo" <?php echo ($list['timezone'] == 'Asia/Tokyo') ? 'selected' : ''; ?>>Asia/Tokyo</option>
+                                                <option value="Asia/Singapore" <?php echo ($list['timezone'] == 'Asia/Singapore') ? 'selected' : ''; ?>>Asia/Singapore</option>
+                                                <option value="Europe/London" <?php echo ($list['timezone'] == 'Europe/London') ? 'selected' : ''; ?>>Europe/London</option>
+                                                <option value="Europe/Paris" <?php echo ($list['timezone'] == 'Europe/Paris') ? 'selected' : ''; ?>>Europe/Paris</option>
+                                                <option value="Europe/Berlin" <?php echo ($list['timezone'] == 'Europe/Berlin') ? 'selected' : ''; ?>>Europe/Berlin</option>
+                                                <option value="Europe/Moscow" <?php echo ($list['timezone'] == 'Europe/Moscow') ? 'selected' : ''; ?>>Europe/Moscow</option>
+                                                <option value="Europe/Istanbul" <?php echo ($list['timezone'] == 'Europe/Istanbul') ? 'selected' : ''; ?>>Europe/Istanbul</option>
+                                                <option value="Europe/Stockholm" <?php echo ($list['timezone'] == 'Europe/Stockholm') ? 'selected' : ''; ?>>Europe/Stockholm</option>
+                                                <option value="Europe/Madrid" <?php echo ($list['timezone'] == 'Europe/Madrid') ? 'selected' : ''; ?>>Europe/Madrid</option>
+                                                <option value="Europe/Rome" <?php echo ($list['timezone'] == 'Europe/Rome') ? 'selected' : ''; ?>>Europe/Rome</option>
+                                                <option value="Pacific/Auckland" <?php echo ($list['timezone'] == 'Pacific/Auckland') ? 'selected' : ''; ?>>Pacific/Auckland</option>
+                                                <option value="Pacific/Honolulu" <?php echo ($list['timezone'] == 'Pacific/Honolulu') ? 'selected' : ''; ?>>Pacific/Honolulu</option>
+                                                <option value="Australia/Sydney" <?php echo ($list['timezone'] == 'Australia/Sydney') ? 'selected' : ''; ?>>Australia/Sydney</option>
+                                                <option value="Australia/Melbourne" <?php echo ($list['timezone'] == 'Australia/Melbourne') ? 'selected' : ''; ?>>Australia/Melbourne</option>
+                                                <option value="Australia/Brisbane" <?php echo ($list['timezone'] == 'Australia/Brisbane') ? 'selected' : ''; ?>>Australia/Brisbane</option>
+                                                <option value="Africa/Johannesburg" <?php echo ($list['timezone'] == 'Africa/Johannesburg') ? 'selected' : ''; ?>>Africa/Johannesburg</option>
+                                                <option value="Africa/Lagos" <?php echo ($list['timezone'] == 'Africa/Lagos') ? 'selected' : ''; ?>>Africa/Lagos</option>
+                                                <option value="Asia/Karachi" <?php echo ($list['timezone'] == 'Asia/Karachi') ? 'selected' : ''; ?>>Asia/Karachi</option>
+                                                <option value="America/Toronto" <?php echo ($list['timezone'] == 'America/Toronto') ? 'selected' : ''; ?>>America/Toronto</option>
+                                                <!-- Add more timezones as needed -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
