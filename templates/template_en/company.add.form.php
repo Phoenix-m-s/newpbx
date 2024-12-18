@@ -222,3 +222,12 @@
         </div>
     </div>
 </div><!--/content -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timezoneSelect = document.getElementById('timezone');
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // گرفتن تایم‌زون مرورگر کاربر
+        if (timezoneSelect.querySelector(`option[value="${timezone}"]`)) {
+            timezoneSelect.value = timezone;
+        }
+    });
+</script>

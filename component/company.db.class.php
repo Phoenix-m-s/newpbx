@@ -491,10 +491,10 @@ class company_db extends DataBase
         $filter = $this->filterBuilder($fields);
         $length = $filter['length'];
         $filter = $filter['list'];
-        if($company_info['comp_name']!='zitel')
+       /* if($company_info['comp_name']!='zitel')
         {
             $filter['filter'] = 'trash = 0 and comp_id='.$company_info['comp_id'];
-        }
+        }*/
 
 
         $sql = "SELECT
